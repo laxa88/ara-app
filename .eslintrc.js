@@ -1,4 +1,5 @@
 module.exports = {
-  extends: "airbnb",
+  extends: ["airbnb", "prettier"],
+  plugins: ["prettier"],
   env: { browser: true }
 };

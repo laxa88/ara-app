@@ -11,12 +11,7 @@ class Hello extends React.Component {
 
   render() {
     const { name } = this.state;
-    return (
-      <h1>
-        Hello world!
-        {name}
-      </h1>
-    );
+    return <h1>{`Hello world, ${name}!`}</h1>;
   }
 }
 
