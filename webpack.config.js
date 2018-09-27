@@ -1,26 +1,35 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
-  template: path.join(__dirname, "src/index.html"),
-  filename: "./index.html",
+  template: path.join(__dirname, 'src/index.html'),
+  filename: './index.html',
 });
 
 module.exports = {
-  mode: "development",
+  mode: 'development',
 
-  entry: path.join(__dirname, "src/index.js"),
+  entry: path.join(__dirname, 'src/index.jsx'),
 
   module: {
+    // Note: Order is important, from BOTTOM to TOP!
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /(node_modules)/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-react", "@babel/preset-env"],
+            presets: ['@babel/preset-react', '@babel/preset-env'],
           },
+        },
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          // eslint options (if necessary)
         },
       },
     ],
@@ -29,7 +38,7 @@ module.exports = {
   plugins: [htmlWebpackPlugin],
 
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.js', '.jsx'],
   },
 
   devServer: {
