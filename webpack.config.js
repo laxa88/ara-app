@@ -11,6 +11,8 @@ module.exports = {
 
   entry: path.join(__dirname, 'src/index.jsx'),
 
+  devtool: 'source-map',
+
   module: {
     // Note: Order is important, from BOTTOM to TOP!
     rules: [

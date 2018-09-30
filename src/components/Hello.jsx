@@ -12,6 +12,7 @@ class Hello extends React.Component {
   }
 
   render() {
+    console.log('###render!');
     const { name } = this.state;
     const v1 = helpers.add(1, 2);
     const v2 = helpers.minus(5, 1);
