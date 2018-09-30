@@ -1,17 +1,21 @@
 import React from 'react';
 
+import * as helpers from './helper';
+
 class Hello extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: 'unknown',
+      name: 'LWY',
     };
   }
 
   render() {
     const { name } = this.state;
-    return <h1>{`Hello world, ${name}!`}</h1>;
+    const v1 = helpers.add(1, 2);
+    const v2 = helpers.minus(5, 1);
+    return <h1>{`Hello world, ${name} ${v1} ${v2}!`}</h1>;
   }
 }
 
