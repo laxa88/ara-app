@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as helpers from './helper';
+import * as helpers from './helper.ts';
 
 class Hello extends React.Component {
   constructor(props) {
