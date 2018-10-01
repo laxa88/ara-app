@@ -34,13 +34,14 @@ module.exports = {
           // eslint options (if necessary)
         },
       },
+      { test: /\.tsx?$/, loader: 'ts-loader' },
     ],
   },
 
   plugins: [htmlWebpackPlugin],
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
 
   devServer: {
