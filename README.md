@@ -12,7 +12,7 @@ This is a personal project for a learning platform app. The idea isn't new; I'm 
 - OK Add eslint + airbnb rules
 - OK Add prettier
 - OK Add jest
-- Convert project to TypeScript
+- OK Convert project to TypeScript
 
 Notes: Each npm library evolves over time, so there is never a tutorial that can smoothly get you up and running in 5 minutes (unless the tutorial was written recently). Best way is to refer to points above, and install each library separately according to each of their "Installation Guide".
 
