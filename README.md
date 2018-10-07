@@ -18,7 +18,7 @@ Notes: Each npm library evolves over time, so there is never a tutorial that can
 
 # Phase 2 TODO
 
-- Setup server (?)
+- OK Setup server
 - Setup database (?)
 - Setup GraphQL (?)
 
