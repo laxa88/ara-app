@@ -13,14 +13,20 @@ This is a personal project for a learning platform app. The idea isn't new; I'm 
 - OK Add prettier
 - OK Add jest
 - OK Convert project to TypeScript
+- Convert eslint to tslint
 
 Notes: Each npm library evolves over time, so there is never a tutorial that can smoothly get you up and running in 5 minutes (unless the tutorial was written recently). Best way is to refer to points above, and install each library separately according to each of their "Installation Guide".
 
 # Phase 2 TODO
 
 - OK Setup server
-- Setup database (?)
+- OK Setup database (?)
 - Setup GraphQL (?)
+- Add eslint + airbnb rules
+- Add prettier
+- Add jest
+- Convert project to TypeScript
+- Convert eslint to tslint
 
 # Phase 3 TODO
 
