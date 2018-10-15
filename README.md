@@ -20,8 +20,8 @@ Notes: Each npm library evolves over time, so there is never a tutorial that can
 # Phase 2 TODO
 
 - OK Setup server
-- OK Setup database (?)
-- Setup GraphQL (?)
+- OK Setup database
+- OK Setup API
 - Add eslint + airbnb rules
 - Add prettier
 - Add jest
