@@ -25,7 +25,7 @@ Notes: Each npm library evolves over time, so there is never a tutorial that can
 - OK Add eslint + airbnb rules
 - OK Add prettier
 - Add jest
-- Convert project to TypeScript
+- OK Convert project to TypeScript
 - Convert eslint to tslint
 
 # Phase 3 TODO
