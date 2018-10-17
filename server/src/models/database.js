@@ -1,8 +1,8 @@
 // Reference:
 // https://mherman.org/blog/postgresql-and-nodejs/
 
-const pg = require("pg");
-const config = require("../../../config");
+const pg = require('pg');
+const config = require('../../../config');
 
 (async () => {
   const { user, pass } = config.db;
@@ -12,7 +12,7 @@ const config = require("../../../config");
   await client.connect();
 
   await client.query(
-    "CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)"
+    'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)',
   );
 
   await client.end();

@@ -1,5 +1,5 @@
-const pg = require("pg");
-const config = require("../../../config");
+const pg = require('pg');
+const config = require('../../../config');
 
 async function post(req, res) {
   const { text, complete } = req.body;
@@ -12,14 +12,14 @@ async function post(req, res) {
   await client.connect();
 
   await client.query(
-    `INSERT INTO items(text, complete) values('${text}', '${complete}')`
+    `INSERT INTO items(text, complete) values('${text}', '${complete}')`,
   );
 
-  const result = await client.query("SELECT * FROM items ORDER BY id ASC");
+  const result = await client.query('SELECT * FROM items ORDER BY id ASC');
 
   return res.status(200).json(result);
 }
 
 module.exports = {
-  post
+  post,
 };
