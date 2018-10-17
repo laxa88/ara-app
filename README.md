@@ -22,8 +22,8 @@ Notes: Each npm library evolves over time, so there is never a tutorial that can
 - OK Setup server
 - OK Setup database
 - OK Setup API
-- Add eslint + airbnb rules
-- Add prettier
+- OK Add eslint + airbnb rules
+- OK Add prettier
 - Add jest
 - Convert project to TypeScript
 - Convert eslint to tslint
