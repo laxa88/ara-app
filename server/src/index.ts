@@ -1,6 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const routes = require('./routes');
+import express from 'express';
+import bodyParser from 'body-parser';
+import routes from './routes';
+import * as helper from './helper';
 
 const app = express();
 const port = 3000;
@@ -25,6 +26,9 @@ app.post('/foo', (req, res) => {
   console.log('###', req.body);
   console.log('###', req.params);
   console.log('###', req.query);
+
+  const result = helper.add(2, 3);
+  console.log('###', result);
 
   const { myVal } = req.body;
 
