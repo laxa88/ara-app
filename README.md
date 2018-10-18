@@ -13,6 +13,7 @@ This is a personal project for a learning platform app. The idea isn't new; I'm 
 - OK Add prettier
 - OK Add jest
 - OK Convert project to TypeScript
+- OK Add jest for typescript
 - Convert eslint to tslint
 
 Notes: Each npm library evolves over time, so there is never a tutorial that can smoothly get you up and running in 5 minutes (unless the tutorial was written recently). Best way is to refer to points above, and install each library separately according to each of their "Installation Guide".
@@ -24,7 +25,7 @@ Notes: Each npm library evolves over time, so there is never a tutorial that can
 - OK Setup API
 - OK Add eslint + airbnb rules
 - OK Add prettier
-- Add jest
+- Add jest for typescript
 - OK Convert project to TypeScript
 - Convert eslint to tslint
 
@@ -35,12 +36,15 @@ Notes: Each npm library evolves over time, so there is never a tutorial that can
 # Phase 4 TODO
 
 - Implement app features (TBD)
+- Add tests and coverage to 100%
 - Add redux + thunk
 - Add CSS loaders
 - Add image/file loaders
 - Add code splitting
+- Add CI pipeline
 
 # Phase 5 TODO
 
 - Get hosting & domain name
+- Setup docker
 - Deploy
