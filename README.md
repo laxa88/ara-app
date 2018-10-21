@@ -1,43 +1,66 @@
 # Introduction
 
-This is a personal project for a learning platform app. The idea isn't new; I'm just using the opportunity to brush up my overall programming experience, while giving myself an goal (i.e. to finish this app).
+This is a full server/client practice project for my local community.
+
+## Problem
+
+Everyone is currently using a single Whatsapp chatroom to share important news AND have small chit-chats. Important messages like maintenance payments, receipts and announcements are difficult to find.
+
+## Solution
+
+Write an single-page app with the following features:
+- Upload and approve community-related payments
+- And simple blog system for committees to post news and announcements
+
+That way, the Whatsapp group can be be safely used exclusively for casual banter.
 
 # Phase 1 TODO
 
-- OK Install react
-- OK Install webpack
-- OK Install babel
-- OK Configure babel to resolve js files
-- OK Configure webpack to use babel-loader
-- OK Add eslint + airbnb rules
-- OK Add prettier
-- OK Add jest
-- OK Convert project to TypeScript
-- OK Add jest for typescript
+- ~~Install react~~
+- ~~Install webpack~~
+- ~~Install babel~~
+- ~~Configure babel to resolve js files~~
+- ~~Configure webpack to use babel-loader~~
+- ~~Add eslint + airbnb rules~~
+- ~~Add prettier~~
+- ~~Add jest~~
+- ~~Convert project to TypeScript~~
+- ~~Add jest for typescript~~
 - Convert eslint to tslint
-
-Notes: Each npm library evolves over time, so there is never a tutorial that can smoothly get you up and running in 5 minutes (unless the tutorial was written recently). Best way is to refer to points above, and install each library separately according to each of their "Installation Guide".
 
 # Phase 2 TODO
 
-- OK Setup server
-- OK Setup database
-- OK Setup API
-- OK Add eslint + airbnb rules
-- OK Add prettier
+- ~~Setup server~~
+- ~~Setup database~~
+- ~~Setup API~~
+- ~~Add eslint + airbnb rules~~
+- ~~Add prettier~~
 - Add jest for typescript
-- OK Convert project to TypeScript
+- ~~Convert project to TypeScript~~
 - Convert eslint to tslint
 
 # Phase 3 TODO
 
-- Setup Selenium
+- Implement client features
+  - Login page
+  - Manage user details page
+  - Payments page
+  - Admin page
+- Implement server features
+  - Public: Login page
+  - User: Change password
+  - User: Create new payment
+  - User: Edit payment
+  - User: Upload attachment for payment
+  - Committee: Approve payment
+  - Admin: Add user
+  - Admin: Update user (name, role, house)
 
 # Phase 4 TODO
 
-- Implement app features (TBD)
+- Setup Selenium
+- Add Selenium tests
 - Add tests and coverage to 100%
-- Add redux + thunk
 - Add CSS loaders
 - Add image/file loaders
 - Add code splitting
