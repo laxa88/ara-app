@@ -26,7 +26,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add jest~~
 - ~~Convert project to TypeScript~~
 - ~~Add jest for typescript~~
-- Convert eslint to tslint
+- ~~Add tslint~~
 
 # Phase 2 TODO
 
@@ -37,7 +37,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add prettier~~
 - Add jest for typescript
 - ~~Convert project to TypeScript~~
-- Convert eslint to tslint
+- Add tslint
 
 # Phase 3 TODO
 
