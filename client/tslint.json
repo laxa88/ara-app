@@ -5,8 +5,5 @@
     "tslint-config-airbnb"
   ],
   "rules": {
-    "quotemark": [true, "single"],
-    "indent": [true, "spaces", 2],
-    "jsx-alignment": [true]
   }
 }
