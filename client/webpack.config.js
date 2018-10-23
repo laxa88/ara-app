@@ -9,7 +9,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 module.exports = {
   mode: 'development',
 
-  entry: path.join(__dirname, 'src/index.jsx'),
+  entry: path.join(__dirname, 'src/index.tsx'),
 
   devtool: 'source-map',
 
