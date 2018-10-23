@@ -34,6 +34,14 @@ module.exports = {
           // eslint options (if necessary)
         },
       },
+      {
+        test: /\.tsx?$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
+        options: {
+          /* Loader options go here */
+        },
+      },
       { test: /\.tsx?$/, loader: 'ts-loader' },
     ],
   },
