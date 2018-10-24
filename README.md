@@ -27,6 +27,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Convert project to TypeScript~~
 - ~~Add jest for typescript~~
 - ~~Add tslint~~
+- ~~Add CSS-in-JS~~
 
 # Phase 2 TODO
 
