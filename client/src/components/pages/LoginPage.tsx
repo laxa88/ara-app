@@ -10,8 +10,8 @@ class LoginPage extends React.Component<{}, {}> {
   public render() {
     return (
       <div>
-        <Input type="email" placeholder="Input email here" />
-        <Input placeholder="Input password here" />
+        <Input isActive={true} type="email" placeholder="Input email here" />
+        <Input isActive={false} placeholder="Input password here" />
       </div>
     );
   }
