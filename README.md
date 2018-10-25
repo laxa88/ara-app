@@ -9,12 +9,23 @@ Everyone is currently using a single Whatsapp chatroom to share important news A
 ## Solution
 
 Write an single-page app with the following features:
+
 - Upload and approve community-related payments
 - And simple blog system for committees to post news and announcements
 
 That way, the Whatsapp group can be be safely used exclusively for casual banter.
 
-# Phase 1 TODO
+## Self Notes
+
+- If `styled-components` autocomplete does not work, try another option in `CTRL + SHIFT + P` > `Select TypeScript Version`
+- If Prettier and Linters don't work correctly, try tweaking the `settings.json` values (via `CTRL + ,`):
+  - `editor.formatOnSave`
+  - `eslint.autoFixOnSave`
+  - `tslint.autoFixOnSave`
+- If TSLint doesn't work correctly with Prettier, see if the `parser` value is `typescript` in `.prettierrc` config
+- If plugins don't work correctly, try checking the logs via `CTRL + P`
+
+## Phase 1 TODO
 
 - ~~Install react~~
 - ~~Install webpack~~
@@ -29,7 +40,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add tslint~~
 - ~~Add CSS-in-JS~~
 
-# Phase 2 TODO
+## Phase 2 TODO
 
 - ~~Setup server~~
 - ~~Setup database~~
@@ -40,14 +51,19 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Convert project to TypeScript~~
 - Add tslint
 
-# Phase 3 TODO
+## Phase 3 TODO
 
-- Implement client features
+- Client UI
   - Login page
   - Manage user details page
   - Payments page
   - Admin page
-- Implement server features
+- Client Implementation
+  - Login page
+  - Manage user details page
+  - Payments page
+  - Admin page
+- Server
   - Public: Login page
   - User: Change password
   - User: Create new payment
@@ -57,7 +73,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - Admin: Add user
   - Admin: Update user (name, role, house)
 
-# Phase 4 TODO
+## Phase 4 TODO
 
 - Setup Selenium
 - Add Selenium tests
@@ -67,7 +83,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - Add code splitting
 - Add CI pipeline
 
-# Phase 5 TODO
+## Phase 5 TODO
 
 - Get hosting & domain name
 - Setup docker
