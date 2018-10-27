@@ -1,5 +1,5 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { LoginPage } from './components/pages';
+import { LoginPage } from './pages';
 
 render(<LoginPage />, document.getElementById('app'));

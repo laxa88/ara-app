@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import InputForm from '../elements/InputForm';
+import InputForm from '../components/InputForm';
 
 interface IState {
   email: string;
