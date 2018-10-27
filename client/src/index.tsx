@@ -1,5 +1,13 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { LoginPage } from './pages';
+import { Provider } from 'react-redux';
 
-render(<LoginPage />, document.getElementById('app'));
+import { LoginPage } from './pages';
+import { store } from './store';
+
+render(
+  <Provider store={store}>
+    <LoginPage />
+  </Provider>,
+  document.getElementById('app'),
+);
