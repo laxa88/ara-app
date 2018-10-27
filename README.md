@@ -41,6 +41,8 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add CSS-in-JS~~
 - Add redux
 - Add redux thunk/saga middleware
+- Add react-router
+- Add redux persistor
 - Add debugger
 
 ## Phase 2 TODO
