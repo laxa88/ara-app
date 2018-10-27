@@ -1,23 +1,26 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import InputForm from '../components/InputForm';
+import * as loginPageActions from '../store/LoginPage/actions';
+import { IDispatch, IState } from '../store/LoginPage/types';
 
-interface IState {
+interface IDispatchMap {
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
+}
+
+interface IProps extends IDispatchMap {
   email: string;
   password: string;
 }
 
-class LoginPage extends React.Component<{}, IState> {
-  constructor(props: {}) {
+class LoginPage extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
 
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-
-    this.state = {
-      email: '',
-      password: '',
-    };
   }
 
   public render() {
@@ -26,13 +29,13 @@ class LoginPage extends React.Component<{}, IState> {
         <InputForm
           label="Email"
           type="email"
-          value={this.state.email}
+          value={this.props.email}
           placeholder="Input email here"
           onChange={this.onChangeEmail}
         />
         <InputForm
           label="Password"
-          value={this.state.password}
+          value={this.props.password}
           type="password"
           placeholder="Input password here"
           onChange={this.onChangePassword}
@@ -41,13 +44,28 @@ class LoginPage extends React.Component<{}, IState> {
     );
   }
 
-  private onChangeEmail(value: string, prevValue: string) {
-    this.setState({ email: value });
+  private onChangeEmail(value: string) {
+    this.props.setEmail(value);
   }
 
-  private onChangePassword(value: string, prevValue: string) {
-    this.setState({ password: value });
+  private onChangePassword(value: string) {
+    this.props.setPassword(value);
   }
 }
 
-export default LoginPage;
+const mapStateToProps = (state: IState): IProps => ({
+  email: state.email,
+  password: state.password,
+  setEmail: () => undefined,
+  setPassword: () => undefined,
+});
+
+const mapDispatchToProps = (dispatch: IDispatch): IDispatchMap => ({
+  setEmail: (val: string) => dispatch(loginPageActions.setEmail(val)),
+  setPassword: (val: string) => dispatch(loginPageActions.setPassword(val)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginPage);
