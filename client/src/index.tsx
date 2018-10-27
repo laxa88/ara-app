@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import { LoginPage } from './pages';
+import { LoginPage } from './containers';
 import { store } from './store';
 
 render(
