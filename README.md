@@ -24,6 +24,15 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - `tslint.autoFixOnSave`
 - If TSLint doesn't work correctly with Prettier, see if the `parser` value is `typescript` in `.prettierrc` config
 - If plugins don't work correctly, try checking the logs via `CTRL + P`
+- Regarding folder structure for redux: I'm following the practice as proposed in [this article](https://resir014.xyz/posts/2018/07/06/redux-4-plus-typescript/) and [this article](https://hackernoon.com/redux-step-by-step-a-simple-and-robust-workflow-for-real-life-apps-1fdf7df46092). In a gist:
+  - `components` - Dumb components. E.g.:
+    - `Input.tsx`
+  - `containers` - Smart components (connected to store). E.g.:
+    - `LoginPage.tsx`
+  - `store` - Contains store logic. Folders are separated by domains. Not sure if it's any better than grouping them by actions/reducer/types, though. E.g.:
+    - `store/LoginPage/actions`
+    - `store/LoginPage/reducer`
+    - `store/LoginPage/types` - For definitions
 
 ## Phase 1 TODO
 
@@ -39,7 +48,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add jest for typescript~~
 - ~~Add tslint~~
 - ~~Add CSS-in-JS~~
-- Add redux
+- ~~Add redux~~
 - Add redux thunk/saga middleware
 - Add react-router
 - Add redux persistor
