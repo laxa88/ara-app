@@ -3,11 +3,6 @@ export const enum ActionTypes {
   SET_PASSWORD = 'LOGIN_PAGE/SET_PASSWORD',
 }
 
-export interface IState {
-  email: string;
-  password: string;
-}
-
 export interface IAction {
   type: string;
   payload?: any;
@@ -15,4 +10,17 @@ export interface IAction {
   meta?: any;
 }
 
-export type IDispatch = (dispatch: IAction) => undefined;
+export interface IState {
+  email: string;
+  password: string;
+}
+
+export interface IProps {
+  email: string;
+  password: string;
+}
+
+export interface IDispatch {
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
+}
