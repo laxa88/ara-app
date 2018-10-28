@@ -1,22 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import * as Redux from 'redux';
 
 import InputForm from '../components/InputForm';
 import * as loginPageActions from '../store/LoginPage/actions';
-import { IDispatch, IState } from '../store/LoginPage/types';
+import { IDispatch, IProps, IState } from '../store/LoginPage/types';
 
-interface IDispatchMap {
-  setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-}
+type Props = IProps & IDispatch;
 
-interface IProps extends IDispatchMap {
-  email: string;
-  password: string;
-}
-
-class LoginPage extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+export class LoginPage extends React.Component<Props, {}> {
+  constructor(props: Props) {
     super(props);
 
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -56,11 +49,9 @@ class LoginPage extends React.Component<IProps, IState> {
 const mapStateToProps = (state: IState): IProps => ({
   email: state.email,
   password: state.password,
-  setEmail: () => undefined,
-  setPassword: () => undefined,
 });
 
-const mapDispatchToProps = (dispatch: IDispatch): IDispatchMap => ({
+const mapDispatchToProps = (dispatch: Redux.Dispatch): IDispatch => ({
   setEmail: (val: string) => dispatch(loginPageActions.setEmail(val)),
   setPassword: (val: string) => dispatch(loginPageActions.setPassword(val)),
 });
