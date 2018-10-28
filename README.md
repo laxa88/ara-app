@@ -33,6 +33,8 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
     - `store/LoginPage/actions`
     - `store/LoginPage/reducer`
     - `store/LoginPage/types` - For definitions
+  - Notes on testing [store-connected components](https://github.com/reduxjs/redux/blob/master/docs/recipes/WritingTests.md#connected-components)
+  - References for connected redux components in typescript: [1](https://medium.com/knerd/typescript-tips-series-proper-typing-of-react-redux-connected-components-eda058b6727d)
 
 ## Phase 1 TODO
 
@@ -50,7 +52,8 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add CSS-in-JS~~
 - ~~Add redux~~
 - Add redux thunk/saga middleware
-- Add react-router
+- ~~Add react-router~~
+- Add react-router-redux
 - Add redux persistor
 - Add debugger
 
