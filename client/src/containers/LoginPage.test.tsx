@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 
 import { mockStore, mount, shallow } from '../common/test';
 import { IProps as IInputForm } from '../components/InputForm';
-import { IProps as ILoginPage } from '../store/LoginPage/types';
+import { ActionTypes } from '../store/LoginPage/types';
 import LoginPage, { LoginPage as Base } from './LoginPage';
 
 describe('<LoginPage />', () => {
@@ -26,18 +26,18 @@ describe('<LoginPage />', () => {
     const mockEmail1 = 'dummy email';
     const mockPassword1 = 'dummy password';
 
-    const mockEmail2 = 'dummy email';
-    const mockPassword2 = 'dummy password';
+    const mockEmail2 = 'new dummy email';
+    const mockPassword2 = 'new dummy password';
 
     const initialState = {
       email: mockEmail1,
       password: mockPassword1,
     };
 
-    const expected = {
-      email: mockEmail2,
-      password: mockPassword2,
-    };
+    const expected = [
+      { type: ActionTypes.SET_EMAIL, payload: { email: mockEmail2 } },
+      { type: ActionTypes.SET_PASSWORD, payload: { password: mockPassword2 } },
+    ];
 
     const store = mockStore(initialState);
 
@@ -57,6 +57,6 @@ describe('<LoginPage />', () => {
 
     // Assert
 
-    expect(store.getState() as ILoginPage).toEqual(expected);
+    expect(store.getActions()).toEqual(expected);
   });
 });
