@@ -35,6 +35,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
     - `store/LoginPage/types` - For definitions
   - Notes on testing [store-connected components](https://github.com/reduxjs/redux/blob/master/docs/recipes/WritingTests.md#connected-components)
   - References for connected redux components in typescript: [1](https://medium.com/knerd/typescript-tips-series-proper-typing-of-react-redux-connected-components-eda058b6727d)
+  - Reference for [good React-Typescript practice](https://medium.freecodecamp.org/effective-use-of-typescript-with-react-3a1389b6072a) (Not necessarily true, but I'm using this as a starting point)
 
 ## Phase 1 TODO
 
