@@ -54,5 +54,9 @@ module.exports = {
 
   devServer: {
     port: 3001,
+
+    // Fixes issue with webpack-dev-server not being able to load Push-State
+    // URL (e.g. react-router's BrowserRouter) when refreshing the page.
+    historyApiFallback: true,
   },
 };
