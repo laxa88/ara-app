@@ -11,6 +11,10 @@ module.exports = {
 
   entry: path.join(__dirname, 'src/index.tsx'),
 
+  output: {
+    publicPath: '/',
+  },
+
   devtool: 'source-map',
 
   module: {
