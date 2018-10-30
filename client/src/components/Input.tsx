@@ -22,12 +22,6 @@ class Input extends React.Component<IInput, {}> {
     this.onChange = this.onChange.bind(this);
   }
 
-  public onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { value: newValue } = e.currentTarget;
-    const { value: prevValue } = this.props;
-    this.props.onChange(newValue, prevValue);
-  }
-
   public render() {
     const { value, placeholder, onChange, ...others } = this.props;
 
@@ -41,6 +35,12 @@ class Input extends React.Component<IInput, {}> {
         />
       </div>
     );
+  }
+
+  private onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { value: newValue } = e.currentTarget;
+    const { value: prevValue } = this.props;
+    this.props.onChange(newValue, prevValue);
   }
 }
 
