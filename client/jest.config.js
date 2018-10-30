@@ -12,4 +12,5 @@ module.exports = {
   },
   testRegex: '\\.test\\.(ts|tsx|js|jsx)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  snapshotSerializers: ['enzyme-to-json/serializer'],
 };
