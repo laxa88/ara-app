@@ -48,7 +48,7 @@ describe('<LoginPage />', () => {
     );
 
     const inputForms = wrapper.children().find('InputForm');
-    type InputFormProps = React.HTMLAttributes<any> & IInputForm;
+    type InputFormProps = React.HTMLAttributes<HTMLInputElement> & IInputForm;
 
     // Act
 
