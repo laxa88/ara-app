@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
 
+import Button from '../components/Button';
 import InputForm from '../components/InputForm';
 import * as loginPageActions from '../store/LoginPage/actions';
 import { IDispatch, IProps, IState } from '../store/LoginPage/types';
@@ -33,6 +34,7 @@ export class LoginPage extends React.Component<Props, {}> {
           placeholder="Input password here"
           onChange={this.onChangePassword}
         />
+        <Button>Login</Button>
       </div>
     );
   }
