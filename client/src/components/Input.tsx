@@ -15,7 +15,7 @@ export interface IInput {
   onChange: (newValue: string, prevValue: string) => void;
 }
 
-class Input extends React.Component<IInput, {}> {
+class Input extends React.PureComponent<IInput, {}> {
   constructor(props: IInput) {
     super(props);
 
