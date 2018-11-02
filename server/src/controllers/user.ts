@@ -14,7 +14,7 @@ async function getUsers(req: Express.Request, res: Express.Response) {
     builder(SQL`SELECT * FROM users ORDER BY id ASC`),
   );
 
-  return res.status(200).json(result);
+  return res.status(200).json(result.rows);
 }
 
 export { getUsers };
