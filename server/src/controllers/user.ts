@@ -14,7 +14,13 @@ async function getUsers(req: Express.Request, res: Express.Response) {
     builder(SQL`SELECT * FROM users ORDER BY id ASC`),
   );
 
-  return res.status(200).json(result.rows);
+  // Omit password field
+  const data = result.rows.map((item) => {
+    const { password, ...others } = item;
+    return { ...others };
+  });
+
+  return res.status(200).json(data);
 }
 
 export { getUsers };
