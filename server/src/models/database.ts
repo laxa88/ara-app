@@ -74,6 +74,15 @@ const createDb = async () => {
     errors.push(e.toString());
   }
 
+  // Reference:
+  // https://x-team.com/blog/storing-secure-passwords-with-postgresql/
+
+  try {
+    await db.query(SQL`CREATE EXTENSION pgcrypto;`);
+  } catch (e) {
+    errors.push(e.toString());
+  }
+
   try {
     const result = await db.query(
       builder(SQL`SELECT * FROM users WHERE email = ${superEmail}`),
@@ -85,8 +94,8 @@ const createDb = async () => {
 
     await db.query(
       builder(
-        SQL`INSERT INTO users(house_id, name, email, password)`,
-        SQL`VALUES(1, ${superName}, ${superEmail}, ${superPass});`,
+        SQL`INSERT INTO users(house_id, email, password, name)`,
+        SQL`VALUES(1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superName});`,
       ),
     );
   } catch (e) {
