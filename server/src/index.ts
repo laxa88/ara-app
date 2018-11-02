@@ -1,7 +1,7 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import routes from './routes';
-import * as helper from './helper';
+import bodyParser from "body-parser";
+import express from "express";
+import * as helper from "./helper";
+import routes from "./routes";
 
 const app = express();
 const port = 3000;
@@ -18,27 +18,12 @@ app.use(bodyParser.json());
 // paths
 // ==================================================
 
-app.use('/api', routes);
-
-app.get('/', (req, res) => res.send('Hello World!'));
-
-app.post('/foo', (req, res) => {
-  console.log('###', req.body);
-  console.log('###', req.params);
-  console.log('###', req.query);
-
-  const result = helper.add(2, 3);
-  console.log('###', result);
-
-  const { myVal } = req.body;
-
-  res.status(200).json({
-    returnVal: myVal,
-  });
-});
+app.get("/", (req, res) => res.send("Server is up!"));
+app.use("/api", routes);
 
 // ==================================================
 // entry
 // ==================================================
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// tslint:disable no-console
+app.listen(port, () => console.log(`Server listening on port ${port}.`));
