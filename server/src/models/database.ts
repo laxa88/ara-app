@@ -20,6 +20,9 @@ const createDb = async () => {
     superPass,
     superHouseNum,
     superUnitNum,
+    adminEmail,
+    adminPass,
+    adminName,
   } = config;
 
   const errors: string[] = [];
@@ -46,7 +49,7 @@ const createDb = async () => {
     );
 
     if (result.rows.length > 0) {
-      throw new Error("SuperUser house already exists");
+      throw new Error("Houses already exists");
     }
 
     await db.query(
@@ -65,6 +68,7 @@ const createDb = async () => {
       CREATE TABLE users
       (
         id SERIAL PRIMARY KEY,
+        user_type TEXT NOT NULL,
         house_id INTEGER REFERENCES houses(id),
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
@@ -91,13 +95,15 @@ const createDb = async () => {
     );
 
     if (result.rows.length) {
-      throw new Error("SuperUser account already exists");
+      throw new Error("Accounts already exists");
     }
 
     await db.query(
       SQL`
-      INSERT INTO users(house_id, email, password, name)
-      VALUES(1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superName});
+      INSERT INTO users(user_type, house_id, email, password, name)
+      VALUES
+        ('SUPER', 1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superName}),
+        ('ADMIN', 1, ${adminEmail}, crypt(${adminPass}, gen_salt('bf')), ${adminName});
       `,
     );
   } catch (e) {
