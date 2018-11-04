@@ -1,5 +1,3 @@
-// tslint:disable no-console
-
 // Reference:
 // https://mherman.org/blog/postgresql-and-nodejs/
 
