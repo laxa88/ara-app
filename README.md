@@ -84,12 +84,13 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - Payments page
   - Admin page
 - Server
-  - Public: Login page
+  - ~~Public: Login~~
+  - Public: Reset password
   - User: Change password
   - User: Create new payment
   - User: Edit payment
   - User: Upload attachment for payment
-  - Committee: Approve payment
+  - Admin: Approve payment
   - Admin: Add user
   - Admin: Update user (name, role, house)
 
