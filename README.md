@@ -66,9 +66,9 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Setup API~~
 - ~~Add eslint + airbnb rules~~
 - ~~Add prettier~~
-- Add jest for typescript
+- ~~Add jest for typescript~~
 - ~~Convert project to TypeScript~~
-- Add tslint
+- ~~Add tslint~~
 - Add debugger
 
 ## Phase 3 TODO
