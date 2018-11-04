@@ -1,23 +1,22 @@
 import Express from "express";
 import pg from "pg";
 import SQL from "sql-template-strings";
-import config from "../../../config";
+import conn from "../helpers/conn";
 
 async function getUsers(req: Express.Request, res: Express.Response) {
-  const { dbConn } = config;
+  const logic = async (pc: pg.PoolClient) => {
+    const result = await pc.query(SQL`SELECT * FROM users ORDER BY id ASC`);
 
-  const db = new pg.Client(dbConn);
-  await db.connect();
+    // Omit password field
+    const data = result.rows.map((item) => {
+      const { password, ...others } = item;
+      return { ...others };
+    });
 
-  const result = await db.query(SQL`SELECT * FROM users ORDER BY id ASC`);
+    res.status(200).json(data);
+  };
 
-  // Omit password field
-  const data = result.rows.map((item) => {
-    const { password, ...others } = item;
-    return { ...others };
-  });
-
-  return res.status(200).json(data);
+  await conn(logic);
 }
 
 export { getUsers };
