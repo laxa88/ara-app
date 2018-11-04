@@ -3,7 +3,6 @@
 // Reference:
 // https://mherman.org/blog/postgresql-and-nodejs/
 
-import fs from "fs";
 import pg from "pg";
 import SQL from "sql-template-strings";
 import config from "../../../config";
@@ -11,9 +10,6 @@ import builder from "../helpers/query-builder";
 
 // Note: Run this to execute:
 // ts-node src\models\database.ts
-
-const loader = (filename: string) =>
-  fs.readFileSync(`${__dirname}/${filename}`).toString();
 
 const createDb = async () => {
   const { dbConn } = config;
@@ -32,8 +28,17 @@ const createDb = async () => {
   const errors: string[] = [];
 
   try {
-    const sql = loader("tbl_houses.sql");
-    await db.query(sql);
+    // const sql = loader("tbl_houses.sql");
+    await db.query(
+      `
+      CREATE TABLE houses
+      (
+        id SERIAL PRIMARY KEY,
+        hse_number INTEGER NOT NULL UNIQUE,
+        unit_number INTEGER NOT NULL UNIQUE
+      );
+      `,
+    );
   } catch (e) {
     errors.push(e.toString());
   }
@@ -58,8 +63,18 @@ const createDb = async () => {
   }
 
   try {
-    const sql = loader("tbl_users.sql");
-    await db.query(sql);
+    await db.query(
+      `
+      CREATE TABLE users
+      (
+        id SERIAL PRIMARY KEY,
+        house_id INTEGER REFERENCES houses(id),
+        email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        name TEXT NOT NULL
+      );
+      `,
+    );
   } catch (e) {
     errors.push(e.toString());
   }
