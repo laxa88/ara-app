@@ -37,6 +37,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - References for connected redux components in typescript: [link](https://medium.com/knerd/typescript-tips-series-proper-typing-of-react-redux-connected-components-eda058b6727d)
   - Reference for [good React-Typescript practice](https://medium.freecodecamp.org/effective-use-of-typescript-with-react-3a1389b6072a) (Not necessarily true, but I'm using this as a starting point)
   - Notes on avoiding `connected-react-router`: [link](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/redux.md)
+  - To debug node server, create a default Node `launch.json` configuration in current workspace, then just `CTRL + SHIFT + P` and attach the debugger to the `ts-node` process.
 
 ## Phase 1 TODO
 
@@ -69,7 +70,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add jest for typescript~~
 - ~~Convert project to TypeScript~~
 - ~~Add tslint~~
-- Add debugger
+- ~~Add debugger~~
 
 ## Phase 3 TODO
 
