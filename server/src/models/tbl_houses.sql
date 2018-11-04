@@ -1,0 +1,7 @@
+CREATE TABLE houses
+(
+  id SERIAL PRIMARY KEY,
+  hse_number INTEGER NOT NULL UNIQUE,
+  unit_number INTEGER NOT NULL UNIQUE
+);
+

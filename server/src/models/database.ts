@@ -1,6 +1,9 @@
+// tslint:disable no-console
+
 // Reference:
 // https://mherman.org/blog/postgresql-and-nodejs/
 
+import fs from "fs";
 import pg from "pg";
 import SQL from "sql-template-strings";
 import config from "../../../config";
@@ -8,6 +11,9 @@ import builder from "../helpers/query-builder";
 
 // Note: Run this to execute:
 // ts-node src\models\database.ts
+
+const loader = (filename: string) =>
+  fs.readFileSync(`${__dirname}/${filename}`).toString();
 
 const createDb = async () => {
   const { dbConn } = config;
@@ -26,15 +32,8 @@ const createDb = async () => {
   const errors: string[] = [];
 
   try {
-    await db.query(
-      builder(
-        SQL`CREATE TABLE houses(`,
-        SQL`id SERIAL PRIMARY KEY,`,
-        SQL`hse_number INTEGER NOT NULL UNIQUE,`,
-        SQL`unit_number INTEGER NOT NULL UNIQUE`,
-        SQL`);`,
-      ),
-    );
+    const sql = loader("tbl_houses.sql");
+    await db.query(sql);
   } catch (e) {
     errors.push(e.toString());
   }
@@ -59,17 +58,8 @@ const createDb = async () => {
   }
 
   try {
-    await db.query(
-      builder(
-        SQL`CREATE TABLE users (`,
-        SQL`  id SERIAL PRIMARY KEY,`,
-        SQL`  house_id INTEGER REFERENCES houses(id),`,
-        SQL`  email TEXT NOT NULL UNIQUE,`,
-        SQL`  password TEXT NOT NULL,`,
-        SQL`  name TEXT NOT NULL`,
-        SQL`);`,
-      ),
-    );
+    const sql = loader("tbl_users.sql");
+    await db.query(sql);
   } catch (e) {
     errors.push(e.toString());
   }
@@ -109,10 +99,8 @@ const createDb = async () => {
 
 createDb()
   .then((success) => {
-    // tslint:disable-next-line no-console
-    console.log("done:", success);
+    console.log(success);
   })
   .catch((err) => {
-    // tslint:disable-next-line no-console
     console.log("error:", err);
   });
