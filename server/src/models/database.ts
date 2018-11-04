@@ -6,7 +6,6 @@
 import pg from "pg";
 import SQL from "sql-template-strings";
 import config from "../../../config";
-import builder from "../helpers/query-builder";
 
 // Note: Run this to execute:
 // ts-node src\models\database.ts
@@ -30,7 +29,7 @@ const createDb = async () => {
   try {
     // const sql = loader("tbl_houses.sql");
     await db.query(
-      `
+      SQL`
       CREATE TABLE houses
       (
         id SERIAL PRIMARY KEY,
@@ -45,7 +44,7 @@ const createDb = async () => {
 
   try {
     const result = await db.query(
-      builder(SQL`SELECT * FROM houses WHERE hse_number = ${superHouseNum}`),
+      SQL`SELECT * FROM houses WHERE hse_number = ${superHouseNum}`,
     );
 
     if (result.rows.length > 0) {
@@ -53,10 +52,10 @@ const createDb = async () => {
     }
 
     await db.query(
-      builder(
-        SQL`INSERT INTO houses (hse_number, unit_number)`,
-        SQL`VALUES(${superHouseNum}, ${superUnitNum});`,
-      ),
+      SQL`
+      INSERT INTO houses (hse_number, unit_number)
+      VALUES(${superHouseNum}, ${superUnitNum});
+      `,
     );
   } catch (e) {
     errors.push(e.toString());
@@ -64,7 +63,7 @@ const createDb = async () => {
 
   try {
     await db.query(
-      `
+      SQL`
       CREATE TABLE users
       (
         id SERIAL PRIMARY KEY,
@@ -90,7 +89,7 @@ const createDb = async () => {
 
   try {
     const result = await db.query(
-      builder(SQL`SELECT * FROM users WHERE email = ${superEmail}`),
+      SQL`SELECT * FROM users WHERE email = ${superEmail}`,
     );
 
     if (result.rows.length) {
@@ -98,10 +97,10 @@ const createDb = async () => {
     }
 
     await db.query(
-      builder(
-        SQL`INSERT INTO users(house_id, email, password, name)`,
-        SQL`VALUES(1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superName});`,
-      ),
+      SQL`
+      INSERT INTO users(house_id, email, password, name)
+      VALUES(1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superName});
+      `,
     );
   } catch (e) {
     errors.push(e.toString());
