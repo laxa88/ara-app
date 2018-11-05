@@ -29,6 +29,10 @@ const createDb = async () => {
 
   const errors: string[] = [];
 
+  // ==================================================
+  // houses
+  // ==================================================
+
   try {
     await db.query(
       SQL`
@@ -62,6 +66,10 @@ const createDb = async () => {
   } catch (e) {
     errors.push(e.toString());
   }
+
+  // ==================================================
+  // users
+  // ==================================================
 
   try {
     await db.query(
@@ -111,6 +119,56 @@ const createDb = async () => {
   } catch (e) {
     errors.push(e.toString());
   }
+
+  // ==================================================
+  // payments
+  // ==================================================
+
+  try {
+    await db.query(SQL`	SET timezone = 'Asia/Kuala_Lumpur';`);
+  } catch (e) {
+    errors.push(e.toString());
+  }
+
+  try {
+    await db.query(
+      SQL`
+      CREATE TABLE payments
+      (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id),
+        date_created TIMESTAMP NOT NULL,
+        date_paid TIMESTAMP NOT NULL,
+        date_approved TIMESTAMP NOT NULL
+      );
+      `,
+    );
+  } catch (e) {
+    errors.push(e.toString());
+  }
+
+  // ==================================================
+  // attachments
+  // ==================================================
+
+  try {
+    await db.query(
+      SQL`
+      CREATE TABLE attachments
+      (
+        id SERIAL PRIMARY KEY,
+        payment_id INTEGER REFERENCES payments(id),
+        file_name TEXT NOT NULL
+      );
+      `,
+    );
+  } catch (e) {
+    errors.push(e.toString());
+  }
+
+  // ==================================================
+  // end
+  // ==================================================
 
   await db.end();
 
