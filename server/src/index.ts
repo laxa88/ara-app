@@ -27,3 +27,16 @@ app.use("/api", privateRoutes);
 // ==================================================
 
 app.listen(port, () => console.log(`Server listening on port ${port}.`));
+
+const displayRoutes = (r: any) => {
+  if (r.route && r.route.path) {
+    const path = `${Object.keys(r.route.methods)[0].toUpperCase()} ${
+      r.route.path
+    }`;
+    console.log(path);
+  }
+};
+
+app._router.stack.forEach(displayRoutes);
+publicRoutes.stack.forEach(displayRoutes);
+privateRoutes.stack.forEach(displayRoutes);
