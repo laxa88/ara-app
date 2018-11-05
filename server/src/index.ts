@@ -1,7 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
-import * as helper from "./helper";
-import routes from "./routes";
+import privateRoutes from "./routes/private";
+import publicRoutes from "./routes/public";
 
 const app = express();
 const port = 3000;
@@ -19,11 +19,11 @@ app.use(bodyParser.json());
 // ==================================================
 
 app.get("/", (req, res) => res.send("Server is up!"));
-app.use("/api", routes);
+app.use("/api", publicRoutes);
+app.use("/api", privateRoutes);
 
 // ==================================================
 // entry
 // ==================================================
 
-// tslint:disable no-console
 app.listen(port, () => console.log(`Server listening on port ${port}.`));
