@@ -22,7 +22,9 @@ async function login(req: Express.Request, res: Express.Response) {
       // Omit password field
       const { password: pw, ...others } = result.rows[0];
 
-      const token = jwt.sign({ ...others }, config.secret);
+      const token = jwt.sign({ ...others }, config.secret, {
+        expiresIn: "15m",
+      });
 
       res.status(200).json({ token });
     } else {
