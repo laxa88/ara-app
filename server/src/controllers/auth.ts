@@ -1,6 +1,8 @@
 import Express from "express";
+import jwt from "jsonwebtoken";
 import pg from "pg";
 import SQL from "sql-template-strings";
+import config from "../../../config";
 import conn from "../helpers/conn";
 
 async function login(req: Express.Request, res: Express.Response) {
@@ -17,7 +19,12 @@ async function login(req: Express.Request, res: Express.Response) {
     );
 
     if (result.rows.length) {
-      res.status(200).json({ message: "success" });
+      // Omit password field
+      const { password: pw, ...others } = result.rows[0];
+
+      const token = jwt.sign({ ...others }, config.secret);
+
+      res.status(200).json({ token });
     } else {
       res.status(403).json({ message: "Email or password is incorrect." });
     }
