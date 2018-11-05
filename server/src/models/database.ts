@@ -16,19 +16,20 @@ const createDb = async () => {
 
   const {
     superEmail,
-    superName,
+    superFName,
+    superLName,
     superPass,
     superHouseNum,
     superUnitNum,
     adminEmail,
     adminPass,
-    adminName,
+    adminFName,
+    adminLName,
   } = config;
 
   const errors: string[] = [];
 
   try {
-    // const sql = loader("tbl_houses.sql");
     await db.query(
       SQL`
       CREATE TABLE houses
@@ -72,7 +73,8 @@ const createDb = async () => {
         house_id INTEGER REFERENCES houses(id),
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
-        name TEXT NOT NULL
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL
       );
       `,
     );
@@ -100,10 +102,10 @@ const createDb = async () => {
 
     await db.query(
       SQL`
-      INSERT INTO users(user_type, house_id, email, password, name)
+      INSERT INTO users(user_type, house_id, email, password, first_name, last_name)
       VALUES
-        ('SUPER', 1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superName}),
-        ('ADMIN', 1, ${adminEmail}, crypt(${adminPass}, gen_salt('bf')), ${adminName});
+        ('SUPER', 1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superFName}, ${superLName}),
+        ('ADMIN', 1, ${adminEmail}, crypt(${adminPass}, gen_salt('bf')), ${adminFName}, ${adminLName});
       `,
     );
   } catch (e) {
