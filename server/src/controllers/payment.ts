@@ -57,8 +57,31 @@ const addPayment = async (req: Express.Request, res: Express.Response) => {
 };
 
 const updatePayment = async (req: Express.Request, res: Express.Response) => {
+  const { id } = req.params;
+  const { date_paid } = req.body;
+
+  const userData: IUser = parseToken(req.headers.authorization);
+
+  if (!date_paid) {
+    res.status(403).json({ message: "Incomplete data." });
+    return;
+  }
+
   const logic = async (pc: pg.PoolClient) => {
-    // TODO
+    const result = await pc.query(
+      SQL`
+        UPDATE payments
+        SET date_paid = ${date_paid}
+        WHERE id = ${id}
+        AND user_id = ${userData.id}
+      `,
+    );
+
+    if (result.rowCount) {
+      res.status(200).json({ message: "Success." });
+    } else {
+      res.status(400).json({ message: "Could not update payment." });
+    }
   };
 
   try {
