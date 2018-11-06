@@ -20,9 +20,6 @@ const createDb = async () => {
     superFName,
     superLName,
     superPass,
-    superRoadNum,
-    superHouseNum,
-    superUnitNum,
     adminEmail,
     adminPass,
     adminFName,
@@ -52,18 +49,23 @@ const createDb = async () => {
   }
 
   try {
-    const result = await db.query(
-      SQL`SELECT * FROM houses WHERE house_number = ${superHouseNum}`,
-    );
+    const result = await db.query(SQL`SELECT * FROM houses`);
 
-    if (result.rows.length > 0) {
+    if (result.rowCount) {
       throw new Error("Houses already exists");
     }
 
+    const houseCount = 182;
+    const houseQueries = [];
+    for (let i = 1; i <= houseCount; i += 1) {
+      houseQueries.push(`('WP 2/x', 12345, ${i})`);
+    }
+
     await db.query(
-      SQL`
+      `
       INSERT INTO houses (road_number, house_number, unit_number)
-      VALUES(${superRoadNum}, ${superHouseNum}, ${superUnitNum});
+      VALUES
+        ${houseQueries.join(",")};
       `,
     );
   } catch (e) {
