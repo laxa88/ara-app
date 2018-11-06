@@ -92,8 +92,8 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - User: Edit payment
   - User: Upload attachment for payment
   - Admin: Approve payment
-  - Admin: Add user
-  - Admin: Update user (name, role, house)
+  - ~~Admin: Add user~~
+  - ~~Admin: Update user~~
   - ~~Super: Update house~~
 
 ## Phase 4 TODO
