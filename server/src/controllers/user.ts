@@ -3,6 +3,7 @@ import pg from "pg";
 import SQL from "sql-template-strings";
 import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
+import { handleException } from "../helpers/error";
 import { parseToken } from "../helpers/token";
 
 const getUsers = async (req: Express.Request, res: Express.Response) => {
@@ -18,7 +19,11 @@ const getUsers = async (req: Express.Request, res: Express.Response) => {
     res.status(200).json(data);
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 const addUser = async (req: Express.Request, res: Express.Response) => {
@@ -76,7 +81,11 @@ const addUser = async (req: Express.Request, res: Express.Response) => {
     res.status(200).json({ message: "Success." });
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 const updateUser = async (req: Express.Request, res: Express.Response) => {
@@ -137,7 +146,11 @@ const updateUser = async (req: Express.Request, res: Express.Response) => {
     }
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 export { getUsers, addUser, updateUser };
