@@ -5,16 +5,16 @@ import conn from "../helpers/conn";
 import { parseToken } from "../helpers/token";
 import { IUser, UserType } from "../models/user";
 
-async function getHouses(req: Express.Request, res: Express.Response) {
+const getHouses = async (req: Express.Request, res: Express.Response) => {
   const logic = async (pc: pg.PoolClient) => {
     const result = await pc.query(SQL`SELECT * FROM houses ORDER BY id ASC`);
     res.status(200).json(result.rows);
   };
 
   await conn(logic);
-}
+};
 
-async function updateHouse(req: Express.Request, res: Express.Response) {
+const updateHouse = async (req: Express.Request, res: Express.Response) => {
   const { id } = req.params;
   const { road_number, house_number, unit_number } = req.body;
 
@@ -49,6 +49,6 @@ async function updateHouse(req: Express.Request, res: Express.Response) {
   } catch (e) {
     res.status(500).json({ message: e.toString() });
   }
-}
+};
 
 export { getHouses, updateHouse };
