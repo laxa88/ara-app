@@ -91,10 +91,10 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - User: Create new payment
   - User: Edit payment
   - User: Upload attachment for payment
-  - ~~Admin: Update house~~
   - Admin: Approve payment
   - Admin: Add user
   - Admin: Update user (name, role, house)
+  - ~~Super: Update house~~
 
 ## Phase 4 TODO
 
