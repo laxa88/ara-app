@@ -19,6 +19,7 @@ const createDb = async () => {
     superFName,
     superLName,
     superPass,
+    superRoadNum,
     superHouseNum,
     superUnitNum,
     adminEmail,
@@ -39,7 +40,8 @@ const createDb = async () => {
       CREATE TABLE houses
       (
         id SERIAL PRIMARY KEY,
-        hse_number INTEGER NOT NULL UNIQUE,
+        road_number VARCHAR NOT NULL,
+        house_number INTEGER NOT NULL,
         unit_number INTEGER NOT NULL UNIQUE
       );
       `,
@@ -50,7 +52,7 @@ const createDb = async () => {
 
   try {
     const result = await db.query(
-      SQL`SELECT * FROM houses WHERE hse_number = ${superHouseNum}`,
+      SQL`SELECT * FROM houses WHERE house_number = ${superHouseNum}`,
     );
 
     if (result.rows.length > 0) {
@@ -59,8 +61,8 @@ const createDb = async () => {
 
     await db.query(
       SQL`
-      INSERT INTO houses (hse_number, unit_number)
-      VALUES(${superHouseNum}, ${superUnitNum});
+      INSERT INTO houses (road_number, house_number, unit_number)
+      VALUES(${superRoadNum}, ${superHouseNum}, ${superUnitNum});
       `,
     );
   } catch (e) {
