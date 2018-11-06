@@ -4,6 +4,7 @@
 import pg from "pg";
 import SQL from "sql-template-strings";
 import config from "../../../config";
+import { UserType } from "./user";
 
 // Note: Run this to execute:
 // ts-node src\models\database.ts
@@ -110,12 +111,13 @@ const createDb = async () => {
       throw new Error("Accounts already exists");
     }
 
+    // prettier-ignore
     await db.query(
       SQL`
       INSERT INTO users(user_type, house_id, email, password, first_name, last_name)
       VALUES
-        ('SUPER', 1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superFName}, ${superLName}),
-        ('ADMIN', 1, ${adminEmail}, crypt(${adminPass}, gen_salt('bf')), ${adminFName}, ${adminLName});
+        (${UserType.SUPER}, 1, ${superEmail}, crypt(${superPass}, gen_salt('bf')), ${superFName}, ${superLName}),
+        (${UserType.ADMIN}, 1, ${adminEmail}, crypt(${adminPass}, gen_salt('bf')), ${adminFName}, ${adminLName});
       `,
     );
   } catch (e) {
