@@ -3,6 +3,7 @@ import pg from "pg";
 import SQL from "sql-template-strings";
 import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
+import { handleException } from "../helpers/error";
 import { parseToken } from "../helpers/token";
 
 const getHouses = async (req: Express.Request, res: Express.Response) => {
@@ -11,7 +12,11 @@ const getHouses = async (req: Express.Request, res: Express.Response) => {
     res.status(200).json(result.rows);
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 const updateHouse = async (req: Express.Request, res: Express.Response) => {
@@ -52,7 +57,7 @@ const updateHouse = async (req: Express.Request, res: Express.Response) => {
   try {
     await conn(logic);
   } catch (e) {
-    res.status(500).json({ message: e.toString() });
+    handleException(e, res);
   }
 };
 
