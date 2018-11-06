@@ -88,10 +88,11 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - ~~Public: Login~~
   - Public: Reset password
   - User: Change password
-  - User: Create new payment
-  - User: Edit payment
-  - User: Upload attachment for payment
-  - Admin: Approve payment
+  - ~~User: Create new payment~~
+  - ~~User: Edit payment~~
+  - User: Add attachment
+  - User: Delete attachment
+  - ~~Admin: Approve payment~~
   - ~~Admin: Add user~~
   - ~~Admin: Update user~~
   - ~~Super: Update house~~
