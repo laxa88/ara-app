@@ -25,6 +25,11 @@ const updateHouse = async (req: Express.Request, res: Express.Response) => {
     return;
   }
 
+  if (!road_number || !house_number || !unit_number) {
+    res.status(403).json({ message: "Incomplete data." });
+    return;
+  }
+
   const logic = async (pc: pg.PoolClient) => {
     const result = await pc.query(
       SQL`
