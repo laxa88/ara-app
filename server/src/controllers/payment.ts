@@ -3,6 +3,7 @@ import pg from "pg";
 import SQL from "sql-template-strings";
 import { IUser } from "../definitions/user";
 import conn from "../helpers/conn";
+import { handleException } from "../helpers/error";
 import { parseToken } from "../helpers/token";
 
 const getPayments = async (req: Express.Request, res: Express.Response) => {
@@ -20,7 +21,11 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
     res.status(200).json(result.rows);
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 const addPayment = async (req: Express.Request, res: Express.Response) => {
@@ -44,7 +49,11 @@ const addPayment = async (req: Express.Request, res: Express.Response) => {
     res.status(200).json({ message: "Success." });
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 const updatePayment = async (req: Express.Request, res: Express.Response) => {
@@ -52,7 +61,11 @@ const updatePayment = async (req: Express.Request, res: Express.Response) => {
     // TODO
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 const approvePayment = async (req: Express.Request, res: Express.Response) => {
@@ -60,7 +73,11 @@ const approvePayment = async (req: Express.Request, res: Express.Response) => {
     // TODO
   };
 
-  await conn(logic);
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
 };
 
 export { getPayments, addPayment, updatePayment, approvePayment };
