@@ -4,6 +4,7 @@ import pg from "pg";
 import SQL from "sql-template-strings";
 import config from "../../../config";
 import conn from "../helpers/conn";
+import { signToken } from "../helpers/token";
 
 async function login(req: Express.Request, res: Express.Response) {
   const { email, password } = req.body;
@@ -21,11 +22,7 @@ async function login(req: Express.Request, res: Express.Response) {
     if (result.rows.length) {
       // Omit password field
       const { password: pw, ...others } = result.rows[0];
-
-      const token = jwt.sign({ ...others }, config.secret, {
-        expiresIn: "15m",
-      });
-
+      const token = signToken({ ...others });
       res.status(200).json({ token });
     } else {
       res.status(403).json({ message: "Email or password is incorrect." });
