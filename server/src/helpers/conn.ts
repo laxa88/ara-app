@@ -16,8 +16,11 @@ pool.on("error", (err, client) => {
 
 const conn = async (logic: (client: pg.PoolClient) => any) => {
   const client = await pool.connect();
-  await logic(client);
-  client.release();
+  try {
+    await logic(client);
+  } finally {
+    client.release();
+  }
 };
 
 export default conn;
