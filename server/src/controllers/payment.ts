@@ -1,9 +1,9 @@
 import Express from "express";
 import pg from "pg";
 import SQL from "sql-template-strings";
+import { IUser } from "../definitions/user";
 import conn from "../helpers/conn";
 import { parseToken } from "../helpers/token";
-import { IUser, UserType } from "../models/user";
 
 const getPayments = async (req: Express.Request, res: Express.Response) => {
   const userData: IUser = parseToken(req.headers.authorization);

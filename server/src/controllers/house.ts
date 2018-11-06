@@ -1,9 +1,9 @@
 import Express from "express";
 import pg from "pg";
 import SQL from "sql-template-strings";
+import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
 import { parseToken } from "../helpers/token";
-import { IUser, UserType } from "../models/user";
 
 const getHouses = async (req: Express.Request, res: Express.Response) => {
   const logic = async (pc: pg.PoolClient) => {

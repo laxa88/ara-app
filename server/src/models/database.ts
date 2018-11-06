@@ -4,7 +4,7 @@
 import pg from "pg";
 import SQL from "sql-template-strings";
 import config from "../../../config";
-import { UserType } from "./user";
+import { UserType } from "../definitions/user";
 
 // Note: Run this to execute:
 // ts-node src\models\database.ts
