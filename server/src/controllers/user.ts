@@ -33,7 +33,6 @@ const addUser = async (req: Express.Request, res: Express.Response) => {
 
   const userData: IUser = parseToken(req.headers.authorization);
 
-  // Only allow SUPER and ADMIN users can add a new user.
   if (
     userData.user_type !== UserType.SUPER &&
     userData.user_type !== UserType.ADMIN
@@ -42,7 +41,6 @@ const addUser = async (req: Express.Request, res: Express.Response) => {
     return;
   }
 
-  // Reject if data is incomplete
   if (
     !user_type ||
     !house_id ||
@@ -100,7 +98,6 @@ const updateUser = async (req: Express.Request, res: Express.Response) => {
     return;
   }
 
-  // Reject if data is incomplete
   if (
     !user_type ||
     !house_id ||
