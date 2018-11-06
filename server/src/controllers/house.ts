@@ -12,4 +12,34 @@ async function getHouses(req: Express.Request, res: Express.Response) {
   await conn(logic);
 }
 
-export { getHouses };
+async function updateHouse(req: Express.Request, res: Express.Response) {
+  const { id } = req.params;
+  const { road_number, house_number, unit_number } = req.body;
+
+  const logic = async (pc: pg.PoolClient) => {
+    const result = await pc.query(
+      SQL`
+        UPDATE houses
+        SET
+          road_number = ${road_number},
+          house_number = ${house_number},
+          unit_number = ${unit_number}
+        WHERE id = ${id}
+      `,
+    );
+
+    if (result.rowCount) {
+      res.status(200).json({ message: "Success." });
+    } else {
+      res.status(400).json({ message: "House ID not found." });
+    }
+  };
+
+  try {
+    await conn(logic);
+  } catch (e) {
+    res.status(500).json({ message: e.toString() });
+  }
+}
+
+export { getHouses, updateHouse };
