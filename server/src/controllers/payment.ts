@@ -24,8 +24,24 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
 };
 
 const addPayment = async (req: Express.Request, res: Express.Response) => {
+  const { date_created, date_paid } = req.body;
+
+  const userData: IUser = parseToken(req.headers.authorization);
+
+  if (!date_created || !date_paid) {
+    res.status(403).json({ message: "Incomplete data." });
+    return;
+  }
+
   const logic = async (pc: pg.PoolClient) => {
-    // TODO
+    await pc.query(
+      SQL`
+        INSERT INTO payments (user_id, date_created, date_paid, approved)
+        VALUES (${userData.id}, ${date_created}, ${date_paid}, false);
+      `,
+    );
+
+    res.status(200).json({ message: "Success." });
   };
 
   await conn(logic);
