@@ -18,4 +18,7 @@ router.post("/v1/payments", controllers.payment.addPayment);
 router.put("/v1/payments/:id", controllers.payment.updatePayment);
 router.put("/v1/payments/:id/approve", controllers.payment.approvePayment);
 
+router.post("/v1/attachments", controllers.attachment.addAttachment);
+router.delete("/v1/attachments/:id", controllers.attachment.deleteAttachment);
+
 export default router;
