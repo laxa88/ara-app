@@ -90,7 +90,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - User: Change password
   - ~~User: Create new payment~~
   - ~~User: Edit payment~~
-  - User: Add attachment
+  - ~~User: Add attachment~~
   - User: Delete attachment
   - ~~Admin: Approve payment~~
   - ~~Admin: Add user~~
