@@ -96,6 +96,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - ~~Admin: Add user~~
   - ~~Admin: Update user~~
   - ~~Super: Update house~~
+  - Add SQL contracts
 
 ## Phase 4 TODO
 
