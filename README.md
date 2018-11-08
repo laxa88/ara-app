@@ -91,7 +91,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - ~~User: Create new payment~~
   - ~~User: Edit payment~~
   - ~~User: Add attachment~~
-  - User: Add attachment file
+  - ~~User: Add attachment file~~
   - ~~User: Delete attachment~~
   - User: Delete attachment file
   - ~~Admin: Approve payment~~
