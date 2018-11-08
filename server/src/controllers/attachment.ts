@@ -1,30 +1,56 @@
 import Express from "express";
+import fs from "fs";
 import pg from "pg";
 import SQL from "sql-template-strings";
+import uuidv4 from "uuid/v4";
 import { IUser } from "../definitions/user";
 import conn from "../helpers/conn";
 import { handleException } from "../helpers/error";
 import { parseToken } from "../helpers/token";
 
 const addAttachment = async (req: Express.Request, res: Express.Response) => {
-  const { payment_id, file_name } = req.body;
+  const { payment_id } = req.body;
+
+  const files: any = req.files;
 
   const userData: IUser = parseToken(req.headers.authorization);
 
-  if (!payment_id || !file_name) {
+  if (!payment_id) {
     res.status(403).json({ message: "Incomplete data." });
     return;
   }
 
+  if (!files.length) {
+    res.status(403).json({ message: "No files found." });
+    return;
+  }
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "application/pdf",
+    "text/plain",
+  ];
+
+  for (const f of files) {
+    if (allowedTypes.indexOf(f.mimetype) === -1) {
+      res.status(403).json({ message: "Invalid file type." });
+      return;
+    }
+  }
+
+  const maxFilesAllowed = 10;
+
   const logic = async (pc: pg.PoolClient) => {
     const result1 = await pc.query(
       SQL`
-        SELECT *
-        FROM payments
+        SELECT * FROM payments
         INNER JOIN users
         ON payments.user_id = users.id
         AND payments.id = ${payment_id}
         AND users.id = ${userData.id}
+        LEFT JOIN attachments
+        ON attachments.payment_id = payments.id
       `,
     );
 
@@ -33,19 +59,64 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
       return;
     }
 
-    // TODO upload file logic goes here
+    if (
+      result1.rowCount >= maxFilesAllowed ||
+      result1.rowCount + +files.length > maxFilesAllowed
+    ) {
+      console.log("###", result1.rowCount, files.length);
+      res
+        .status(400)
+        .json({ message: `Cannot upload more than ${maxFilesAllowed} files.` });
 
-    const result2 = await pc.query(
-      SQL`
-        INSERT INTO attachments (payment_id, file_name)
-        VALUES (${payment_id}, ${file_name});
-      `,
-    );
+      return;
+    }
 
-    if (result2.rowCount) {
-      res.status(200).json({ message: "Success." });
+    const basePath = "uploads";
+    const userPath = `${basePath}/${userData.id}`;
+    const paymentPath = `${userPath}/${payment_id}`;
+
+    if (!fs.existsSync(basePath)) {
+      fs.mkdirSync(basePath);
+    }
+
+    if (!fs.existsSync(userPath)) {
+      fs.mkdirSync(userPath);
+    }
+
+    if (!fs.existsSync(paymentPath)) {
+      fs.mkdirSync(paymentPath);
+    }
+
+    const errors = [];
+
+    for (const f of files) {
+      try {
+        const splitname = f.originalname.split(".");
+        const extension = splitname[splitname.length - 1];
+        const hashedName = uuidv4();
+        const filename = `${hashedName}.${extension}`;
+        const filePath = `${paymentPath}/${filename}`;
+        fs.writeFileSync(filePath, f.buffer);
+
+        const r = await pc.query(
+          SQL`
+          INSERT INTO attachments (payment_id, file_name)
+          VALUES (${payment_id}, ${filename});
+        `,
+        );
+
+        if (!r.rowCount) {
+          errors.push("Could not update attachment into database");
+        }
+      } catch (e) {
+        errors.push(e.toString());
+      }
+    }
+
+    if (errors.length) {
+      res.status(400).json({ message: errors });
     } else {
-      res.status(400).json({ message: "Unable to add attachment." });
+      res.status(200).json({ files });
     }
   };
 
