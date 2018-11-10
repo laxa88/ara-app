@@ -1,5 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
+import cors from "./middleware/cors";
 import privateRoutes from "./routes/private";
 import publicRoutes from "./routes/public";
 
@@ -13,6 +14,8 @@ const port = 3000;
 // Required to parse form and json data in req.body
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(cors);
 
 // ==================================================
 // paths
