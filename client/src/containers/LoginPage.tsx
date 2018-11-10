@@ -17,7 +17,7 @@ export class LoginPage extends React.Component<Props, {}> {
 
   public render() {
     return (
-      <div>
+      <form onSubmit={this.onSubmit}>
         <InputForm
           label="Email"
           type="email"
@@ -33,8 +33,13 @@ export class LoginPage extends React.Component<Props, {}> {
           onChange={this.onChangePassword}
         />
         <Button onClick={this.onClickLogin}>Login</Button>
-      </div>
+      </form>
     );
+  }
+
+  private onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.onClickLogin();
   }
 
   private onClickLogin = () => {
