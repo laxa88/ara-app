@@ -10,18 +10,19 @@ function* doLogin(action: IAction) {
 
     const data = yield call(service.login, email, password);
 
-    if (data.token) {
-      yield put<IAction>({
-        payload: { token: data.token },
-        type: ActionTypes.LOGIN_SUCCESS,
-      });
-    } else {
-      throw new Error(data.toString());
-    }
-  } catch (e) {
-    const message = getValue(e, 'response.data.message') || e;
+    const { token } = data;
+
+    // TODO call() to store token as cookie with expiry
+
     yield put<IAction>({
-      payload: { message: message.toString() },
+      payload: { token },
+      type: ActionTypes.LOGIN_SUCCESS,
+    });
+  } catch (e) {
+    const message = getValue(e, 'response.data.message') || e.toString();
+
+    yield put<IAction>({
+      payload: { message },
       type: ActionTypes.LOGIN_FAIL,
     });
   }
