@@ -93,7 +93,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - ~~User: Add attachment~~
   - ~~User: Add attachment file~~
   - ~~User: Delete attachment~~
-  - User: Delete attachment file
+  - ~~User: Delete attachment file~~
   - ~~Admin: Approve payment~~
   - ~~Admin: Add user~~
   - ~~Admin: Update user~~
