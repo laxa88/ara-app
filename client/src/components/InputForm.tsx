@@ -20,10 +20,10 @@ class InputForm extends React.Component<IProps, {}> {
     const { label, value, onChange, ...others } = this.props;
 
     return (
-      <form>
+      <div>
         <Label>{label}</Label>
         <Input value={value} onChange={onChange} {...others} />
-      </form>
+      </div>
     );
   }
 }
