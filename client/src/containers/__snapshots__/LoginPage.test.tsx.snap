@@ -16,5 +16,10 @@ exports[`<LoginPage /> should render 1`] = `
     type="password"
     value="dummy password"
   />
+  <Button
+    onClick={[Function]}
+  >
+    Login
+  </Button>
 </div>
 `;

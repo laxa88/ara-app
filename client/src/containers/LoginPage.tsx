@@ -12,9 +12,6 @@ type Props = IProps & IDispatch;
 export class LoginPage extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
-
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
   }
 
   public render() {
@@ -34,16 +31,20 @@ export class LoginPage extends React.Component<Props, {}> {
           placeholder="Input password here"
           onChange={this.onChangePassword}
         />
-        <Button>Login</Button>
+        <Button onClick={this.onClickLogin}>Login</Button>
       </div>
     );
   }
 
-  private onChangeEmail(value: string) {
+  private onClickLogin = () => {
+    this.props.login();
+  }
+
+  private onChangeEmail = (value: string) => {
     this.props.setEmail(value);
   }
 
-  private onChangePassword(value: string) {
+  private onChangePassword = (value: string) => {
     this.props.setPassword(value);
   }
 }
@@ -54,6 +55,7 @@ const mapStateToProps = (state: IState): IProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch): IDispatch => ({
+  login: () => dispatch(loginPageActions.login()),
   setEmail: (val: string) => dispatch(loginPageActions.setEmail(val)),
   setPassword: (val: string) => dispatch(loginPageActions.setPassword(val)),
 });
