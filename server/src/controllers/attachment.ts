@@ -20,7 +20,7 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
     return;
   }
 
-  if (!files.length) {
+  if (!files || !files.length) {
     res.status(403).json({ message: "No files to upload." });
     return;
   }
