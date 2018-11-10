@@ -141,8 +141,7 @@ const deleteAttachment = async (
   const logic = async (pc: pg.PoolClient) => {
     const result1 = await pc.query(
       SQL`
-        SELECT *
-        FROM attachments
+        SELECT payment_id, file_name FROM attachments
         INNER JOIN payments
         ON attachments.payment_id = payments.id
         INNER JOIN users
@@ -157,7 +156,12 @@ const deleteAttachment = async (
       return;
     }
 
-    // TODO delete file logic goes here
+    // Delete file from the folder:
+    // uploads/user_id/payment_id/file_name.ext
+    const payment_id = result1.rows[0].payment_id;
+    const fileName = result1.rows[0].file_name;
+    const filePath = `uploads/${userData.id}/${payment_id}/${fileName}`;
+    fs.unlinkSync(filePath);
 
     const result2 = await pc.query(
       SQL`
