@@ -63,7 +63,6 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
       result1.rowCount >= maxFilesAllowed ||
       result1.rowCount + +files.length > maxFilesAllowed
     ) {
-      console.log("###", result1.rowCount, files.length);
       res
         .status(400)
         .json({ message: `Cannot upload more than ${maxFilesAllowed} files.` });
