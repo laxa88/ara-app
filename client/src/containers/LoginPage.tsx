@@ -5,7 +5,8 @@ import * as Redux from 'redux';
 import Button from '../components/Button';
 import InputForm from '../components/InputForm';
 import * as loginPageActions from '../store/LoginPage/actions';
-import { IDispatch, IProps, IState } from '../store/LoginPage/types';
+import { IDispatch, IProps } from '../store/LoginPage/types';
+import { IReducers } from '../store/types';
 
 type Props = IProps & IDispatch;
 
@@ -37,7 +38,8 @@ export class LoginPage extends React.Component<Props, {}> {
   }
 
   private onClickLogin = () => {
-    this.props.login();
+    const { email, password } = this.props;
+    this.props.login(email, password);
   }
 
   private onChangeEmail = (value: string) => {
@@ -49,15 +51,15 @@ export class LoginPage extends React.Component<Props, {}> {
   }
 }
 
-const mapStateToProps = (state: IState): IProps => ({
-  email: state.email,
-  password: state.password,
+const mapStateToProps = (state: IReducers): IProps => ({
+  email: state.loginPage.email,
+  password: state.loginPage.password,
 });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch): IDispatch => ({
-  login: () => dispatch(loginPageActions.login()),
-  setEmail: (val: string) => dispatch(loginPageActions.setEmail(val)),
-  setPassword: (val: string) => dispatch(loginPageActions.setPassword(val)),
+  login: (e: string, p: string) => dispatch(loginPageActions.login(e, p)),
+  setEmail: (v: string) => dispatch(loginPageActions.setEmail(v)),
+  setPassword: (v: string) => dispatch(loginPageActions.setPassword(v)),
 });
 
 export default connect(
