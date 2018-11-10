@@ -70,6 +70,9 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
       return;
     }
 
+    // Create folders if they don't exist, in the format:
+    // uploads/user_id/payment_id/file_name.ext
+
     const basePath = "uploads";
     const userPath = `${basePath}/${userData.id}`;
     const paymentPath = `${userPath}/${payment_id}`;
@@ -90,6 +93,7 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
 
     for (const f of files) {
       try {
+        // Upload files to target folder
         const splitname = f.originalname.split(".");
         const extension = splitname[splitname.length - 1];
         const hashedName = uuidv4();
