@@ -13,6 +13,8 @@ const corsConfig: CorsOptions = {
     if (allowedOrigins.indexOf(origin) === -1) {
       return cb(new Error("CORS violation: Invalid origin."), false);
     }
+
+    return cb(null, true);
   },
 };
 
