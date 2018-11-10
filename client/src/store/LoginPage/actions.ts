@@ -7,3 +7,7 @@ export function setEmail(email: string) {
 export function setPassword(password: string) {
   return { type: ActionTypes.SET_PASSWORD, payload: { password } };
 }
+
+export function login() {
+  return { type: ActionTypes.LOGIN };
+}
