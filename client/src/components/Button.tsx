@@ -8,13 +8,13 @@ const StyledButton = styled.button`
   border-radius: 3px;
 `;
 
-class Button extends React.PureComponent<{}, {}> {
+interface IProps {
+  onClick: () => void;
+}
+
+class Button extends React.PureComponent<IProps, {}> {
   public render() {
-    return (
-      <div>
-        <StyledButton {...this.props} />
-      </div>
-    );
+    return <StyledButton {...this.props} />;
   }
 }
 
