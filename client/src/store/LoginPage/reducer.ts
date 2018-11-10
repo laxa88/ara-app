@@ -2,6 +2,7 @@ import { ActionTypes, IAction, IState } from './types';
 
 const defaultState: IState = {
   email: '',
+  errorMessage: '',
   isLoading: false,
   password: '',
 };
@@ -27,6 +28,19 @@ export function loginPage(
       return {
         ...state,
         isLoading: true,
+      };
+
+    case ActionTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    case ActionTypes.LOGIN_FAIL:
+      return {
+        ...state,
+        errorMessage: action.payload.message,
+        isLoading: false,
       };
 
     default:
