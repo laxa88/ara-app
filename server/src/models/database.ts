@@ -10,12 +10,12 @@ import { UserType } from "../definitions/user";
 // ts-node src\models\database.ts
 
 const createDb = async () => {
-  const { dbConn } = config;
-
-  const db = new pg.Client(dbConn);
-  await db.connect();
-
   const {
+    host,
+    port,
+    database,
+    user,
+    password,
     superEmail,
     superFName,
     superLName,
@@ -25,6 +25,16 @@ const createDb = async () => {
     adminFName,
     adminLName,
   } = config;
+
+  const db = new pg.Client({
+    database,
+    host,
+    password,
+    port,
+    user,
+  });
+
+  await db.connect();
 
   const errors: string[] = [];
 

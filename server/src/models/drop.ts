@@ -5,9 +5,22 @@ import config from "../../../config";
 // ts-node src\models\drop.ts
 
 const deleteDb = async () => {
-  const { dbConn } = config;
+  const {
+    host,
+    port,
+    database,
+    user,
+    password,
+  } = config;
 
-  const db = new pg.Client(dbConn);
+  const db = new pg.Client({
+    database,
+    host,
+    password,
+    port,
+    user,
+  });
+
   await db.connect();
 
   const errors: string[] = [];
