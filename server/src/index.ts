@@ -1,11 +1,11 @@
 import bodyParser from "body-parser";
 import express from "express";
+import config from "../../config";
 import cors from "./middleware/cors";
 import privateRoutes from "./routes/private";
 import publicRoutes from "./routes/public";
 
 const app = express();
-const port = 3000;
 
 // ==================================================
 // middleware
@@ -29,7 +29,7 @@ app.use("/api", privateRoutes);
 // entry
 // ==================================================
 
-app.listen(port, () => console.log(`Server listening on port ${port}.`));
+app.listen(config.serverPort, () => console.log(`Server listening on port ${config.serverPort}.`));
 
 const displayRoutes = (r: any) => {
   if (r.route && r.route.path) {
