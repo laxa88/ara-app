@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = require('../config');
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'src/index.html'),
@@ -57,7 +58,7 @@ module.exports = {
   },
 
   devServer: {
-    port: 3001,
+    port: config.clientPort,
 
     // Fixes issue with webpack-dev-server not being able to load Push-State
     // URL (e.g. react-router's BrowserRouter) when refreshing the page.
