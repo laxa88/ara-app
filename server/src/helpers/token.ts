@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "../../../config";
-import { IUser } from "../models/user";
+import { IUser } from "../definitions/user";
 
 const signToken = (data: object) => {
   return jwt.sign(data, config.secret, {
