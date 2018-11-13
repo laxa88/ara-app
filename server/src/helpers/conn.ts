@@ -2,9 +2,9 @@ import pg from "pg";
 import config from "../../../config";
 
 const pool = new pg.Pool({
-  database: config.db,
+  database: config.database,
   host: config.host,
-  password: config.pass,
+  password: config.password,
   port: config.port,
   user: config.user,
 });
