@@ -39,6 +39,19 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - Notes on avoiding `connected-react-router`: [link](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/redux.md)
   - To debug node server, create a default Node `launch.json` configuration in current workspace, then just `CTRL + SHIFT + P` and attach the debugger to the `ts-node` process.
 
+## Database setup
+
+- Use `brew install postgres`
+- Access the CLI via `psql postgres`
+- Add the user role with superuser, in order to allow the use of the `pgcrypto` extension:
+  - `CREATE USER <user> WITH SUPERUSER;`
+- If you created a user by accident without adding the role, you can edit the user:
+  - `ALTER USER <user> SUPERUSER;`
+- Make sure the database exists:
+  - `CREATE DATABASE <db name>;`
+- Edit the `config.js` (refer to `config.template.js` for reference)
+- Navigate to `/server` folder and run `yarn db-tb-setup`.
+
 ## Phase 1 TODO
 
 - ~~Install react~~
