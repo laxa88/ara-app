@@ -19,6 +19,11 @@ import {
 } from '../store/LoginPage/types';
 import { IReducers } from '../store/types';
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const Form = styled.form`
   font-size: 18px;
   padding: 10px 20px;
@@ -26,6 +31,7 @@ const Form = styled.form`
   width: 100%;
   box-sizing: border-box;
   margin: 15px 0;
+  max-width: 600px;
 `;
 
 export type Dispatch = ILoginPageDispatch & IAuthDispatch;
@@ -46,25 +52,27 @@ export class LoginPage extends React.Component<ClassProps, {}> {
     }
 
     return (
-      <Form onSubmit={this.onSubmit}>
-        <InputForm
-          autoComplete="email"
-          label="Email"
-          type="email"
-          value={this.props.email}
-          placeholder="Input email here"
-          onChange={this.onChangeEmail}
-        />
-        <InputForm
-          autoComplete="password"
-          label="Password"
-          value={this.props.password}
-          type="password"
-          placeholder="Input password here"
-          onChange={this.onChangePassword}
-        />
-        <Button onClick={this.onClickLogin}>Login</Button>
-      </Form>
+      <Container>
+        <Form onSubmit={this.onSubmit}>
+          <InputForm
+            autoComplete="email"
+            label="Email"
+            type="email"
+            value={this.props.email}
+            placeholder="Input email here"
+            onChange={this.onChangeEmail}
+          />
+          <InputForm
+            autoComplete="password"
+            label="Password"
+            value={this.props.password}
+            type="password"
+            placeholder="Input password here"
+            onChange={this.onChangePassword}
+          />
+          <Button onClick={this.onClickLogin}>Login</Button>
+        </Form>
+      </Container>
     );
   }
 
