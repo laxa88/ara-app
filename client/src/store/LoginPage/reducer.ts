@@ -2,15 +2,10 @@ import { ActionTypes, IAction, IState } from './types';
 
 const defaultState: IState = {
   email: '',
-  errorMessage: '',
-  isLoading: false,
   password: '',
 };
 
-export function loginPage(
-  state: IState = defaultState,
-  action: IAction,
-): IState {
+export function reducer(state: IState = defaultState, action: IAction): IState {
   switch (action.type) {
     case ActionTypes.SET_EMAIL:
       return {
@@ -22,25 +17,6 @@ export function loginPage(
       return {
         ...state,
         password: action.payload.password,
-      };
-
-    case ActionTypes.LOGIN:
-      return {
-        ...state,
-        isLoading: true,
-      };
-
-    case ActionTypes.LOGIN_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-      };
-
-    case ActionTypes.LOGIN_FAIL:
-      return {
-        ...state,
-        errorMessage: action.payload.message,
-        isLoading: false,
       };
 
     default:
