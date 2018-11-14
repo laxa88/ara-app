@@ -1,23 +1,25 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect, Route } from 'react-router-dom';
+import * as Redux from 'redux';
+
 import { getSessionData } from '../services/session';
+import * as authActions from '../store/Auth/actions';
+import { IDispatch } from '../store/Auth/types';
+import { IProps } from '../store/DashboardPage/types';
 import { IReducers } from '../store/types';
 import DetailsPage from './DetailsPage';
 import PaymentsPage from './PaymentsPage';
 
-interface IProps {
-  match?: any;
-  sessionData: object;
-}
+export type Props = IProps & IDispatch;
 
-class DashboardPage extends React.Component<IProps, {}> {
-  constructor(props: IProps) {
+class DashboardPage extends React.Component<Props, {}> {
+  constructor(props: Props) {
     super(props);
   }
 
   public render() {
-    if (!this.props.sessionData) {
+    if (!this.props.isLoggedIn) {
       return <Redirect to="/" />;
     }
 
@@ -29,6 +31,9 @@ class DashboardPage extends React.Component<IProps, {}> {
           </li>
           <li>
             <Link to={`${this.props.match.url}/payments`}>Payments</Link>
+          </li>
+          <li>
+            <button onClick={this.onClickLogout}>Logout</button>
           </li>
         </ul>
 
@@ -45,10 +50,21 @@ class DashboardPage extends React.Component<IProps, {}> {
       </div>
     );
   }
+
+  private onClickLogout = () => {
+    this.props.logout();
+  }
 }
 
 const mapStateToProps = (state: IReducers): IProps => ({
-  sessionData: getSessionData(),
+  isLoggedIn: state.auth.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(DashboardPage);
+const mapDispatchToProps = (dispatch: Redux.Dispatch): IDispatch => ({
+  logout: () => dispatch(authActions.logout()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DashboardPage);
