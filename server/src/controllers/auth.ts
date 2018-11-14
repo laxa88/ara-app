@@ -22,7 +22,7 @@ async function login(req: Express.Request, res: Express.Response) {
     if (result.rows.length) {
       // Omit password field
       const { password: pw, ...others } = result.rows[0];
-      const token = signToken({ ...others });
+      const token = signToken({ data: others });
       res.status(200).json({ token });
     } else {
       res.status(403).json({ message: "Email or password is incorrect." });
