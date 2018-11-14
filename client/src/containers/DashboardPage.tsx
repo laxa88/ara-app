@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link, Route } from 'react-router-dom';
+import { Link, Redirect, Route } from 'react-router-dom';
+import { getSessionData } from '../services/session';
+import { IReducers } from '../store/types';
 import DetailsPage from './DetailsPage';
 import PaymentsPage from './PaymentsPage';
 
 interface IProps {
-  match: any;
+  match?: any;
+  sessionData: object;
 }
 
 class DashboardPage extends React.Component<IProps, {}> {
@@ -14,6 +17,10 @@ class DashboardPage extends React.Component<IProps, {}> {
   }
 
   public render() {
+    if (!this.props.sessionData) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div>
         <ul>
@@ -40,6 +47,8 @@ class DashboardPage extends React.Component<IProps, {}> {
   }
 }
 
-const mapStateToProps = (state: {}) => state;
+const mapStateToProps = (state: IReducers): IProps => ({
+  sessionData: getSessionData(),
+});
 
 export default connect(mapStateToProps)(DashboardPage);
