@@ -12,6 +12,7 @@ describe('<LoginPage />', () => {
       email: 'dummy email',
       login: jest.fn(),
       password: 'dummy password',
+      sessionData: {},
       setEmail: jest.fn(),
       setPassword: jest.fn(),
     };
@@ -33,6 +34,7 @@ describe('<LoginPage />', () => {
     const initialState = {
       email: mockEmail1,
       password: mockPassword1,
+      sessionData: {},
     };
 
     const expected = [

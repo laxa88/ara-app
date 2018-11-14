@@ -30,6 +30,7 @@ export interface IState {
 export interface IProps {
   email: string;
   password: string;
+  sessionData: object;
 }
 
 export interface IDispatch {

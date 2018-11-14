@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import * as Redux from 'redux';
 
 import Button from '../components/Button';
 import InputForm from '../components/InputForm';
+import { getSessionData } from '../services/session';
 import * as loginPageActions from '../store/LoginPage/actions';
 import { IDispatch, IProps } from '../store/LoginPage/types';
 import { IReducers } from '../store/types';
 
-type Props = IProps & IDispatch;
+export type Props = IProps & IDispatch;
 
 export class LoginPage extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -16,6 +18,10 @@ export class LoginPage extends React.Component<Props, {}> {
   }
 
   public render() {
+    if (this.props.sessionData) {
+      return <Redirect to="/dashboard" />;
+    }
+
     return (
       <form onSubmit={this.onSubmit}>
         <InputForm
@@ -59,6 +65,7 @@ export class LoginPage extends React.Component<Props, {}> {
 const mapStateToProps = (state: IReducers): IProps => ({
   email: state.loginPage.email,
   password: state.loginPage.password,
+  sessionData: getSessionData(),
 });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch): IDispatch => ({
