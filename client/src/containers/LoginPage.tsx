@@ -7,8 +7,16 @@ import Button from '../components/Button';
 import InputForm from '../components/InputForm';
 import styled from '../css/styled';
 import { getSessionData } from '../services/session';
+import * as authActions from '../store/Auth/actions';
+import {
+  IDispatch as IAuthDispatch,
+  IProps as IAuthProps,
+} from '../store/Auth/types';
 import * as loginPageActions from '../store/LoginPage/actions';
-import { IDispatch, IProps } from '../store/LoginPage/types';
+import {
+  IDispatch as ILoginPageDispatch,
+  IProps,
+} from '../store/LoginPage/types';
 import { IReducers } from '../store/types';
 
 const Form = styled.form`
@@ -20,15 +28,20 @@ const Form = styled.form`
   margin: 15px 0;
 `;
 
-export type Props = IProps & IDispatch;
+export type Dispatch = ILoginPageDispatch & IAuthDispatch;
+export type Props = IProps & IAuthProps;
+export type ClassProps = Props & Dispatch;
 
-export class LoginPage extends React.Component<Props, {}> {
-  constructor(props: Props) {
+export class LoginPage extends React.Component<ClassProps, {}> {
+  constructor(props: ClassProps) {
     super(props);
   }
 
   public render() {
-    if (this.props.sessionData) {
+    // BUG: Because there is no redux-hydrate yet, if you
+    // refresh the page, the isLoggedIn state will always reset.
+
+    if (this.props.isLoggedIn) {
       return <Redirect to="/dashboard" />;
     }
 
@@ -74,14 +87,14 @@ export class LoginPage extends React.Component<Props, {}> {
   }
 }
 
-const mapStateToProps = (state: IReducers): IProps => ({
+const mapStateToProps = (state: IReducers): Props => ({
   email: state.loginPage.email,
+  isLoggedIn: state.auth.isLoggedIn,
   password: state.loginPage.password,
-  sessionData: getSessionData(),
 });
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch): IDispatch => ({
-  login: (e: string, p: string) => dispatch(loginPageActions.login(e, p)),
+const mapDispatchToProps = (dispatch: Redux.Dispatch): Dispatch => ({
+  login: (e: string, p: string) => dispatch(authActions.login(e, p)),
   setEmail: (v: string) => dispatch(loginPageActions.setEmail(v)),
   setPassword: (v: string) => dispatch(loginPageActions.setPassword(v)),
 });

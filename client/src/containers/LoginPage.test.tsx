@@ -10,9 +10,9 @@ describe('<LoginPage />', () => {
   it('should render', () => {
     const mockProps = {
       email: 'dummy email',
+      isLoggedIn: true,
       login: jest.fn(),
       password: 'dummy password',
-      sessionData: {},
       setEmail: jest.fn(),
       setPassword: jest.fn(),
     };
