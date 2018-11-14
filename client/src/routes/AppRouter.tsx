@@ -6,17 +6,6 @@ import LoginPage from '../containers/LoginPage';
 const AppRouter = () => (
   <Router>
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
-      </nav>
-
       <Route path="/" exact={true} component={LoginPage} />
       <Route path="/dashboard" component={DashboardPage} />
     </div>
