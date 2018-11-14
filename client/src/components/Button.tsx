@@ -2,10 +2,12 @@ import * as React from 'react';
 import styled from '../css/styled';
 
 const StyledButton = styled.button`
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
+  font-size: 18px;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #acfb2d;
+  width: 100%;
 `;
 
 interface IProps {
