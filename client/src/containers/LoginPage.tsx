@@ -25,6 +25,7 @@ export class LoginPage extends React.Component<Props, {}> {
     return (
       <form onSubmit={this.onSubmit}>
         <InputForm
+          autoComplete="email"
           label="Email"
           type="email"
           value={this.props.email}
@@ -32,6 +33,7 @@ export class LoginPage extends React.Component<Props, {}> {
           onChange={this.onChangeEmail}
         />
         <InputForm
+          autoComplete="password"
           label="Password"
           value={this.props.password}
           type="password"

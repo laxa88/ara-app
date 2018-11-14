@@ -9,6 +9,7 @@ const StyledInput = styled.input`
 `;
 
 export interface IInput {
+  autoComplete?: string;
   value: string;
   placeholder?: string;
   type?: string;
