@@ -2,29 +2,30 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { getValue } from '../../common/object';
 import * as service from '../../services/auth';
+import { setSessionData } from '../../services/session';
 import { ActionTypes, IAction } from './types';
+
+const actionLoginSuccess = (token: string) => ({
+  payload: { token },
+  type: ActionTypes.LOGIN_SUCCESS,
+});
+
+const actionLoginFail = (message: string) => ({
+  payload: { message },
+  type: ActionTypes.LOGIN_FAIL,
+});
 
 function* doLogin(action: IAction) {
   try {
     const { email, password } = action.payload;
+    const response = yield call(service.login, email, password);
+    const { token } = response.data;
 
-    const data = yield call(service.login, email, password);
-
-    const { token } = data;
-
-    // TODO call() to store token as cookie with expiry
-
-    yield put<IAction>({
-      payload: { token },
-      type: ActionTypes.LOGIN_SUCCESS,
-    });
+    yield call(setSessionData, token);
+    yield put<IAction>(actionLoginSuccess(token));
   } catch (e) {
     const message = getValue(e, 'response.data.message') || e.toString();
-
-    yield put<IAction>({
-      payload: { message },
-      type: ActionTypes.LOGIN_FAIL,
-    });
+    yield put<IAction>(actionLoginFail(message));
   }
 }
 
