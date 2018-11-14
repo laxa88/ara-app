@@ -4,7 +4,8 @@ import styled from '../css/styled';
 import Input, { IInput } from './Input';
 
 const Label = styled.label`
-  color: red;
+  font-size: 18px;
+  font-family: sans-serif;
 `;
 
 export interface IProps extends IInput {
