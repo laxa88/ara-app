@@ -5,10 +5,20 @@ import * as Redux from 'redux';
 
 import Button from '../components/Button';
 import InputForm from '../components/InputForm';
+import styled from '../css/styled';
 import { getSessionData } from '../services/session';
 import * as loginPageActions from '../store/LoginPage/actions';
 import { IDispatch, IProps } from '../store/LoginPage/types';
 import { IReducers } from '../store/types';
+
+const Form = styled.form`
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 15px 0;
+`;
 
 export type Props = IProps & IDispatch;
 
@@ -23,7 +33,7 @@ export class LoginPage extends React.Component<Props, {}> {
     }
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <Form onSubmit={this.onSubmit}>
         <InputForm
           autoComplete="email"
           label="Email"
@@ -41,7 +51,7 @@ export class LoginPage extends React.Component<Props, {}> {
           onChange={this.onChangePassword}
         />
         <Button onClick={this.onClickLogin}>Login</Button>
-      </form>
+      </Form>
     );
   }
 
