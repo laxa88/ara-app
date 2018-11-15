@@ -1,7 +1,7 @@
-import { IState as authState } from './Auth/types';
-import { IState as loginPageState } from './LoginPage/types';
+import { IState as IAuthState } from './Auth/types';
+import { IState as ILoginPageState } from './LoginPage/types';
 
 export interface IReducers {
-  loginPage: loginPageState;
-  auth: authState;
+  loginPage: ILoginPageState;
+  auth: IAuthState;
 }
