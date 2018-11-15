@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect, Route } from 'react-router-dom';
 import * as Redux from 'redux';
 
+import MenuItem from '../components/MenuItem';
 import { getSessionData } from '../services/session';
 import * as authActions from '../store/Auth/actions';
 import { IDispatch } from '../store/Auth/types';
@@ -19,6 +20,8 @@ class DashboardPage extends React.Component<Props, {}> {
   }
 
   public render() {
+    const { pathname } = window.location;
+
     if (!this.props.isLoggedIn) {
       return <Redirect to="/" />;
     }
@@ -27,22 +30,37 @@ class DashboardPage extends React.Component<Props, {}> {
       <div>
         <ul>
           <li>
-            <Link to={`${this.props.match.url}/details`}>My Details</Link>
+            <MenuItem
+              to={`${this.props.match.url}/details`}
+              pathname={pathname}
+            >
+              My Details
+            </MenuItem>
           </li>
           <li>
-            <Link to={`${this.props.match.url}/payments`}>Payments</Link>
+            <MenuItem
+              to={`${this.props.match.url}/payments`}
+              pathname={pathname}
+            >
+              Payments
+            </MenuItem>
           </li>
           <li>
-            <button onClick={this.onClickLogout}>Logout</button>
+            <MenuItem to="/" onClick={this.onClickLogout}>
+              Logout
+            </MenuItem>
           </li>
         </ul>
 
         <div>
           <Route
+            exact={true}
             path={`${this.props.match.url}/details`}
             component={DetailsPage}
           />
+
           <Route
+            exact={true}
             path={`${this.props.match.url}/payments`}
             component={PaymentsPage}
           />
