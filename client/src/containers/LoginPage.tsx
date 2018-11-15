@@ -55,7 +55,7 @@ export class LoginPage extends React.Component<ClassProps, {}> {
     const { email, password, isLoading, errorMessage } = this.props;
 
     if (this.props.isLoggedIn) {
-      return <Redirect to="/dashboard" />;
+      return <Redirect to="/dashboard/payments" />;
     }
 
     return (
