@@ -8,6 +8,13 @@ const StyledButton = styled.button`
   border-radius: 10px;
   background-color: #acfb2d;
   width: 100%;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background-color: #c4ff65;
+    cursor: pointer;
+  }
 `;
 
 interface IProps {
