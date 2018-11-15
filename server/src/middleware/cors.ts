@@ -1,10 +1,13 @@
 import cors, { CorsOptions } from "cors";
 import config from "../../../config";
+import { snooze } from "../helpers/snooze";
 
 // Reference: https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
 const corsConfig: CorsOptions = {
-  origin: (origin, cb) => {
+  origin: async (origin, cb) => {
     const { clientPort } = config;
+
+    await snooze(1000);
 
     // Allow requests with no origin, e.g. Postman, Insomnia, etc.
     if (!origin) {
