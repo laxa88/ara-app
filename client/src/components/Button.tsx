@@ -12,6 +12,7 @@ const StyledButton = styled.button`
 
 interface IProps {
   onClick: () => void;
+  disabled?: boolean;
 }
 
 class Button extends React.PureComponent<IProps, {}> {

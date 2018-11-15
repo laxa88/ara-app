@@ -34,6 +34,11 @@ const Form = styled.form`
   max-width: 600px;
 `;
 
+const ErrorMessage = styled.div`
+  font-size: 18px;
+  color: red;
+`;
+
 export type Dispatch = ILoginPageDispatch & IAuthDispatch;
 export type Props = IProps & IAuthProps;
 export type ClassProps = Props & Dispatch;
@@ -47,6 +52,8 @@ export class LoginPage extends React.Component<ClassProps, {}> {
     // BUG: Because there is no redux-hydrate yet, if you
     // refresh the page, the isLoggedIn state will always reset.
 
+    const { email, password, isLoading, errorMessage } = this.props;
+
     if (this.props.isLoggedIn) {
       return <Redirect to="/dashboard" />;
     }
@@ -55,22 +62,30 @@ export class LoginPage extends React.Component<ClassProps, {}> {
       <Container>
         <Form onSubmit={this.onSubmit}>
           <InputForm
+            disabled={isLoading}
             autoComplete="email"
             label="Email"
             type="email"
-            value={this.props.email}
+            value={email}
             placeholder="Input email here"
             onChange={this.onChangeEmail}
           />
+
           <InputForm
+            disabled={isLoading}
             autoComplete="password"
             label="Password"
-            value={this.props.password}
+            value={password}
             type="password"
             placeholder="Input password here"
             onChange={this.onChangePassword}
           />
-          <Button onClick={this.onClickLogin}>Login</Button>
+
+          <ErrorMessage>{errorMessage}</ErrorMessage>
+
+          <Button disabled={isLoading} onClick={this.onClickLogin}>
+            Login
+          </Button>
         </Form>
       </Container>
     );
@@ -97,6 +112,8 @@ export class LoginPage extends React.Component<ClassProps, {}> {
 
 const mapStateToProps = (state: IReducers): Props => ({
   email: state.loginPage.email,
+  errorMessage: state.auth.errorMessage,
+  isLoading: state.auth.isLoading,
   isLoggedIn: state.auth.isLoggedIn,
   password: state.loginPage.password,
 });

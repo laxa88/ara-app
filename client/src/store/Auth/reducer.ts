@@ -11,6 +11,7 @@ export function reducer(state: IState = defaultState, action: IAction): IState {
     case ActionTypes.LOGIN:
       return {
         ...state,
+        errorMessage: '',
         isLoading: true,
       };
 

@@ -25,6 +25,8 @@ export interface IState {
 
 export interface IProps {
   isLoggedIn: boolean;
+  isLoading: boolean;
+  errorMessage: string;
 }
 
 export interface IDispatch {
