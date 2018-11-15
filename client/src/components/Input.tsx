@@ -12,10 +12,11 @@ const StyledInput = styled.input`
 
 export interface IInput {
   autoComplete?: string;
-  value: string;
+  disabled?: boolean;
+  onChange: (newValue: string, prevValue: string) => void;
   placeholder?: string;
   type?: string;
-  onChange: (newValue: string, prevValue: string) => void;
+  value: string;
 }
 
 class Input extends React.PureComponent<IInput, {}> {
@@ -26,16 +27,11 @@ class Input extends React.PureComponent<IInput, {}> {
   }
 
   public render() {
-    const { value, placeholder, onChange, ...others } = this.props;
+    const { onChange, ...others } = this.props;
 
     return (
       <div>
-        <StyledInput
-          value={value}
-          placeholder={placeholder}
-          onChange={this.onChange}
-          {...others}
-        />
+        <StyledInput onChange={this.onChange} {...others} />
       </div>
     );
   }
