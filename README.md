@@ -88,7 +88,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 ## Phase 3 TODO
 
 - Client UI
-  - Login page
+  - ~~Login page~~
   - Manage user details page
   - Payments page
   - Admin page
