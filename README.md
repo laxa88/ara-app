@@ -38,6 +38,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - Reference for [good React-Typescript practice](https://medium.freecodecamp.org/effective-use-of-typescript-with-react-3a1389b6072a) (Not necessarily true, but I'm using this as a starting point)
   - Notes on avoiding `connected-react-router`: [link](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/redux.md)
   - To debug node server, create a default Node `launch.json` configuration in current workspace, then just `CTRL + SHIFT + P` and attach the debugger to the `ts-node` process.
+  - Styled Components: Install `vscode-styled-components` to get syntax highlighting and autocomplete!
 
 ## Database setup
 
