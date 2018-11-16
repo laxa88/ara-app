@@ -75,7 +75,7 @@ class DashboardPage extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: IReducers): IProps => ({
-  isLoggedIn: state.auth.isLoggedIn,
+  isLoggedIn: !!getSessionData(),
 });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch): IDispatch => ({

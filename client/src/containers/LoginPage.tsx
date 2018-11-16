@@ -114,7 +114,7 @@ const mapStateToProps = (state: IReducers): Props => ({
   email: state.loginPage.email,
   errorMessage: state.auth.errorMessage,
   isLoading: state.auth.isLoading,
-  isLoggedIn: state.auth.isLoggedIn,
+  isLoggedIn: !!getSessionData(),
   password: state.loginPage.password,
 });
 
