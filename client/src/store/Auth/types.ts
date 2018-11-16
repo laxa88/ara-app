@@ -18,7 +18,6 @@ export interface IAction {
 }
 
 export interface IState {
-  isLoggedIn: boolean;
   isLoading: boolean;
   errorMessage: string;
 }

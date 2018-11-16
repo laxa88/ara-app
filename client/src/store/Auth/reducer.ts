@@ -3,7 +3,6 @@ import { ActionTypes, IAction, IState } from './types';
 const defaultState: IState = {
   errorMessage: '',
   isLoading: false,
-  isLoggedIn: false,
 };
 
 export function reducer(state: IState = defaultState, action: IAction): IState {
@@ -19,7 +18,6 @@ export function reducer(state: IState = defaultState, action: IAction): IState {
       return {
         ...state,
         isLoading: false,
-        isLoggedIn: true,
       };
 
     case ActionTypes.LOGIN_FAIL:
@@ -30,11 +28,6 @@ export function reducer(state: IState = defaultState, action: IAction): IState {
       };
 
     case ActionTypes.LOGOUT:
-      return {
-        ...state,
-        isLoggedIn: false,
-      };
-
     default:
       return state;
   }
