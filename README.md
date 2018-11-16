@@ -39,6 +39,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - Notes on avoiding `connected-react-router`: [link](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/redux.md)
   - To debug node server, create a default Node `launch.json` configuration in current workspace, then just `CTRL + SHIFT + P` and attach the debugger to the `ts-node` process.
   - Styled Components: Install `vscode-styled-components` to get syntax highlighting and autocomplete!
+  - For when I work on different machines and accidentally commit under a different user, use the script here in Terminal: [https://help.github.com/articles/changing-author-info/](link)
 
 ## Database setup
 
