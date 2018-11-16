@@ -7,7 +7,7 @@ import MenuItem from '../components/MenuItem';
 import { getSessionData } from '../services/session';
 import * as authActions from '../store/Auth/actions';
 import { IDispatch } from '../store/Auth/types';
-import { IProps } from '../store/DashboardPage/types';
+import { IProps } from '../store/Dashboard/types';
 import { IReducers } from '../store/types';
 import DetailsPage from './DetailsPage';
 import PaymentsPage from './PaymentsPage';
