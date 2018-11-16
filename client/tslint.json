@@ -5,6 +5,7 @@
     "tslint-config-airbnb"
   ],
   "rules": {
-    "variable-name": [true, "check-format", "allow-pascal-case"]
+    "variable-name": [true, "check-format", "allow-pascal-case"],
+    "object-literal-sort-keys": [true, "shorthand-first"]
   }
 }
