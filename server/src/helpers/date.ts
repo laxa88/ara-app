@@ -1,5 +1,8 @@
 // https://stackoverflow.com/questions/23593052/format-javascript-date-to-yyyy-mm-dd
 
+/**
+ * Returns formatted date, e.g. "2018-11-16 23:42:09"
+ */
 const formatDate = () => {
   const d = new Date();
 
