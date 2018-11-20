@@ -13,8 +13,16 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
   const logic = async (pc: pg.PoolClient) => {
     const result = await pc.query(
       SQL`
-        SELECT attachments.id as attachment_id, * FROM payments
-        INNER JOIN attachments
+        SELECT
+          attachments.id as attachment_id,
+          payments.id as payment_id,
+          approved,
+          date_approved,
+          date_created,
+          date_paid,
+          file_name
+        FROM payments
+        LEFT JOIN attachments
         ON attachments.payment_id = payments.id
         WHERE payments.user_id = ${userData.id}
         ORDER BY payments.id DESC
@@ -42,10 +50,12 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
         };
       }
 
-      acc[payment_id].attachments.push({
-        file_name,
-        id: attachment_id,
-      });
+      if (attachment_id) {
+        acc[payment_id].attachments.push({
+          file_name,
+          id: attachment_id,
+        });
+      }
 
       // Sort from latest to oldest
       acc[payment_id].attachments.sort((a: any, b: any) => a.id < b.id);
