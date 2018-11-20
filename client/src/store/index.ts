@@ -3,9 +3,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import reduxSaga from 'redux-saga';
-import { reducer as auth } from './Auth/reducer';
-import { loginSaga, logoutSaga } from './Auth/sagas';
-import { reducer as loginPage } from './LoginPage/reducer';
+import * as reducer from './reducer';
+import * as sagas from './sagas';
 
 const persistConfig = {
   storage,
@@ -13,8 +12,9 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  auth,
-  loginPage,
+  auth: reducer.auth,
+  loginPage: reducer.loginPage,
+  payments: reducer.payments,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -28,7 +28,11 @@ const store = createStore(
 
 const persistor = persistStore(store);
 
-sagaMiddleware.run(loginSaga);
-sagaMiddleware.run(logoutSaga);
+sagaMiddleware.run(sagas.loginSaga);
+sagaMiddleware.run(sagas.logoutSaga);
+sagaMiddleware.run(sagas.getPaymentsSaga);
+sagaMiddleware.run(sagas.addPaymentSaga);
+sagaMiddleware.run(sagas.updatePaymentSaga);
+sagaMiddleware.run(sagas.approvePaymentSaga);
 
 export { store, persistor };
