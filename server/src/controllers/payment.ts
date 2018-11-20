@@ -29,7 +29,7 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
       `,
     );
 
-    const payment = result.rows.reduce((acc, curr) => {
+    const payments = result.rows.reduce((acc, curr) => {
       const {
         approved,
         date_approved,
@@ -63,7 +63,7 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
       return acc;
     }, {});
 
-    res.status(200).json(payment);
+    res.status(200).json(payments);
   };
 
   try {
@@ -74,11 +74,11 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
 };
 
 const addPayment = async (req: Express.Request, res: Express.Response) => {
-  const { date_created, date_paid } = req.body;
+  const { date_paid } = req.body;
 
   const userData: IUser = parseToken(req.headers.authorization);
 
-  if (!date_created || !date_paid) {
+  if (!date_paid) {
     res.status(403).json({ message: "Incomplete data." });
     return;
   }
