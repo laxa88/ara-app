@@ -39,8 +39,8 @@ const addUser = async (req: Express.Request, res: Express.Response) => {
   const userData: IUser = parseToken(req.headers.authorization);
 
   if (
-    userData.user_type !== UserType.SUPER &&
-    userData.user_type !== UserType.ADMIN
+    userData.data.user_type !== UserType.SUPER &&
+    userData.data.user_type !== UserType.ADMIN
   ) {
     res.status(403).json({ message: "Unathorised user." });
     return;
@@ -102,7 +102,7 @@ const updateUser = async (req: Express.Request, res: Express.Response) => {
   const userData: IUser = parseToken(req.headers.authorization);
 
   // Only SUPER users or the user themselves can update user data.
-  if (userData.user_type !== UserType.SUPER && userData.id !== id) {
+  if (userData.data.user_type !== UserType.SUPER && userData.data.id !== id) {
     res.status(403).json({ message: "Unathorised user." });
     return;
   }
@@ -126,7 +126,7 @@ const updateUser = async (req: Express.Request, res: Express.Response) => {
         SET
           ${
             // Only SUPER users can change user type.
-            userData.user_type === UserType.SUPER
+            userData.data.user_type === UserType.SUPER
               ? `user_type = ${user_type}`
               : ""
           }

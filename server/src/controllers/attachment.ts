@@ -48,7 +48,7 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
         INNER JOIN users
         ON payments.user_id = users.id
         AND payments.id = ${payment_id}
-        AND users.id = ${userData.id}
+        AND users.id = ${userData.data.id}
         LEFT JOIN attachments
         ON attachments.payment_id = payments.id
       `,
@@ -74,7 +74,7 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
     // uploads/user_id/payment_id/file_name.ext
 
     const basePath = "uploads";
-    const userPath = `${basePath}/${userData.id}`;
+    const userPath = `${basePath}/${userData.data.id}`;
     const paymentPath = `${userPath}/${payment_id}`;
 
     if (!fs.existsSync(basePath)) {
@@ -147,7 +147,7 @@ const deleteAttachment = async (
         INNER JOIN users
         ON payments.user_id = users.id
         AND attachments.id = ${id}
-        AND users.id = ${userData.id}
+        AND users.id = ${userData.data.id}
       `,
     );
 
@@ -160,7 +160,7 @@ const deleteAttachment = async (
     // uploads/user_id/payment_id/file_name.ext
     const payment_id = result1.rows[0].payment_id;
     const fileName = result1.rows[0].file_name;
-    const filePath = `uploads/${userData.id}/${payment_id}/${fileName}`;
+    const filePath = `uploads/${userData.data.id}/${payment_id}/${fileName}`;
     fs.unlinkSync(filePath);
 
     const result2 = await pc.query(

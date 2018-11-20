@@ -25,7 +25,7 @@ const updateHouse = async (req: Express.Request, res: Express.Response) => {
 
   const userData: IUser = parseToken(req.headers.authorization);
 
-  if (userData.user_type !== UserType.SUPER) {
+  if (userData.data.user_type !== UserType.SUPER) {
     res.status(403).json({ message: "Unathorised user." });
     return;
   }

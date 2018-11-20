@@ -24,7 +24,7 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
         FROM payments
         LEFT JOIN attachments
         ON attachments.payment_id = payments.id
-        WHERE payments.user_id = ${userData.id}
+        WHERE payments.user_id = ${userData.data.id}
         ORDER BY payments.id DESC
       `,
     );
@@ -84,10 +84,12 @@ const addPayment = async (req: Express.Request, res: Express.Response) => {
   }
 
   const logic = async (pc: pg.PoolClient) => {
+    const dateCreated = formatDate();
+
     await pc.query(
       SQL`
         INSERT INTO payments (user_id, date_created, date_paid, approved)
-        VALUES (${userData.id}, ${date_created}, ${date_paid}, false);
+        VALUES (${userData.data.id}, ${dateCreated}, ${date_paid}, false);
       `,
     );
 
@@ -118,7 +120,7 @@ const updatePayment = async (req: Express.Request, res: Express.Response) => {
         UPDATE payments
         SET date_paid = ${date_paid}
         WHERE id = ${id}
-        AND user_id = ${userData.id}
+        AND user_id = ${userData.data.id}
       `,
     );
 
@@ -143,8 +145,8 @@ const approvePayment = async (req: Express.Request, res: Express.Response) => {
   const userData: IUser = parseToken(req.headers.authorization);
 
   if (
-    userData.user_type !== UserType.SUPER &&
-    userData.user_type !== UserType.ADMIN
+    userData.data.user_type !== UserType.SUPER &&
+    userData.data.user_type !== UserType.ADMIN
   ) {
     res.status(403).json({ message: "Unathorised user." });
     return;
@@ -165,7 +167,7 @@ const approvePayment = async (req: Express.Request, res: Express.Response) => {
           date_approved = ${currDate},
           approved = ${approved === "true"}
         WHERE id = ${id}
-        AND user_id = ${userData.id}
+        AND user_id = ${userData.data.id}
       `,
     );
 
