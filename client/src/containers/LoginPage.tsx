@@ -44,10 +44,6 @@ export type Props = IProps & IAuthProps;
 export type ClassProps = Props & Dispatch;
 
 export class LoginPage extends React.Component<ClassProps, {}> {
-  constructor(props: ClassProps) {
-    super(props);
-  }
-
   public render() {
     // BUG: Because there is no redux-hydrate yet, if you
     // refresh the page, the isLoggedIn state will always reset.
