@@ -1,6 +1,7 @@
 import Express from "express";
 import pg from "pg";
 import SQL from "sql-template-strings";
+import { IAttachment, IPayment } from "../definitions/payment";
 import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
 import { formatDate } from "../helpers/date";
@@ -29,39 +30,44 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
       `,
     );
 
-    const payments = result.rows.reduce((acc, curr) => {
+    const payments = result.rows.reduce((acc: IPayment[], curr) => {
       const {
+        payment_id,
+        attachment_id,
         approved,
         date_approved,
         date_created,
         date_paid,
         file_name,
-        payment_id,
-        attachment_id,
       } = curr;
 
-      if (!acc[payment_id]) {
-        acc[payment_id] = {
+      let payment = acc.find((item: IPayment) => item.id === payment_id);
+
+      if (!payment) {
+        payment = {
           approved,
           attachments: [],
           date_approved,
           date_created,
           date_paid,
+          id: payment_id,
         };
+
+        acc.push(payment);
       }
 
       if (attachment_id) {
-        acc[payment_id].attachments.push({
+        payment.attachments.push({
           file_name,
           id: attachment_id,
         });
       }
 
-      // Sort from latest to oldest
-      acc[payment_id].attachments.sort((a: any, b: any) => a.id < b.id);
+      // Sort attachments from latest to oldest
+      payment.attachments.sort((a, b) => a.id > b.id ? -1 : 0);
 
       return acc;
-    }, {});
+    }, []);
 
     res.status(200).json(payments);
   };
