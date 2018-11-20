@@ -94,12 +94,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - Manage user details page
   - Payments page
   - Admin page
-- Client Implementation
-  - Login page
-  - Manage user details page
-  - Payments page
-  - Admin page
-  - Token expiry
+  - ~~Token expiry~~
 - Server
   - ~~Public: Login~~
   - Public: Reset password
