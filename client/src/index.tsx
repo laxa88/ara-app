@@ -6,6 +6,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { AppRouter } from './routes';
 import { persistor, store } from './store';
 
+import './index.css';
+
 render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
