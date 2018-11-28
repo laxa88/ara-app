@@ -8,6 +8,7 @@ const StyledInput = styled.input`
   width: 100%;
   box-sizing: border-box;
   margin: 15px 0;
+  outline: none;
 `;
 
 export interface IInput {
