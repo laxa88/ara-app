@@ -22,6 +22,11 @@ module.exports = {
     // Note: Order is important, from BOTTOM to TOP!
     rules: [
       {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+
+      {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         use: {
@@ -31,6 +36,7 @@ module.exports = {
           },
         },
       },
+
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -39,6 +45,7 @@ module.exports = {
           // eslint options (if necessary)
         },
       },
+
       {
         test: /\.tsx?$/,
         enforce: 'pre',
@@ -47,6 +54,7 @@ module.exports = {
           /* Loader options go here */
         },
       },
+
       { test: /\.tsx?$/, loader: 'ts-loader' },
     ],
   },
