@@ -9,14 +9,14 @@ const config = {
   password: 'abcde', // postgres user's password
   secret: 'abcde', // salt secret for passwords
 
+  adminEmail: '',
+  adminFName: '',
+  adminLName: '',
+  adminPass: '',
   superEmail: '',
   superFName: '',
   superLName: '',
   superPass: '',
-  adminEmail: '',
-  adminPass: '',
-  adminFName: '',
-  adminLName: '',
 };
 
 module.exports = config;
