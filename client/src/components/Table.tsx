@@ -18,11 +18,24 @@ const HeaderRow = styled.div`
   display: flex;
   padding: 10px;
   border-bottom: solid 1px black;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const CellRow = styled.div`
   display: flex;
   padding: 10px;
+
+  @media (max-width: 480px) {
+    display: block;
+    border-bottom: solid 1px black;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 `;
 
 const Header = styled.div`
