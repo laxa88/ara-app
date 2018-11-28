@@ -25,7 +25,6 @@ const Container = styled.div`
 `;
 
 const Form = styled.form`
-  font-size: 18px;
   padding: 10px 20px;
   border-radius: 10px;
   width: 100%;
@@ -35,7 +34,6 @@ const Form = styled.form`
 `;
 
 const ErrorMessage = styled.div`
-  font-size: 18px;
   color: red;
 `;
 

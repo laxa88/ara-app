@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from '../css/styled';
 
 const StyledInput = styled.input`
-  font-size: 18px;
   padding: 10px 20px;
   border-radius: 10px;
   width: 100%;

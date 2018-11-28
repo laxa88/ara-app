@@ -1,12 +1,6 @@
 import * as React from 'react';
-import styled from '../css/styled';
 
 import Input, { IInput } from './Input';
-
-const Label = styled.label`
-  font-size: 18px;
-  font-family: sans-serif;
-`;
 
 export interface IProps extends IInput {
   label: string;
@@ -22,7 +16,7 @@ class InputForm extends React.Component<IProps, {}> {
 
     return (
       <div>
-        <Label>{label}</Label>
+        <div>{label}</div>
         <Input value={value} onChange={onChange} {...others} />
       </div>
     );

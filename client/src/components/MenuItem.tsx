@@ -9,8 +9,6 @@ export interface IProps {
 }
 
 const Div = styled<IProps, 'div'>('div')`
-  font-size: 18px;
-  font-family: sans-serif;
   font-weight: ${props => (props.to === props.pathname ? '600' : '')};
 `;
 

@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from '../css/styled';
 
 const StyledButton = styled.button`
-  font-size: 18px;
   margin: 10px 0;
   padding: 10px 20px;
   border-radius: 10px;
