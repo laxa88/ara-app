@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import Input, { IInput } from './Input';
+import Form from './Form';
+import Input, { IProps as IInput } from './Input';
 
 export interface IProps extends IInput {
   label: string;
@@ -15,10 +16,9 @@ class InputForm extends React.Component<IProps, {}> {
     const { label, value, onChange, ...others } = this.props;
 
     return (
-      <div>
-        <div>{label}</div>
+      <Form label={label}>
         <Input value={value} onChange={onChange} {...others} />
-      </div>
+      </Form>
     );
   }
 }
