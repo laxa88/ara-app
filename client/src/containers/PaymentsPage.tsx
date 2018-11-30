@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
+import Button from '../components/Button';
 import ModalPaymentAdd from '../components/ModalPaymentAdd';
 import Table from '../components/Table';
 import * as paymentsActions from '../store/Payments/actions';
@@ -16,7 +17,11 @@ export type Dispatch = IDispatch;
 export type Props = IProps;
 export type ClassProps = Props & Dispatch;
 
-class PaymentsPage extends React.Component<ClassProps, {}> {
+interface IClassState {
+  isModalOpen: boolean;
+}
+
+class PaymentsPage extends React.Component<ClassProps, IClassState> {
   constructor(props: ClassProps) {
     super(props);
 
@@ -34,6 +39,7 @@ class PaymentsPage extends React.Component<ClassProps, {}> {
   }
 
   public render() {
+    const { isModalOpen } = this.state;
     const { errorMessage, isLoading, payments } = this.props;
 
     const items = payments.map(this.itemRenderer);
@@ -47,10 +53,17 @@ class PaymentsPage extends React.Component<ClassProps, {}> {
       ],
     };
 
+    const addPaymentModal = isModalOpen ? (
+      <ModalPaymentAdd onClickAdd={this.handleAddPayment} />
+    ) : (
+      undefined
+    );
+
     return (
       <div>
         {items} <Table data={data} />
-        <ModalPaymentAdd onClickAdd={this.handleAddPayment} />
+        <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
+        {addPaymentModal}
       </div>
     );
   }
@@ -79,8 +92,13 @@ class PaymentsPage extends React.Component<ClassProps, {}> {
     );
   }
 
+  private handleOnClickAddPayment = () => {
+    this.setState({ isModalOpen: true });
+  }
+
   private handleAddPayment = (datePaid: string, attachments: any[]) => {
     console.log('###', datePaid, attachments);
+    this.setState({ isModalOpen: false });
   }
 }
 
