@@ -80,6 +80,7 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
             label="Date paid"
             value={this.state.datePaid}
             onChange={this.handleOnChangeDatePaid}
+            type="date"
           />
 
           <div>
