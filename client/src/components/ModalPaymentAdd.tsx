@@ -28,7 +28,7 @@ const Modal = styled.div`
 `;
 
 const Header = styled.h2`
-  margin: 10px;
+  margin: 0 10px 20px;
 `;
 
 const PreviewContainer = styled.div`
