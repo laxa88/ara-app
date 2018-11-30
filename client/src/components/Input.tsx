@@ -10,7 +10,7 @@ const StyledInput = styled.input`
   outline: none;
 `;
 
-export interface IInput {
+export interface IProps {
   autoComplete?: string;
   disabled?: boolean;
   onChange: (newValue: string, prevValue: string) => void;
@@ -19,8 +19,8 @@ export interface IInput {
   value: string;
 }
 
-class Input extends React.PureComponent<IInput, {}> {
-  constructor(props: IInput) {
+class Input extends React.PureComponent<IProps, {}> {
+  constructor(props: IProps) {
     super(props);
 
     this.onChange = this.onChange.bind(this);

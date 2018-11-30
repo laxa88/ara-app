@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mount, shallow } from '../common/test';
-import Input, { IInput } from './Input';
+import Input from './Input';
 
 describe('<Input />', () => {
   const mockProps = {
