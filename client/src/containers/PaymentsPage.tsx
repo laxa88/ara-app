@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
+import ModalPaymentAdd from '../components/ModalPaymentAdd';
+import Table from '../components/Table';
 import * as paymentsActions from '../store/Payments/actions';
 import {
   IAttachment,
@@ -15,6 +17,14 @@ export type Props = IProps;
 export type ClassProps = Props & Dispatch;
 
 class PaymentsPage extends React.Component<ClassProps, {}> {
+  constructor(props: ClassProps) {
+    super(props);
+
+    this.state = {
+      isModalOpen: false,
+    };
+  }
+
   public componentWillMount() {
     this.props.getPayments();
   }
@@ -23,7 +33,29 @@ class PaymentsPage extends React.Component<ClassProps, {}> {
     this.props.getPayments();
   }
 
-  public attachmentRenderer = (attachment: IAttachment) => {
+  public render() {
+    const { errorMessage, isLoading, payments } = this.props;
+
+    const items = payments.map(this.itemRenderer);
+
+    const data = {
+      headers: ['header 1', 'header 2'],
+      rows: [
+        { cells: ['cell 1-1', 'cell 1-2'] },
+        { cells: ['cell 2-1', 'cell 2-2'] },
+        { cells: ['cell 3-1', 'cell 3-2'] },
+      ],
+    };
+
+    return (
+      <div>
+        {items} <Table data={data} />
+        <ModalPaymentAdd onClickAdd={this.handleAddPayment} />
+      </div>
+    );
+  }
+
+  private attachmentRenderer = (attachment: IAttachment) => {
     return (
       <div key={attachment.id}>
         <div>{attachment.file_name}</div>
@@ -32,7 +64,7 @@ class PaymentsPage extends React.Component<ClassProps, {}> {
     );
   }
 
-  public itemRenderer = (item: IPayment) => {
+  private itemRenderer = (item: IPayment) => {
     const attachments = item.attachments.map(this.attachmentRenderer);
 
     return (
@@ -47,12 +79,8 @@ class PaymentsPage extends React.Component<ClassProps, {}> {
     );
   }
 
-  public render() {
-    const { errorMessage, isLoading, payments } = this.props;
-
-    const items = payments.map(this.itemRenderer);
-
-    return <div>{items}</div>;
+  private handleAddPayment = (datePaid: string, attachments: any[]) => {
+    console.log('###', datePaid, attachments);
   }
 }
 
