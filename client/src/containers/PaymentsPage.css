@@ -4,4 +4,16 @@
 
 .add {
   padding-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add button {
+  max-width: 250px;
+}
+
+@media (max-width: 480px) {
+  .add {
+    justify-content: center;
+  }
 }
