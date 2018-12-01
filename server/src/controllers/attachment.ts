@@ -32,11 +32,20 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
     "text/plain",
   ];
 
+  const disallowedTypesFound = [];
+
   for (const f of files) {
     if (allowedTypes.indexOf(f.mimetype) === -1) {
-      res.status(403).json({ message: "Invalid file type." });
-      return;
+      disallowedTypesFound.push(f.mimetype);
     }
+  }
+
+  if (disallowedTypesFound.length) {
+    res.status(403).json({
+      invalidTypes: disallowedTypesFound,
+      message: "Invalid file type.",
+    });
+    return;
   }
 
   const maxFilesAllowed = 10;
