@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
+import { parseDate } from '../common/date';
 import Button from '../components/Button';
 import PaymentAdd from '../components/modals/PaymentAdd';
 import Table from '../components/Table';
@@ -42,15 +43,9 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     const { isModalOpen } = this.state;
     const { errorMessage, isLoading, payments } = this.props;
 
-    const items = payments.map(this.itemRenderer);
-
     const data = {
-      headers: ['header 1', 'header 2'],
-      rows: [
-        { cells: ['cell 1-1', 'cell 1-2'] },
-        { cells: ['cell 2-1', 'cell 2-2'] },
-        { cells: ['cell 3-1', 'cell 3-2'] },
-      ],
+      headers: this.headerRenderer(),
+      rows: payments.map(this.itemRenderer),
     };
 
     const addPaymentModal = isModalOpen ? (
@@ -65,7 +60,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     return (
       <div>
         <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
-        {items} <Table data={data} />
+        <Table data={data} />
         {addPaymentModal}
       </div>
     );
@@ -80,19 +75,20 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     );
   }
 
-  private itemRenderer = (item: IPayment) => {
-    const attachments = item.attachments.map(this.attachmentRenderer);
+  private headerRenderer = () => {
+    return ['ID', 'Date paid', 'Date created', 'Attachments', 'Approved'];
+  }
 
-    return (
-      <div key={item.id}>
-        <div>{item.id}</div>
-        <div>{item.date_created}</div>
-        <div>{item.date_paid}</div>
-        <div>{item.approved}</div>
-        <div>{item.date_approved}</div>
-        <div>{attachments}</div>
-      </div>
-    );
+  private itemRenderer = (item: IPayment) => {
+    return {
+      cells: [
+        item.id,
+        parseDate(item.date_paid),
+        parseDate(item.date_created),
+        item.attachments.length,
+        item.approved ? 'Approved' : 'Not approved',
+      ],
+    };
   }
 
   private handleOnClickAddPayment = () => {
@@ -104,8 +100,9 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
   }
 
   private handleAddPayment = (datePaid: string, attachments: any[]) => {
-    console.log('###', datePaid, attachments);
     this.setState({ isModalOpen: false });
+
+    // TODO API request to create new payment here
   }
 }
 
