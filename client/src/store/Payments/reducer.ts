@@ -14,6 +14,7 @@ export function reducer(state: IState = defaultState, action: IAction): IState {
     case ActionTypes.APPROVE:
       return {
         ...state,
+        errorMessage: '',
         isLoading: true,
       };
 
@@ -40,6 +41,7 @@ export function reducer(state: IState = defaultState, action: IAction): IState {
         ...state,
         errorMessage: action.payload.errorMessage,
         isLoading: false,
+        payments: [],
       };
 
     default:
