@@ -3,7 +3,6 @@ import styled from '../css/styled';
 
 const StyledDiv = styled.div`
   text-align: center;
-  color: red;
   padding: 20px;
 `;
 
