@@ -1,7 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { getValue } from '../../common/object';
-import { APP } from '../../constants/enums';
 import * as service from '../../services/payments';
 import * as actions from './actions';
 import { ActionTypes, IAction } from './types';
@@ -54,15 +53,15 @@ function* getPaymentsSaga() {
 }
 
 function* addPaymentSaga() {
-  yield takeLatest(ActionTypes.ADD, getPayments);
+  yield takeLatest(ActionTypes.ADD, addPayment);
 }
 
 function* updatePaymentSaga() {
-  yield takeLatest(ActionTypes.UPDATE, getPayments);
+  yield takeLatest(ActionTypes.UPDATE, updatePayment);
 }
 
 function* approvePaymentSaga() {
-  yield takeLatest(ActionTypes.APPROVE, getPayments);
+  yield takeLatest(ActionTypes.APPROVE, approvePayment);
 }
 
 export {
