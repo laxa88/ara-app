@@ -86,7 +86,9 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
 
     return (
       <div>
-        <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
+        <div className={css.add}>
+          <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
+        </div>
         {table}
         {error}
         {addPaymentModal}
