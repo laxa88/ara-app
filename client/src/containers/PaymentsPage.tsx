@@ -39,20 +39,34 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
 
   public render() {
     const { isModalOpen } = this.state;
-    const { errorMessage, isLoading, payments } = this.props;
+    const {
+      errorMessageAdd,
+      errorMessageApprove,
+      errorMessageGet,
+      errorMessageUpdate,
+      isLoadingAdd,
+      isLoadingApprove,
+      isLoadingGet,
+      isLoadingUpdate,
+      payments,
+    } = this.props;
 
     const data = {
       headers: this.headerRenderer(),
       rows: payments.map(this.itemRenderer),
     };
 
-    const table = isLoading ? (
+    const table = isLoadingGet ? (
       <Loading>Loading payment data...</Loading>
     ) : (
       <Table data={data} />
     );
 
-    const error = errorMessage ? <Error>{errorMessage}</Error> : undefined;
+    const error = errorMessageGet ? (
+      <Error>{errorMessageGet}</Error>
+    ) : (
+      undefined
+    );
 
     const addPaymentModal = isModalOpen ? (
       <PaymentAdd
@@ -113,8 +127,16 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
 }
 
 const mapStateToProps = (state: IReducers): Props => ({
-  errorMessage: state.payments.errorMessage,
-  isLoading: state.payments.isLoading,
+  errorMessageAdd: state.payments.errorMessageAdd,
+  errorMessageApprove: state.payments.errorMessageApprove,
+  errorMessageGet: state.payments.errorMessageGet,
+  errorMessageUpdate: state.payments.errorMessageUpdate,
+
+  isLoadingAdd: state.payments.isLoadingAdd,
+  isLoadingApprove: state.payments.isLoadingApprove,
+  isLoadingGet: state.payments.isLoadingGet,
+  isLoadingUpdate: state.payments.isLoadingUpdate,
+
   payments: state.payments.payments,
 });
 

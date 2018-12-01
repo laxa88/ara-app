@@ -41,14 +41,30 @@ export interface IAction {
 }
 
 export interface IState {
-  errorMessage: string;
-  isLoading: boolean;
+  errorMessageGet: string;
+  errorMessageAdd: string;
+  errorMessageUpdate: string;
+  errorMessageApprove: string;
+
+  isLoadingGet: boolean;
+  isLoadingAdd: boolean;
+  isLoadingUpdate: boolean;
+  isLoadingApprove: boolean;
+
   payments: IPayment[];
 }
 
 export interface IProps {
-  errorMessage: string;
-  isLoading: boolean;
+  errorMessageGet: string;
+  errorMessageAdd: string;
+  errorMessageUpdate: string;
+  errorMessageApprove: string;
+
+  isLoadingGet: boolean;
+  isLoadingAdd: boolean;
+  isLoadingUpdate: boolean;
+  isLoadingApprove: boolean;
+
   payments: IPayment[];
 }
 
