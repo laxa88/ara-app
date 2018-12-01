@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-import { APP } from '../constants/enums';
 import * as paths from '../constants/paths';
-import { getCookie } from './cookie';
 import { getAuthHeader } from './headers';
 
 export function getPayments() {
