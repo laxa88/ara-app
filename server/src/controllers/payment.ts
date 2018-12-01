@@ -64,7 +64,7 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
       }
 
       // Sort attachments from latest to oldest
-      payment.attachments.sort((a, b) => a.id > b.id ? -1 : 0);
+      payment.attachments.sort((a, b) => (a.id > b.id ? -1 : 0));
 
       return acc;
     }, []);
