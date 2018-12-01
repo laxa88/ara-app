@@ -16,12 +16,16 @@ import {
 } from '../store/Payments/types';
 import { IReducers } from '../store/types';
 
+import * as css from './PaymentsPage.css';
+
 export type Dispatch = IDispatch;
 export type Props = IProps;
 export type ClassProps = Props & Dispatch;
 
 interface IClassState {
-  isModalOpen: boolean;
+  editId: number;
+  isAddModalOpen: boolean;
+  isEditModalOpen: boolean;
 }
 
 class PaymentsPage extends React.Component<ClassProps, IClassState> {
@@ -29,7 +33,9 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     super(props);
 
     this.state = {
-      isModalOpen: false,
+      editId: null,
+      isAddModalOpen: false,
+      isEditModalOpen: false,
     };
   }
 
@@ -38,7 +44,8 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
   }
 
   public render() {
-    const { isModalOpen } = this.state;
+    const { isAddModalOpen, isEditModalOpen } = this.state;
+
     const {
       errorMessageAdd,
       errorMessageApprove,
@@ -68,7 +75,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
       undefined
     );
 
-    const addPaymentModal = isModalOpen ? (
+    const addPaymentModal = isAddModalOpen ? (
       <PaymentAdd
         onClickAdd={this.handleAddPayment}
         onClickCancel={this.handleAddPaymentCancel}
@@ -97,10 +104,18 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
   }
 
   private headerRenderer = () => {
-    return ['ID', 'Date paid', 'Date created', 'Attachments', 'Approved'];
+    return ['ID', 'Date paid', 'Date created', 'Attachments', 'Approved', ''];
   }
 
   private itemRenderer = (item: IPayment) => {
+    const editButton = (
+      <div className={css.cell}>
+        <Button key={item.id} onClick={this.handleOnClickEdit(item.id)}>
+          Edit
+        </Button>
+      </div>
+    );
+
     return {
       cells: [
         item.id,
@@ -108,20 +123,28 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
         parseDate(item.date_created),
         item.attachments.length,
         item.approved ? 'Approved' : 'Not approved',
+        editButton,
       ],
     };
   }
 
   private handleOnClickAddPayment = () => {
-    this.setState({ isModalOpen: true });
+    this.setState({ isAddModalOpen: true });
+  }
+
+  private handleOnClickEdit = (id: number) => () => {
+    this.setState({
+      editId: id,
+      isEditModalOpen: true,
+    });
   }
 
   private handleAddPaymentCancel = () => {
-    this.setState({ isModalOpen: false });
+    this.setState({ isAddModalOpen: false });
   }
 
   private handleAddPayment = (datePaid: string, attachments: any[]) => {
-    this.setState({ isModalOpen: false });
+    this.setState({ isAddModalOpen: false });
     this.props.addPayment(datePaid);
   }
 }
