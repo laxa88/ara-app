@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getDate } from '../../common/date';
+import { getMonth } from '../../common/date';
 import styled from '../../css/styled';
 import Button from '../Button';
 import InputFileForm from '../InputFileForm';
@@ -43,7 +43,7 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
 
     this.state = {
       attachments: [],
-      datePaid: getDate(),
+      datePaid: getMonth(),
       previews: [],
     };
   }
@@ -59,7 +59,7 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
           label="Date paid"
           value={this.state.datePaid}
           onChange={this.handleOnChangeDatePaid}
-          type="date"
+          type="month"
         />
 
         <div>
