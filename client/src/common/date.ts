@@ -1,9 +1,6 @@
 // https://stackoverflow.com/questions/23593052/format-javascript-date-to-yyyy-mm-dd
 
-/**
- * Returns today's date, e.g. "2018-11-16"
- */
-const getDate = () => {
+const getDateData = () => {
   const d = new Date();
 
   const year = d.getFullYear();
@@ -17,8 +14,24 @@ const getDate = () => {
     day = `0${day}`;
   }
 
-  const resultDate = [year, month, day].join('-');
+  return { year, month, day };
+};
 
+/**
+ * Returns current month, e.g. "2018-11"
+ */
+const getMonth = () => {
+  const { year, month } = getDateData();
+  const resultDate = [year, month].join('-');
+  return resultDate;
+};
+
+/**
+ * Returns today's date, e.g. "2018-11-16"
+ */
+const getDate = () => {
+  const { year, month, day } = getDateData();
+  const resultDate = [year, month, day].join('-');
   return resultDate;
 };
 
@@ -64,4 +77,4 @@ const parseDate = (date: string) => {
   return date.substr(0, 10);
 };
 
-export { getDate, getTime, formatDate, parseDate };
+export { getMonth, getDate, getTime, formatDate, parseDate };
