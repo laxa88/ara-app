@@ -93,7 +93,14 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - ~~Login page~~
   - Manage user details page
   - Payments page
+    - ~~Get payments~~
+    - Add payment
+    - Edit payment
+    - Add attachment
+    - Delete attachment
   - Admin page
+    - Get payments (all users)
+    - Approve payment
   - ~~Token expiry~~
 - Server
   - ~~Public: Login~~
