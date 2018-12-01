@@ -64,8 +64,8 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
 
     return (
       <div>
-        {items} <Table data={data} />
         <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
+        {items} <Table data={data} />
         {addPaymentModal}
       </div>
     );
