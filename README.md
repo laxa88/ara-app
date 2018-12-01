@@ -72,7 +72,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add redux saga middleware~~
 - ~~Add react-router~~
 - Add react-router-redux
-- Add redux persistor
+- ~~Add redux persistor~~
 - Add debugger
 
 ## Phase 2 TODO
@@ -116,8 +116,8 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - Setup Selenium
 - Add Selenium tests
 - Add tests and coverage to 100%
-- Add CSS loaders
-- Add image/file loaders
+- ~~Add CSS loaders~~
+- ~~Add image/file loaders~~
 - Add code splitting
 - Add CI pipeline
 
