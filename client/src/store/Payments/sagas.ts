@@ -20,6 +20,7 @@ function* addPayment(action: IAction) {
     const { date_paid } = action.payload;
     yield call(service.addPayment, date_paid);
     yield put<IAction>(actions.addPaymentSuccess());
+    yield put<IAction>(actions.getPayments());
   } catch (e) {
     const message = getValue(e, 'response.data.message') || e.toString();
     yield put<IAction>(actions.addPaymentFail(message));
