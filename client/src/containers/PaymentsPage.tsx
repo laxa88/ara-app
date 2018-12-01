@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import Button from '../components/Button';
-import ModalPaymentAdd from '../components/ModalPaymentAdd';
+import PaymentAdd from '../components/modals/PaymentAdd';
 import Table from '../components/Table';
 import * as paymentsActions from '../store/Payments/actions';
 import {
@@ -54,7 +54,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     };
 
     const addPaymentModal = isModalOpen ? (
-      <ModalPaymentAdd onClickAdd={this.handleAddPayment} />
+      <PaymentAdd onClickAdd={this.handleAddPayment} />
     ) : (
       undefined
     );

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import styled from '../css/styled';
-import Button from './Button';
-import InputFileForm from './InputFileForm';
-import InputForm from './InputForm';
+import { getDate } from '../../common/date';
+import styled from '../../css/styled';
+import Button from '../Button';
+import InputFileForm from '../InputFileForm';
+import InputForm from '../InputForm';
 
 const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
@@ -63,7 +64,7 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
 
     this.state = {
       attachments: [],
-      datePaid: '',
+      datePaid: getDate(),
       previews: [],
     };
   }
