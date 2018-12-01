@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { parseDate } from '../common/date';
 import Button from '../components/Button';
+import Loading from '../components/Loading';
 import PaymentAdd from '../components/modals/PaymentAdd';
 import Table from '../components/Table';
 import * as paymentsActions from '../store/Payments/actions';
@@ -31,10 +32,6 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     };
   }
 
-  public componentWillMount() {
-    this.props.getPayments();
-  }
-
   public componentDidMount() {
     this.props.getPayments();
   }
@@ -48,6 +45,12 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
       rows: payments.map(this.itemRenderer),
     };
 
+    const table = isLoading ? (
+      <Loading>Loading payment data...</Loading>
+    ) : (
+      <Table data={data} />
+    );
+
     const addPaymentModal = isModalOpen ? (
       <PaymentAdd
         onClickAdd={this.handleAddPayment}
@@ -60,7 +63,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     return (
       <div>
         <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
-        <Table data={data} />
+        {table}
         {addPaymentModal}
       </div>
     );
@@ -101,8 +104,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
 
   private handleAddPayment = (datePaid: string, attachments: any[]) => {
     this.setState({ isModalOpen: false });
-
-    // TODO API request to create new payment here
+    this.props.addPayment(datePaid);
   }
 }
 
