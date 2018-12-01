@@ -91,7 +91,7 @@ class FileForm extends React.Component<IProps, IState> {
     for (let i = 0; i < files.length; i += 1) {
       readFile(files.item(i));
     }
-  };
+  }
 }
 
 export default FileForm;
