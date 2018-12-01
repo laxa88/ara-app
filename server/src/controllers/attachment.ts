@@ -48,7 +48,7 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
     return;
   }
 
-  const maxFilesAllowed = 10;
+  const maxFilesAllowed = 5;
 
   const logic = async (pc: pg.PoolClient) => {
     const result1 = await pc.query(
