@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { parseDate } from '../common/date';
 import Button from '../components/Button';
+import Error from '../components/Error';
 import Loading from '../components/Loading';
 import PaymentAdd from '../components/modals/PaymentAdd';
 import Table from '../components/Table';
@@ -51,6 +52,8 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
       <Table data={data} />
     );
 
+    const error = errorMessage ? <Error>{errorMessage}</Error> : undefined;
+
     const addPaymentModal = isModalOpen ? (
       <PaymentAdd
         onClickAdd={this.handleAddPayment}
@@ -64,6 +67,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
       <div>
         <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
         {table}
+        {error}
         {addPaymentModal}
       </div>
     );
