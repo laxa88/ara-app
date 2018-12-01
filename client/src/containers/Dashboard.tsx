@@ -12,6 +12,8 @@ import { IReducers } from '../store/types';
 import DetailsPage from './DetailsPage';
 import PaymentsPage from './PaymentsPage';
 
+import * as css from './Dashboard.css';
+
 export type Props = IProps & IDispatch;
 
 class DashboardPage extends React.Component<Props, {}> {
@@ -28,7 +30,7 @@ class DashboardPage extends React.Component<Props, {}> {
 
     return (
       <div>
-        <ul>
+        <ul className={css.list}>
           <li>
             <MenuItem
               to={`${this.props.match.url}/details`}

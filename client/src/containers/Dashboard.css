@@ -1,0 +1,20 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.list li {
+  padding: 10px;
+}
+
+@media (max-width: 480px) {
+  .list {
+    flex-direction: column;
+  }
+
+  .list li {
+    text-align: center;
+  }
+}
