@@ -57,4 +57,11 @@ const formatDate = () => {
   return result;
 };
 
-export { getDate, getTime, formatDate };
+/**
+ * Parses data, e.g. "2018-12-01T15:00:00.000Z" to "2018-12-01"
+ */
+const parseDate = (date: string) => {
+  return date.substr(0, 10);
+};
+
+export { getDate, getTime, formatDate, parseDate };
