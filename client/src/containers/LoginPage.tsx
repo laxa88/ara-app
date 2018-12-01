@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import * as Redux from 'redux';
 
 import Button from '../components/Button';
+import Error from '../components/Error';
 import InputForm from '../components/InputForm';
 import styled from '../css/styled';
 import { getSessionData } from '../services/session';
@@ -31,10 +32,6 @@ const Form = styled.form`
   box-sizing: border-box;
   margin: 15px 0;
   max-width: 600px;
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
 `;
 
 export type Dispatch = ILoginPageDispatch & IAuthDispatch;
@@ -75,7 +72,7 @@ export class LoginPage extends React.Component<ClassProps, {}> {
             onChange={this.onChangePassword}
           />
 
-          <ErrorMessage>{errorMessage}</ErrorMessage>
+          <Error>{errorMessage}</Error>
 
           <Button disabled={isLoading} onClick={this.onClickLogin}>
             Login
