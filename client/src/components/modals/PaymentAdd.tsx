@@ -4,29 +4,7 @@ import styled from '../../css/styled';
 import Button from '../Button';
 import InputFileForm from '../InputFileForm';
 import InputForm from '../InputForm';
-
-const Overlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-`;
-
-const Modal = styled.div`
-  background-color: white;
-  width: 80%;
-  max-width: 480px;
-  border-radius: 5px;
-  padding: 24px;
-  margin: 24px;
-  max-height: 80%;
-  overflow: auto;
-`;
+import Modal from './Modal';
 
 const Header = styled.h2`
   margin: 0 10px 20px;
@@ -50,6 +28,7 @@ const PreviewImage = styled.img`
 
 interface IProps {
   onClickAdd: (datePaid: string, attachments: any) => void;
+  onClickCancel: () => void;
 }
 
 interface IState {
@@ -70,35 +49,37 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const disabled = !this.state.datePaid;
+    const disabled = !(this.state.datePaid && this.state.previews.length);
 
     return (
-      <Overlay>
-        <Modal>
-          <Header>Add new payment</Header>
+      <Modal>
+        <Header>Add new payment</Header>
 
-          <InputForm
-            label="Date paid"
-            value={this.state.datePaid}
-            onChange={this.handleOnChangeDatePaid}
-            type="date"
+        <InputForm
+          label="Date paid"
+          value={this.state.datePaid}
+          onChange={this.handleOnChangeDatePaid}
+          type="date"
+        />
+
+        <div>
+          <InputFileForm
+            label="Attachments"
+            onLoadedFiles={this.handleOnLoadedFiles}
+            accept="image/*"
           />
 
-          <div>
-            <InputFileForm
-              label="Attachments"
-              onLoadedFiles={this.handleOnLoadedFiles}
-              accept="image/*"
-            />
+          {this.renderAttachments()}
+        </div>
 
-            {this.renderAttachments()}
-          </div>
-
+        <div>
           <Button disabled={disabled} onClick={this.handleOnClickAdd}>
             Add
           </Button>
-        </Modal>
-      </Overlay>
+
+          <Button onClick={this.handleOnClickCancel}>Cancel</Button>
+        </div>
+      </Modal>
     );
   }
 
@@ -125,6 +106,10 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
     const { datePaid, attachments } = this.state;
 
     this.props.onClickAdd(datePaid, attachments);
+  }
+
+  private handleOnClickCancel = () => {
+    this.props.onClickCancel();
   }
 }
 
