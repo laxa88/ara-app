@@ -23,7 +23,26 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          { loader: 'style-loader' },
+          {
+            // Note: This is an extension of css-loader, to fix
+            // the issue where Typescript can't find CSS file defs.
+            loader: 'typings-for-css-modules-loader',
+            options: {
+              // original css-loader options
+              importLoaders: 1,
+              camelCase: true,
+              minimize: true,
+              modules: true,
+              sourceMap: true,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+
+              // specific options for typings-for-css-modules-loader
+              namedExport: true,
+            },
+          },
+        ],
       },
 
       {
