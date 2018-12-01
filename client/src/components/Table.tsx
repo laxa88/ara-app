@@ -27,6 +27,7 @@ const HeaderRow = styled.div`
 const CellRow = styled.div`
   display: flex;
   padding: 10px;
+  align-items: center;
 
   @media (max-width: 480px) {
     display: block;
