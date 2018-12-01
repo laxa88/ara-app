@@ -54,7 +54,10 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     };
 
     const addPaymentModal = isModalOpen ? (
-      <PaymentAdd onClickAdd={this.handleAddPayment} />
+      <PaymentAdd
+        onClickAdd={this.handleAddPayment}
+        onClickCancel={this.handleAddPaymentCancel}
+      />
     ) : (
       undefined
     );
@@ -94,6 +97,10 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
 
   private handleOnClickAddPayment = () => {
     this.setState({ isModalOpen: true });
+  }
+
+  private handleAddPaymentCancel = () => {
+    this.setState({ isModalOpen: false });
   }
 
   private handleAddPayment = (datePaid: string, attachments: any[]) => {
