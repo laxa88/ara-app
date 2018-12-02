@@ -5,11 +5,11 @@ import { parseDate } from '../common/date';
 import Button from '../components/Button';
 import Error from '../components/Error';
 import Loading from '../components/Loading';
-import PaymentAdd from '../components/modals/PaymentAdd';
+import ModalPayment from '../components/modals/ModalPayment';
 import Table from '../components/Table';
 import * as paymentsActions from '../store/Payments/actions';
 import {
-  IAttachment,
+  // IAttachment,
   IDispatch,
   IPayment,
   IProps,
@@ -76,8 +76,8 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     );
 
     const addPaymentModal = isAddModalOpen ? (
-      <PaymentAdd
-        onClickAdd={this.handleAddPayment}
+      <ModalPayment
+        onClickConfirm={this.handleAddPayment}
         onClickCancel={this.handleAddPaymentCancel}
       />
     ) : (
@@ -87,7 +87,9 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     return (
       <div>
         <div className={css.add}>
-          <Button onClick={this.handleOnClickAddPayment}>Add Payment</Button>
+          <Button onClick={this.handleOnClickConfirmPayment}>
+            Add Payment
+          </Button>
         </div>
         {table}
         {error}
@@ -96,14 +98,14 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     );
   }
 
-  private attachmentRenderer = (attachment: IAttachment) => {
-    return (
-      <div key={attachment.id}>
-        <div>{attachment.file_name}</div>
-        <div>{attachment.id}</div>
-      </div>
-    );
-  }
+  // private attachmentRenderer = (attachment: IAttachment) => {
+  //   return (
+  //     <div key={attachment.id}>
+  //       <div>{attachment.file_name}</div>
+  //       <div>{attachment.id}</div>
+  //     </div>
+  //   );
+  // }
 
   private headerRenderer = () => {
     return ['ID', 'Date paid', 'Date created', 'Attachments', 'Approved', ''];
@@ -130,7 +132,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     };
   }
 
-  private handleOnClickAddPayment = () => {
+  private handleOnClickConfirmPayment = () => {
     this.setState({ isAddModalOpen: true });
   }
 

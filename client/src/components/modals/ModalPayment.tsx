@@ -8,6 +8,7 @@ import Modal from './Modal';
 
 const Header = styled.h2`
   margin: 0 10px 20px;
+  text-align: center;
 `;
 
 const PreviewContainer = styled.div`
@@ -27,7 +28,7 @@ const PreviewImage = styled.img`
 `;
 
 interface IProps {
-  onClickAdd: (datePaid: string, attachments: any) => void;
+  onClickConfirm: (datePaid: string, attachments: any) => void;
   onClickCancel: () => void;
 }
 
@@ -37,7 +38,7 @@ interface IState {
   attachments: File[];
 }
 
-class ModalPaymentAdd extends React.Component<IProps, IState> {
+class ModalPayment extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -53,7 +54,7 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
 
     return (
       <Modal>
-        <Header>Add new payment</Header>
+        <Header>New payment</Header>
 
         <InputForm
           label="Date paid"
@@ -73,7 +74,7 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
         </div>
 
         <div>
-          <Button disabled={disabled} onClick={this.handleOnClickAdd}>
+          <Button disabled={disabled} onClick={this.handleOnClickConfirm}>
             Add
           </Button>
 
@@ -102,10 +103,10 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
     this.setState({ previews: dataUrls, attachments: files });
   }
 
-  private handleOnClickAdd = () => {
+  private handleOnClickConfirm = () => {
     const { datePaid, attachments } = this.state;
 
-    this.props.onClickAdd(datePaid, attachments);
+    this.props.onClickConfirm(datePaid, attachments);
   }
 
   private handleOnClickCancel = () => {
@@ -113,4 +114,4 @@ class ModalPaymentAdd extends React.Component<IProps, IState> {
   }
 }
 
-export default ModalPaymentAdd;
+export default ModalPayment;
