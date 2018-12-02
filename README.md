@@ -15,6 +15,25 @@ Write an single-page app with the following features:
 
 That way, the Whatsapp group can be be safely used exclusively for casual banter.
 
+## Requirements
+
+### User
+
+- Able to add new payment details
+- Able to edit payment details
+- Able to upload attachment images for a payment
+- Able to delete attachment images for a payment
+
+### Admin
+
+- Able to approve a user's payment
+
+### All users
+
+- Able to view calendar of all users' payment statuses
+- Able to view a selected user's payment details
+- Able to view map of all users in the neighbourhood
+
 ## Self Notes
 
 - If `styled-components` autocomplete does not work, try another option in `CTRL + SHIFT + P` > `Select TypeScript Version`
