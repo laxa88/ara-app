@@ -1,10 +1,10 @@
 import Express from "express";
+import moment from "moment";
 import pg from "pg";
 import SQL from "sql-template-strings";
 import { IAttachment, IPayment } from "../definitions/payment";
 import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
-import { formatDate } from "../helpers/date";
 import { handleException } from "../helpers/error";
 import { parseToken } from "../helpers/token";
 
@@ -47,9 +47,9 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
         payment = {
           approved,
           attachments: [],
-          date_approved,
-          date_created,
-          date_paid,
+          date_approved: moment(date_approved).format("YYYY-MM"),
+          date_created: moment(date_created).format("YYYY-MM"),
+          date_paid: moment(date_paid).format("YYYY-MM"),
           id: payment_id,
         };
 
@@ -90,7 +90,7 @@ const addPayment = async (req: Express.Request, res: Express.Response) => {
   }
 
   const logic = async (pc: pg.PoolClient) => {
-    const dateCreated = formatDate();
+    const dateCreated = moment().format("YYYY-MM");
 
     await pc.query(
       SQL`
@@ -164,7 +164,7 @@ const approvePayment = async (req: Express.Request, res: Express.Response) => {
   }
 
   const logic = async (pc: pg.PoolClient) => {
-    const currDate = formatDate();
+    const currDate = moment().format("YYYY-MM");
 
     const result = await pc.query(
       SQL`
