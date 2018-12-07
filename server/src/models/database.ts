@@ -154,8 +154,7 @@ const createDb = async () => {
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id),
         date_created TIMESTAMP NOT NULL,
-        date_paid TIMESTAMP NOT NULL,
-        date_approved TIMESTAMP,
+        amount INTEGER NOT NULL,
         approved BOOLEAN NOT NULL
       );
       `,

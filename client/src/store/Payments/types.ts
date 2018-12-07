@@ -20,18 +20,16 @@ export interface IAttachment {
 
 export interface IPayment {
   id: number;
-  attachments: IAttachment[];
-  approved: boolean;
-  date_approved: string;
   date_created: string;
-  date_paid: string;
+  attachments: IAttachment[];
+  amount: number;
+  approved: boolean;
 }
 
 export interface IAction {
   type: string;
   payload?: {
     approved?: boolean;
-    date_paid?: string;
     errorMessage?: string;
     id?: number;
     payments?: IPayment[];

@@ -15,12 +15,11 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
     const result = await pc.query(
       SQL`
         SELECT
-          attachments.id as attachment_id,
           payments.id as payment_id,
+          attachments.id as attachment_id,
+          amount,
           approved,
-          date_approved,
           date_created,
-          date_paid,
           file_name
         FROM payments
         LEFT JOIN attachments
@@ -32,24 +31,22 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
 
     const payments = result.rows.reduce((acc: IPayment[], curr) => {
       const {
-        payment_id,
-        attachment_id,
+        amount,
         approved,
-        date_approved,
+        attachment_id,
         date_created,
-        date_paid,
         file_name,
+        payment_id,
       } = curr;
 
       let payment = acc.find((item: IPayment) => item.id === payment_id);
 
       if (!payment) {
         payment = {
+          amount,
           approved,
           attachments: [],
-          date_approved: moment(date_approved).format("YYYY-MM"),
           date_created: moment(date_created).format("YYYY-MM"),
-          date_paid: moment(date_paid).format("YYYY-MM"),
           id: payment_id,
         };
 
@@ -169,9 +166,7 @@ const approvePayment = async (req: Express.Request, res: Express.Response) => {
     const result = await pc.query(
       SQL`
         UPDATE payments
-        SET
-          date_approved = ${currDate},
-          approved = ${approved === "true"}
+        SET approved = ${approved === "true"}
         WHERE id = ${id}
         AND user_id = ${userData.data.id}
       `,
