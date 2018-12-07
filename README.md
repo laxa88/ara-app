@@ -19,10 +19,8 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 
 ### User
 
-- Able to add new payment details
-- Able to edit payment details
-- Able to upload attachment images for a payment
-- Able to delete attachment images for a payment
+- Able to add new payment
+- Able to edit payment
 
 ### Admin
 
@@ -31,8 +29,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 ### All users
 
 - Able to view calendar of all users' payment statuses
-- Able to view a selected user's payment details
-- Able to view map of all users in the neighbourhood
+- Able to view list of all user payments
 
 ## Self Notes
 
