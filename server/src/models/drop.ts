@@ -5,13 +5,7 @@ import config from "../../../config";
 // ts-node src\models\drop.ts
 
 const deleteDb = async () => {
-  const {
-    host,
-    port,
-    database,
-    user,
-    password,
-  } = config;
+  const { host, port, database, user, password } = config;
 
   const db = new pg.Client({
     database,
@@ -24,7 +18,13 @@ const deleteDb = async () => {
   await db.connect();
 
   const errors: string[] = [];
-  const tables = ["houses", "users", "payments", "attachments"];
+  const tables = [
+    "houses",
+    "users",
+    "payments",
+    "payment_dates",
+    "attachments",
+  ];
 
   for (const t of tables) {
     try {

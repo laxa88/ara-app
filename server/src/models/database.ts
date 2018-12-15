@@ -38,9 +38,13 @@ const createDb = async () => {
 
   const errors: string[] = [];
 
-  // ==================================================
-  // houses
-  // ==================================================
+  /***************************************************
+    Houses
+
+    Each house belongs to a street, and has two numbers:
+    - The house number (publicly displayed)
+    - The unit number (number used by real estate developer)
+  ***************************************************/
 
   try {
     await db.query(
@@ -82,9 +86,15 @@ const createDb = async () => {
     errors.push(e.toString());
   }
 
-  // ==================================================
-  // users
-  // ==================================================
+  /***************************************************
+    Users
+
+    Every user should only be allowed to create a payment
+    for themselves, and not anyone else. Each user should
+    only belong to one house (unless they're rich enough
+    to purchase more), in which case, they'll be forced
+    to have one account for each house.
+  ***************************************************/
 
   try {
     await db.query(
@@ -92,8 +102,8 @@ const createDb = async () => {
       CREATE TABLE users
       (
         id SERIAL PRIMARY KEY,
-        user_type TEXT NOT NULL,
         house_id INTEGER REFERENCES houses(id),
+        user_type TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
         first_name TEXT NOT NULL,
@@ -137,14 +147,25 @@ const createDb = async () => {
   }
 
   // ==================================================
-  // payments
+  // set time zone
   // ==================================================
 
   try {
-    await db.query(SQL`	SET timezone = 'Asia/Kuala_Lumpur';`);
+    await db.query(SQL`SET timezone = 'Asia/Kuala_Lumpur';`);
   } catch (e) {
     errors.push(e.toString());
   }
+
+  /***************************************************
+    Payments
+
+    This is the core requirement of the app. Each user
+    should be able to:
+    - Make a new payment
+    - Upload attachment image(s)
+    - Describe the details (payment and remarks)
+    - Check the state of approval by the committee
+  ***************************************************/
 
   try {
     await db.query(
@@ -153,9 +174,10 @@ const createDb = async () => {
       (
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id),
+        approver_id INTEGER REFERENCES users(id),
         date_created TIMESTAMP NOT NULL,
         amount INTEGER NOT NULL,
-        approved BOOLEAN NOT NULL
+        remarks TEXT
       );
       `,
     );
@@ -163,9 +185,41 @@ const createDb = async () => {
     errors.push(e.toString());
   }
 
-  // ==================================================
-  // attachments
-  // ==================================================
+  /***************************************************
+    Payment Dates
+
+    The current main reason for making payments is to
+    keep track of the monthly security fee. The fee is
+    fixed every month, so naturally a "payment" should
+    have at least one date.
+
+    If a user makes a bulk payment (e.g. One payment for 3 months)
+  ***************************************************/
+
+  try {
+    await db.query(
+      SQL`
+      CREATE TABLE payment_dates
+      (
+        id SERIAL PRIMARY KEY,
+        date TIMESTAMP NOT NULL,
+        payment_id INTEGER REFERENCES payments(id),
+        approver_id INTEGER REFERENCES users(id)
+      );
+      `,
+    );
+  } catch (e) {
+    errors.push(e.toString());
+  }
+
+  /***************************************************
+    Attachments
+
+    At least one attachment (image) is required for each new
+    payment as evidence. In most cases a payment should only
+    have one proof of receipt, but just in case, we allow
+    multiple attachments for one payment.
+  ***************************************************/
 
   try {
     await db.query(
@@ -182,9 +236,9 @@ const createDb = async () => {
     errors.push(e.toString());
   }
 
-  // ==================================================
-  // end
-  // ==================================================
+  /***************************************************
+    Close the database connection when we're done.
+  ***************************************************/
 
   await db.end();
 

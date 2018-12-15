@@ -7,8 +7,8 @@
     "test": "jest --coverage",
     "build": "tsc -p .",
     "start": "nodemon",
-    "db-tb-setup": "ts-node src/models/database.ts",
-    "db-tb-drop": "ts-node src/models/drop.ts"
+    "db-setup": "ts-node src/models/database.ts",
+    "db-drop": "ts-node src/models/drop.ts"
   },
   "author": "",
   "license": "ISC",
