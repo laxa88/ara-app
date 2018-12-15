@@ -19,7 +19,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 
 ### User
 
-- Able to add new payment
+- Able to create payment
 - Able to edit payment
 
 ### Admin
@@ -70,7 +70,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - Edit the `config.js` (refer to `config.template.js` for reference)
 - Navigate to `/server` folder and run `yarn db-tb-setup`.
 
-## Phase 1 TODO
+## Phase 1 Client code
 
 - ~~Install react~~
 - ~~Install webpack~~
@@ -90,8 +90,10 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - Add react-router-redux
 - ~~Add redux persistor~~
 - Add debugger
+- ~~Add CSS loaders~~
+- ~~Add image/file loaders~~
 
-## Phase 2 TODO
+## Phase 2 Server code
 
 - ~~Setup server~~
 - ~~Setup database~~
@@ -103,7 +105,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 - ~~Add tslint~~
 - ~~Add debugger~~
 
-## Phase 3 TODO
+## Phase 3 Feature implementation
 
 - Client UI
   - ~~Login page~~
@@ -134,18 +136,20 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - ~~Super: Update house~~
   - Add SQL contracts
 
-## Phase 4 TODO
+## Phase 4 Deploy
+
+- Get hosting & domain name
+- Deploy
+
+## Phase 5 Maintenance
 
 - Setup Selenium
 - Add Selenium tests
-- Add tests and coverage to 100%
-- ~~Add CSS loaders~~
-- ~~Add image/file loaders~~
+- Setup docker for DB tests
+- Add unit tests
 - Add code splitting
-- Add CI pipeline
 
-## Phase 5 TODO
+## Phase 6 CI/CD
 
-- Get hosting & domain name
-- Setup docker
-- Deploy
+- Setup CI/CD pipeline
+- Automate master updates to trigger new deployments
