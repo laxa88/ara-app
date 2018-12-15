@@ -72,7 +72,7 @@ const createDb = async () => {
     const houseCount = 182;
     const houseQueries = [];
     for (let i = 1; i <= houseCount; i += 1) {
-      houseQueries.push(`('WP 2/x', 12345, ${i})`);
+      houseQueries.push(`('WP 2/x', ${i}, ${i})`);
     }
 
     await db.query(
