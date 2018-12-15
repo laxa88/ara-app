@@ -143,6 +143,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 
 ## Phase 5 Maintenance
 
+- Setup Swagger
 - Setup Selenium
 - Add Selenium tests
 - Setup docker for DB tests
