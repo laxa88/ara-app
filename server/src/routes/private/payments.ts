@@ -27,4 +27,9 @@ export default (router: Router) => {
   );
 
   router.put("/v1/payments/:id/approve", controllers.payment.approvePayment);
+
+  router.put(
+    "/v1/payments/:id/approve/month",
+    controllers.payment.approveMonthPayment,
+  );
 };

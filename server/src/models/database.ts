@@ -188,12 +188,13 @@ const createDb = async () => {
   /***************************************************
     Payment Dates
 
-    The current main reason for making payments is to
-    keep track of the monthly security fee. The fee is
-    fixed every month, so naturally a "payment" should
-    have at least one date.
+    This table is separate from "payments" table, as it
+    only keeps track of approved monthly payments by
+    user. The admin will be responsible for tallying
+    payments with actual months that each payment was for.
 
-    If a user makes a bulk payment (e.g. One payment for 3 months)
+    Note: The "date" field is "TEXT" instead of "TIMESTAMP"
+    because we only care for YYYY-MM formats.
   ***************************************************/
 
   try {
@@ -202,8 +203,8 @@ const createDb = async () => {
       CREATE TABLE payment_dates
       (
         id SERIAL PRIMARY KEY,
-        date TIMESTAMP NOT NULL,
-        payment_id INTEGER REFERENCES payments(id),
+        date TEXT NOT NULL,
+        user_id INTEGER REFERENCES users(id),
         approver_id INTEGER REFERENCES users(id)
       );
       `,

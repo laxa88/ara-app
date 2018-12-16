@@ -11,3 +11,10 @@ export interface IPayment {
   amount: number;
   remarks: string;
 }
+
+export interface IMonthPayment {
+  id: number;
+  date: string;
+  userId: number;
+  approverId: number;
+}

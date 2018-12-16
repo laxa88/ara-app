@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import moment from "moment";
 import pg from "pg";
 import SQL from "sql-template-strings";
-import { IPayment } from "../definitions/payment";
+import { IMonthPayment, IPayment } from "../definitions/payment";
 import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
 import { handleException } from "../helpers/error";
@@ -49,22 +49,18 @@ const getAllPaymentsSQL = () => {
 const getMonthPaymentsSQL = () => {
   return SQL`
     SELECT
-      payments.id as payment_id,
-      attachments.id as attachment_id,
-      amount,
-      approver_id,
-      date_created,
-      amount,
-      remarks,
-      file_name
-    FROM payments
-    LEFT JOIN attachments
-    ON attachments.payment_id = payments.id
-    ORDER BY payments.id DESC
+      payment_dates.id as id,
+      date,
+      user_id,
+      approver_id
+    FROM payment_dates
+    LEFT JOIN users
+    ON payment_dates.user_id = users.id
+    ORDER BY payment_dates.date DESC
   `;
 };
 
-const reducePaymentRows = (rows: any) => {
+const parsePaymentRows = (rows: any) => {
   return rows.reduce((acc: IPayment[], curr: any) => {
     const {
       amount,
@@ -105,12 +101,27 @@ const reducePaymentRows = (rows: any) => {
   }, []);
 };
 
+const parseMonthPaymentRows = (rows: any) => {
+  return rows.reduce((acc: IMonthPayment[], curr: any) => {
+    if (curr.approver_id) {
+      acc.push({
+        approverId: curr.approver_id,
+        date: curr.date,
+        id: curr.id,
+        userId: curr.user_id,
+      });
+    }
+
+    return acc;
+  }, []);
+};
+
 const getPayments = async (req: Request, res: Response) => {
   const userData: IUser = parseToken(req.headers.authorization);
 
   const logic = async (pc: pg.PoolClient) => {
     const result = await pc.query(getUserPaymentsSQL(userData.data.id));
-    const payments = reducePaymentRows(result.rows);
+    const payments = parsePaymentRows(result.rows);
     res.status(200).json(payments);
   };
 
@@ -126,7 +137,7 @@ const getUserPayments = async (req: Request, res: Response) => {
 
   const logic = async (pc: pg.PoolClient) => {
     const result = await pc.query(getUserPaymentsSQL(id));
-    const payments = reducePaymentRows(result.rows);
+    const payments = parsePaymentRows(result.rows);
     res.status(200).json(payments);
   };
 
@@ -140,7 +151,7 @@ const getUserPayments = async (req: Request, res: Response) => {
 const getAllPayments = async (req: Request, res: Response) => {
   const logic = async (pc: pg.PoolClient) => {
     const result = await pc.query(getAllPaymentsSQL());
-    const payments = reducePaymentRows(result.rows);
+    const payments = parsePaymentRows(result.rows);
     res.status(200).json(payments);
   };
 
@@ -154,7 +165,7 @@ const getAllPayments = async (req: Request, res: Response) => {
 const getMonthPayments = async (req: Request, res: Response) => {
   const logic = async (pc: pg.PoolClient) => {
     const result = await pc.query(getMonthPaymentsSQL());
-    const payments = reducePaymentRows(result.rows);
+    const payments = parseMonthPaymentRows(result.rows);
     res.status(200).json(payments);
   };
 
@@ -287,6 +298,88 @@ const approvePayment = async (req: Request, res: Response) => {
   }
 };
 
+const approveMonthPayment = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const { approved, date } = req.body;
+
+  const userData: IUser = parseToken(req.headers.authorization);
+
+  if (
+    userData.data.user_type !== UserType.SUPER &&
+    userData.data.user_type !== UserType.ADMIN
+  ) {
+    res.status(403).json({ message: "Unathorised user." });
+    return;
+  }
+
+  if (typeof approved !== "boolean" || !date) {
+    res.status(403).json({ message: "Incomplete data." });
+    return;
+  }
+
+  const targetDate = moment(date).format("YYYY-MM");
+
+  if (targetDate === "Invalid date") {
+    res.status(403).json({ message: "Invalid data." });
+    return;
+  }
+
+  const logic = async (pc: pg.PoolClient) => {
+    const approverId = approved ? userData.data.id : null;
+
+    // Check if the payment exists:
+    // - If no, create a new month.
+    // - If yes, update the month.
+
+    const result1 = await pc.query(
+      SQL`
+        SELECT * FROM payment_dates
+        WHERE id = ${id}
+        AND date = ${targetDate}
+      `,
+    );
+
+    let result2;
+
+    if (result1.rowCount) {
+      result2 = SQL`
+        UPDATE payment_dates
+        SET approver_id = ${approverId}
+        WHERE id = ${id}
+        AND date = ${targetDate}
+      `;
+    } else {
+      result2 = SQL`
+        INSERT INTO payment_dates (
+          date,
+          user_id,
+          approver_id
+        )
+        VALUES (
+          ${targetDate},
+          ${id},
+          ${approverId}
+        )
+      `;
+    }
+
+    const result = await pc.query(result2);
+
+    if (result.rowCount) {
+      res.status(200).json({ message: "Success." });
+    } else {
+      res.status(400).json({ message: "Could not update payment." });
+    }
+  };
+
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
+};
+
 export {
   getPayments,
   getUserPayments,
@@ -295,4 +388,5 @@ export {
   addPayment,
   updatePayment,
   approvePayment,
+  approveMonthPayment,
 };
