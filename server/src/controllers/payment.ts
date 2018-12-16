@@ -64,11 +64,12 @@ const parsePaymentRows = (rows: any) => {
   return rows.reduce((acc: IPayment[], curr: any) => {
     const {
       amount,
-      remarks,
+      approver_id,
       attachment_id,
       date_created,
       file_name,
       payment_id,
+      remarks,
       user_id,
     } = curr;
 
@@ -77,6 +78,7 @@ const parsePaymentRows = (rows: any) => {
     if (!payment) {
       payment = {
         amount,
+        approver_id,
         attachments: [],
         date_created: moment(date_created).format(),
         id: payment_id,
@@ -267,20 +269,19 @@ const approvePayment = async (req: Request, res: Response) => {
     return;
   }
 
-  if (!approved) {
+  if (typeof approved !== "boolean") {
     res.status(403).json({ message: "Incomplete data." });
     return;
   }
 
   const logic = async (pc: pg.PoolClient) => {
-    const currDate = moment().format("YYYY-MM");
+    const approverId = approved ? userData.data.id : null;
 
     const result = await pc.query(
       SQL`
         UPDATE payments
-        SET approved = ${approved === "true"}
+        SET approver_id = ${approverId}
         WHERE id = ${id}
-        AND user_id = ${userData.data.id}
       `,
     );
 
@@ -300,7 +301,6 @@ const approvePayment = async (req: Request, res: Response) => {
 
 const approveMonthPayment = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   const { approved, date } = req.body;
 
   const userData: IUser = parseToken(req.headers.authorization);
