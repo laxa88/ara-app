@@ -1,71 +1,116 @@
-import Express from "express";
+import { Request, Response } from "express";
 import moment from "moment";
 import pg from "pg";
 import SQL from "sql-template-strings";
-import { IAttachment, IPayment } from "../definitions/payment";
+import { IPayment } from "../definitions/payment";
 import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
 import { handleException } from "../helpers/error";
 import { parseToken } from "../helpers/token";
 
-const getPayments = async (req: Express.Request, res: Express.Response) => {
+const getUserPaymentsSQL = (userId: number) => {
+  return SQL`
+    SELECT
+      payments.id as payment_id,
+      attachments.id as attachment_id,
+      amount,
+      approver_id,
+      date_created,
+      amount,
+      remarks,
+      file_name
+    FROM payments
+    LEFT JOIN attachments
+    ON attachments.payment_id = payments.id
+    WHERE payments.user_id = ${userId}
+    ORDER BY payments.id DESC
+  `;
+};
+
+const getAllPaymentsSQL = () => {
+  return SQL`
+    SELECT
+      payments.id as payment_id,
+      payments.user_id as user_id,
+      attachments.id as attachment_id,
+      amount,
+      approver_id,
+      date_created,
+      amount,
+      remarks,
+      file_name
+    FROM payments
+    LEFT JOIN attachments
+    ON attachments.payment_id = payments.id
+    ORDER BY payments.id DESC
+  `;
+};
+
+const getMonthPaymentsSQL = () => {
+  return SQL`
+    SELECT
+      payments.id as payment_id,
+      attachments.id as attachment_id,
+      amount,
+      approver_id,
+      date_created,
+      amount,
+      remarks,
+      file_name
+    FROM payments
+    LEFT JOIN attachments
+    ON attachments.payment_id = payments.id
+    ORDER BY payments.id DESC
+  `;
+};
+
+const reducePaymentRows = (rows: any) => {
+  return rows.reduce((acc: IPayment[], curr: any) => {
+    const {
+      amount,
+      remarks,
+      attachment_id,
+      date_created,
+      file_name,
+      payment_id,
+      user_id,
+    } = curr;
+
+    let payment = acc.find((item: IPayment) => item.id === payment_id);
+
+    if (!payment) {
+      payment = {
+        amount,
+        attachments: [],
+        date_created: moment(date_created).format(),
+        id: payment_id,
+        remarks,
+        user_id,
+      };
+
+      acc.push(payment);
+    }
+
+    if (attachment_id) {
+      payment.attachments.push({
+        file_name,
+        id: attachment_id,
+      });
+    }
+
+    // Sort attachments from latest to oldest
+    payment.attachments.sort((a, b) => (a.id > b.id ? -1 : 0));
+
+    return acc;
+  }, []);
+};
+
+const getPayments = async (req: Request, res: Response) => {
   const userData: IUser = parseToken(req.headers.authorization);
 
   const logic = async (pc: pg.PoolClient) => {
-    const result = await pc.query(
-      SQL`
-        SELECT
-          payments.id as payment_id,
-          attachments.id as attachment_id,
-          amount,
-          approved,
-          date_created,
-          file_name
-        FROM payments
-        LEFT JOIN attachments
-        ON attachments.payment_id = payments.id
-        WHERE payments.user_id = ${userData.data.id}
-        ORDER BY payments.id DESC
-      `,
-    );
-
-    const payments = result.rows.reduce((acc: IPayment[], curr) => {
-      const {
-        amount,
-        approved,
-        attachment_id,
-        date_created,
-        file_name,
-        payment_id,
-      } = curr;
-
-      let payment = acc.find((item: IPayment) => item.id === payment_id);
-
-      if (!payment) {
-        payment = {
-          amount,
-          approved,
-          attachments: [],
-          date_created: moment(date_created).format("YYYY-MM"),
-          id: payment_id,
-        };
-
-        acc.push(payment);
-      }
-
-      if (attachment_id) {
-        payment.attachments.push({
-          file_name,
-          id: attachment_id,
-        });
-      }
-
-      // Sort attachments from latest to oldest
-      payment.attachments.sort((a, b) => (a.id > b.id ? -1 : 0));
-
-      return acc;
-    }, []);
-
+    const result = await pc.query(getUserPaymentsSQL(userData.data.id));
+    const payments = reducePaymentRows(result.rows);
     res.status(200).json(payments);
   };
 
@@ -76,23 +121,77 @@ const getPayments = async (req: Express.Request, res: Express.Response) => {
   }
 };
 
-const addPayment = async (req: Express.Request, res: Express.Response) => {
-  const { date_paid } = req.body;
+const getUserPayments = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const logic = async (pc: pg.PoolClient) => {
+    const result = await pc.query(getUserPaymentsSQL(id));
+    const payments = reducePaymentRows(result.rows);
+    res.status(200).json(payments);
+  };
+
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
+};
+
+const getAllPayments = async (req: Request, res: Response) => {
+  const logic = async (pc: pg.PoolClient) => {
+    const result = await pc.query(getAllPaymentsSQL());
+    const payments = reducePaymentRows(result.rows);
+    res.status(200).json(payments);
+  };
+
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
+};
+
+const getMonthPayments = async (req: Request, res: Response) => {
+  const logic = async (pc: pg.PoolClient) => {
+    const result = await pc.query(getMonthPaymentsSQL());
+    const payments = reducePaymentRows(result.rows);
+    res.status(200).json(payments);
+  };
+
+  try {
+    await conn(logic);
+  } catch (e) {
+    handleException(e, res);
+  }
+};
+
+const addPayment = async (req: Request, res: Response) => {
+  const { amount, remarks } = req.body;
 
   const userData: IUser = parseToken(req.headers.authorization);
 
-  if (!date_paid) {
+  if (!amount) {
     res.status(403).json({ message: "Incomplete data." });
     return;
   }
 
   const logic = async (pc: pg.PoolClient) => {
-    const dateCreated = moment().format("YYYY-MM");
+    const dateCreated = moment();
 
     await pc.query(
       SQL`
-        INSERT INTO payments (user_id, date_created, date_paid, approved)
-        VALUES (${userData.data.id}, ${dateCreated}, ${date_paid}, false);
+        INSERT INTO payments (
+          user_id,
+          date_created,
+          amount,
+          remarks
+        )
+        VALUES (
+          ${userData.data.id},
+          ${dateCreated},
+          ${amount},
+          ${remarks}
+        );
       `,
     );
 
@@ -106,13 +205,14 @@ const addPayment = async (req: Express.Request, res: Express.Response) => {
   }
 };
 
-const updatePayment = async (req: Express.Request, res: Express.Response) => {
+const updatePayment = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { date_paid } = req.body;
+
+  const { amount, remarks } = req.body;
 
   const userData: IUser = parseToken(req.headers.authorization);
 
-  if (!date_paid) {
+  if (!amount) {
     res.status(403).json({ message: "Incomplete data." });
     return;
   }
@@ -121,7 +221,8 @@ const updatePayment = async (req: Express.Request, res: Express.Response) => {
     const result = await pc.query(
       SQL`
         UPDATE payments
-        SET date_paid = ${date_paid}
+        SET amount = ${amount},
+            remarks = ${remarks}
         WHERE id = ${id}
         AND user_id = ${userData.data.id}
       `,
@@ -141,7 +242,7 @@ const updatePayment = async (req: Express.Request, res: Express.Response) => {
   }
 };
 
-const approvePayment = async (req: Express.Request, res: Express.Response) => {
+const approvePayment = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { approved } = req.body;
 
@@ -186,4 +287,12 @@ const approvePayment = async (req: Express.Request, res: Express.Response) => {
   }
 };
 
-export { getPayments, addPayment, updatePayment, approvePayment };
+export {
+  getPayments,
+  getUserPayments,
+  getAllPayments,
+  getMonthPayments,
+  addPayment,
+  updatePayment,
+  approvePayment,
+};

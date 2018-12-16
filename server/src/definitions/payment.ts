@@ -5,8 +5,9 @@ export interface IAttachment {
 
 export interface IPayment {
   id: number;
+  user_id: number;
   attachments: IAttachment[];
   date_created: string;
   amount: number;
-  approved: boolean;
+  remarks: string;
 }
