@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
+import fs from "fs";
 import moment from "moment";
 import pg from "pg";
 import SQL from "sql-template-strings";
+import uuidv4 from "uuid/v4";
+
 import { IMonthPayment, IPayment } from "../definitions/payment";
 import { IUser, UserType } from "../definitions/user";
 import conn from "../helpers/conn";
@@ -180,6 +183,7 @@ const getMonthPayments = async (req: Request, res: Response) => {
 
 const addPayment = async (req: Request, res: Response) => {
   const { amount, remarks } = req.body;
+  const files: any = req.files || [];
 
   const userData: IUser = parseToken(req.headers.authorization);
 
@@ -188,10 +192,47 @@ const addPayment = async (req: Request, res: Response) => {
     return;
   }
 
+  const fileLimit = 5;
+
+  if (files.length > fileLimit) {
+    res.status(403).json({ message: `Cannot upload more than ${fileLimit}` });
+    return;
+  }
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "application/pdf",
+    "text/plain",
+  ];
+
+  const disallowedTypesFound = [];
+
+  for (const f of files) {
+    if (allowedTypes.indexOf(f.mimetype) === -1) {
+      disallowedTypesFound.push(f.mimetype);
+    }
+  }
+
+  if (disallowedTypesFound.length) {
+    const error = {
+      invalidTypes: disallowedTypesFound,
+      message: "Invalid file type.",
+    };
+
+    res.status(403).json(error);
+
+    return;
+  }
+
   const logic = async (pc: pg.PoolClient) => {
     const dateCreated = moment();
 
-    await pc.query(
+    // ==================================================
+    // Create a new payment
+    // ==================================================
+
+    const result = await pc.query(
       SQL`
         INSERT INTO payments (
           user_id,
@@ -204,11 +245,69 @@ const addPayment = async (req: Request, res: Response) => {
           ${dateCreated},
           ${amount},
           ${remarks}
-        );
+        )
+        RETURNING *;
       `,
     );
 
-    res.status(200).json({ message: "Success." });
+    // ==================================================
+    // If attachments exist, upload attachments
+    // and link them to the payment.
+    // ==================================================
+
+    const payment = result.rows[0];
+
+    // Create folders if they don't exist, in the format:
+    // uploads/user_id/payment_id/file_name.ext
+
+    const basePath = "uploads";
+    const userPath = `${basePath}/${userData.data.id}`;
+    const paymentPath = `${userPath}/${payment.id}`;
+
+    if (!fs.existsSync(basePath)) {
+      fs.mkdirSync(basePath);
+    }
+
+    if (!fs.existsSync(userPath)) {
+      fs.mkdirSync(userPath);
+    }
+
+    if (!fs.existsSync(paymentPath)) {
+      fs.mkdirSync(paymentPath);
+    }
+
+    const errors = [];
+
+    for (const f of files) {
+      try {
+        // Upload files to target folder
+        const splitname = f.originalname.split(".");
+        const extension = splitname[splitname.length - 1];
+        const hashedName = uuidv4();
+        const filename = `${hashedName}.${extension}`;
+        const filePath = `${paymentPath}/${filename}`;
+        fs.writeFileSync(filePath, f.buffer);
+
+        const r = await pc.query(
+          SQL`
+          INSERT INTO attachments (payment_id, file_name)
+          VALUES (${payment.id}, ${filename});
+        `,
+        );
+
+        if (!r.rowCount) {
+          errors.push("Could not update attachment into database");
+        }
+      } catch (e) {
+        errors.push(e.toString());
+      }
+    }
+
+    if (errors.length) {
+      res.status(400).json({ message: errors });
+    } else {
+      res.status(200).json({ message: "Success." });
+    }
   };
 
   try {
