@@ -20,11 +20,7 @@ export default (router: Router) => {
     controllers.payment.addPayment,
   );
 
-  router.put(
-    "/v1/payments/:id",
-    upload.array("files"),
-    controllers.payment.updatePayment,
-  );
+  router.put("/v1/payments/:id", controllers.payment.updatePayment);
 
   router.put("/v1/payments/:id/approve", controllers.payment.approvePayment);
 
