@@ -108,7 +108,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
   // }
 
   private headerRenderer = () => {
-    return ['ID', 'Date paid', 'Date created', 'Attachments', 'Approved', ''];
+    return ['ID', 'Date created', 'Attachments', 'Approver', ''];
   }
 
   private itemRenderer = (item: IPayment) => {
@@ -123,10 +123,9 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     return {
       cells: [
         item.id,
-        parseDate(item.date_paid),
         parseDate(item.date_created),
         item.attachments.length,
-        item.approved ? 'Approved' : 'Not approved',
+        item.approver_id,
         editButton,
       ],
     };
@@ -147,9 +146,13 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     this.setState({ isAddModalOpen: false });
   }
 
-  private handleAddPayment = (datePaid: string, attachments: any[]) => {
+  private handleAddPayment = (
+    amount: number,
+    remarks: string,
+    attachments: any[],
+  ) => {
     this.setState({ isAddModalOpen: false });
-    this.props.addPayment(datePaid);
+    this.props.addPayment(amount, remarks, attachments);
   }
 }
 
@@ -168,15 +171,16 @@ const mapStateToProps = (state: IReducers): Props => ({
 });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch): Dispatch => ({
-  addPayment: (dp: string) => dispatch(paymentsActions.addPayment(dp)),
+  addPayment: (amount: number, remarks: string, attachments: any[]) =>
+    dispatch(paymentsActions.addPayment(amount, remarks, attachments)),
 
   approvePayment: (id: number, a: boolean) =>
     dispatch(paymentsActions.approvePayment(id, a)),
 
   getPayments: () => dispatch(paymentsActions.getPayments()),
 
-  updatePayment: (id: number, dp: string) =>
-    dispatch(paymentsActions.updatePayment(id, dp)),
+  updatePayment: (id: number, amount: number, remarks: string) =>
+    dispatch(paymentsActions.updatePayment(id, amount, remarks)),
 });
 
 export default connect(

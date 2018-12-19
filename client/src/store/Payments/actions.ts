@@ -12,8 +12,12 @@ export function getPaymentsFail(errorMessage: string): IAction {
   return { type: ActionTypes.GET_FAIL, payload: { errorMessage } };
 }
 
-export function addPayment(datePaid: string): IAction {
-  return { type: ActionTypes.ADD, payload: { date_paid: datePaid } };
+export function addPayment(
+  amount: number,
+  remarks: string,
+  attachments: any[],
+): IAction {
+  return { type: ActionTypes.ADD, payload: { amount, remarks, attachments } };
 }
 
 export function addPaymentSuccess(): IAction {
@@ -24,8 +28,12 @@ export function addPaymentFail(errorMessage: string): IAction {
   return { type: ActionTypes.ADD_FAIL, payload: { errorMessage } };
 }
 
-export function updatePayment(id: number, datePaid: string): IAction {
-  return { type: ActionTypes.UPDATE, payload: { id, date_paid: datePaid } };
+export function updatePayment(
+  id: number,
+  amount: number,
+  remarks: string,
+): IAction {
+  return { type: ActionTypes.UPDATE, payload: { id, amount, remarks } };
 }
 
 export function updatePaymentSuccess(): IAction {

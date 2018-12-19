@@ -112,7 +112,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
   - Manage user details page
   - Payments page
     - ~~Get payments~~
-    - Add payment
+    - ~~Add payment~~
     - Edit payment
     - Add attachment
     - Delete attachment

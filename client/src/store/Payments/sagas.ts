@@ -17,8 +17,8 @@ function* getPayments() {
 
 function* addPayment(action: IAction) {
   try {
-    const { date_paid } = action.payload;
-    yield call(service.addPayment, date_paid);
+    const { amount, remarks, attachments } = action.payload;
+    yield call(service.addPayment, amount, remarks, attachments);
     yield put<IAction>(actions.addPaymentSuccess());
     yield put<IAction>(actions.getPayments());
   } catch (e) {
@@ -29,8 +29,8 @@ function* addPayment(action: IAction) {
 
 function* updatePayment(action: IAction) {
   try {
-    const { id, date_paid } = action.payload;
-    yield call(service.updatePayment, id, date_paid);
+    const { id, amount, remarks } = action.payload;
+    yield call(service.updatePayment, id, amount, remarks);
     yield put<IAction>(actions.updatePaymentSuccess());
   } catch (e) {
     const message = getValue(e, 'response.data.message') || e.toString();

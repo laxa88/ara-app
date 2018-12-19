@@ -28,14 +28,15 @@ const PreviewImage = styled.img`
 `;
 
 interface IProps {
-  onClickConfirm: (datePaid: string, attachments: any) => void;
+  onClickConfirm: (amount: number, remarks: string, attachments: any) => void;
   onClickCancel: () => void;
 }
 
 interface IState {
-  datePaid: string;
-  previews: string[];
+  amount: number;
   attachments: File[];
+  previews: string[];
+  remarks: string;
 }
 
 class ModalPayment extends React.Component<IProps, IState> {
@@ -43,24 +44,30 @@ class ModalPayment extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
+      amount: 0,
       attachments: [],
-      datePaid: getMonth(),
       previews: [],
+      remarks: '',
     };
   }
 
   public render() {
-    const disabled = !(this.state.datePaid && this.state.previews.length);
+    const disabled = !(this.state.amount && this.state.previews.length);
 
     return (
       <Modal>
         <Header>New payment</Header>
 
         <InputForm
-          label="Date paid"
-          value={this.state.datePaid}
-          onChange={this.handleOnChangeDatePaid}
-          type="month"
+          label="Amount"
+          value={this.state.amount}
+          onChange={this.handleOnChangeAmount}
+        />
+
+        <InputForm
+          label="Remarks"
+          value={this.state.remarks}
+          onChange={this.handleOnChangeRemarks}
         />
 
         <div>
@@ -95,8 +102,12 @@ class ModalPayment extends React.Component<IProps, IState> {
     return <PreviewContainer>{images}</PreviewContainer>;
   }
 
-  private handleOnChangeDatePaid = (value: string) => {
-    this.setState({ datePaid: value });
+  private handleOnChangeAmount = (value: string) => {
+    this.setState({ amount: +value });
+  }
+
+  private handleOnChangeRemarks = (value: string) => {
+    this.setState({ remarks: value });
   }
 
   private handleOnLoadedFiles = (files: File[], dataUrls: string[]) => {
@@ -104,9 +115,9 @@ class ModalPayment extends React.Component<IProps, IState> {
   }
 
   private handleOnClickConfirm = () => {
-    const { datePaid, attachments } = this.state;
+    const { amount, remarks, attachments } = this.state;
 
-    this.props.onClickConfirm(datePaid, attachments);
+    this.props.onClickConfirm(amount, remarks, attachments);
   }
 
   private handleOnClickCancel = () => {

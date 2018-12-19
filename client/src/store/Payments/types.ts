@@ -19,20 +19,25 @@ export interface IAttachment {
 }
 
 export interface IPayment {
-  id: number;
-  date_created: string;
-  attachments: IAttachment[];
   amount: number;
-  approved: boolean;
+  approver_id: number;
+  attachments: IAttachment[];
+  date_created: string;
+  id: number;
+  remarks: string;
+  user_id: number;
 }
 
 export interface IAction {
   type: string;
   payload?: {
+    amount?: number;
     approved?: boolean;
+    attachments?: any[];
     errorMessage?: string;
     id?: number;
     payments?: IPayment[];
+    remarks?: string;
   };
   error?: boolean;
   meta?: any;
@@ -68,7 +73,7 @@ export interface IProps {
 
 export interface IDispatch {
   getPayments: () => void;
-  addPayment: (datePaid: string) => void;
-  updatePayment: (id: number, datePaid: string) => void;
+  addPayment: (amount: number, remarks: string, attachments: any[]) => void;
+  updatePayment: (id: number, amount: number, remarks: string) => void;
   approvePayment: (id: number, approved: boolean) => void;
 }
