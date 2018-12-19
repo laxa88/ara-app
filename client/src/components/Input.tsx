@@ -16,7 +16,7 @@ export interface IProps {
   onChange: (newValue: string, prevValue: string) => void;
   placeholder?: string;
   type?: string;
-  value: string;
+  value: string | number;
 }
 
 class Input extends React.PureComponent<IProps, {}> {
@@ -39,7 +39,7 @@ class Input extends React.PureComponent<IProps, {}> {
   private onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value: newValue } = e.currentTarget;
     const { value: prevValue } = this.props;
-    this.props.onChange(newValue, prevValue);
+    this.props.onChange(newValue, `${prevValue}`);
   }
 }
 
