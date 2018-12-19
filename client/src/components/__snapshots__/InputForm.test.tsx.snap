@@ -1,13 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<InputForm /> should render 1`] = `
-<form>
-  <styled.label>
-    dummy label
-  </styled.label>
+<Form
+  label="dummy label"
+>
   <Input
     onChange={[MockFunction]}
     value="dummy value"
   />
-</form>
+</Form>
 `;
