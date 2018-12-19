@@ -1,6 +1,7 @@
 const path = require('path');
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const config = require('../config');
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'src/index.html'),
@@ -8,15 +9,11 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-  mode: 'development',
-
   entry: path.join(__dirname, 'src/index.tsx'),
 
   output: {
     publicPath: '/',
   },
-
-  devtool: 'source-map',
 
   module: {
     // Note: Order is important, from BOTTOM to TOP!
@@ -89,13 +86,5 @@ module.exports = {
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  },
-
-  devServer: {
-    port: config.clientPort,
-
-    // Fixes issue with webpack-dev-server not being able to load Push-State
-    // URL (e.g. react-router's BrowserRouter) when refreshing the page.
-    historyApiFallback: true,
   },
 };
