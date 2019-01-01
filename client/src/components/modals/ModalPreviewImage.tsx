@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from '../Button';
 import Modal from './Modal';
 
-import * as previewImageCss from './css/preview-image.css';
+import * as css from './ModalPreviewImage.css';
 
 interface IProps {
   imageUrl: string;
@@ -16,7 +16,7 @@ class ModalPreviewImage extends React.PureComponent<IProps, {}> {
     return (
       <Modal isOpen={this.props.isOpen}>
         <Button onClick={this.props.onClose}>Close</Button>
-        <img className={previewImageCss.image} src={this.props.imageUrl} />
+        <img className={css.image} src={this.props.imageUrl} />
       </Modal>
     );
   }
