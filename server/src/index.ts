@@ -29,7 +29,9 @@ app.use("/api", privateRoutes);
 // entry
 // ==================================================
 
-app.listen(config.serverPort, () => console.log(`Server listening on port ${config.serverPort}.`));
+app.listen(config.serverPort, () =>
+  console.log(`Server listening on port ${config.serverPort}.`),
+);
 
 const displayRoutes = (r: any) => {
   if (r.route && r.route.path) {
