@@ -1,0 +1,10 @@
+.content {
+  background-color: white;
+  width: 80%;
+  max-width: 480px;
+  border-radius: 5px;
+  padding: 24px;
+  margin: 24px;
+  max-height: 80%;
+  overflow: auto;
+}

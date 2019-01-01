@@ -1,36 +1,23 @@
 import * as React from 'react';
-import styled from '../../css/styled';
 
-const Overlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-`;
+import * as contentCss from './css/content.css';
+import * as overlayCss from './css/overlay.css';
 
-const Content = styled.div`
-  background-color: white;
-  width: 80%;
-  max-width: 480px;
-  border-radius: 5px;
-  padding: 24px;
-  margin: 24px;
-  max-height: 80%;
-  overflow: auto;
-`;
+interface IProps {
+  isOpen: boolean;
+}
 
-class Modal extends React.Component<{}, {}> {
+class Modal extends React.Component<IProps, {}> {
   public render() {
-    return (
-      <Overlay>
-        <Content>{this.props.children}</Content>
-      </Overlay>
-    );
+    if (this.props.isOpen) {
+      return (
+        <div className={overlayCss.overlay}>
+          <div className={contentCss.content}>{this.props.children}</div>
+        </div>
+      );
+    }
+
+    return <div />;
   }
 }
 
