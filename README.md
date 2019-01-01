@@ -138,6 +138,7 @@ That way, the Whatsapp group can be be safely used exclusively for casual banter
 
 ## Phase 4 Deploy
 
+- Replace all hard-coded values with environment vars
 - Get hosting & domain name
 - Deploy
 
