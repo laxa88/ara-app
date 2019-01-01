@@ -21,6 +21,7 @@ app.use(cors);
 // paths
 // ==================================================
 
+app.use(express.static("uploads"));
 app.get("/", (req, res) => res.send("Server is up!"));
 app.use("/api", publicRoutes);
 app.use("/api", privateRoutes);
