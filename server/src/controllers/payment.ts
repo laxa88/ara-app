@@ -121,6 +121,8 @@ const parseMonthPaymentRows = (rows: any) => {
   }, []);
 };
 
+// controllers
+
 const getPayments = async (req: Request, res: Response) => {
   const userData: IUser = parseToken(req.headers.authorization);
 
@@ -202,8 +204,8 @@ const addPayment = async (req: Request, res: Response) => {
   const allowedTypes = [
     "image/jpeg",
     "image/png",
-    "application/pdf",
-    "text/plain",
+    // "application/pdf",
+    // "text/plain",
   ];
 
   const disallowedTypesFound = [];

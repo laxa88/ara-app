@@ -28,8 +28,8 @@ const addAttachment = async (req: Express.Request, res: Express.Response) => {
   const allowedTypes = [
     "image/jpeg",
     "image/png",
-    "application/pdf",
-    "text/plain",
+    // "application/pdf",
+    // "text/plain",
   ];
 
   const disallowedTypesFound = [];
