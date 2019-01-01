@@ -123,11 +123,14 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
       </div>
     );
 
-    const attachmentLinks = item.attachments.map(attachment => (
+    const attachmentLinks = item.attachments.map((attachment, index) => (
       <Button
+        className={css.previewButton}
         key={attachment.id}
         onClick={this.handleOnClickAttachment(1, 11, attachment.file_name)}
-      />
+      >
+        {index}
+      </Button>
     ));
 
     return {
