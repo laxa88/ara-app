@@ -1,15 +1,11 @@
 import * as React from 'react';
-import { getMonth } from '../../common/date';
 import styled from '../../css/styled';
 import Button from '../Button';
 import InputFileForm from '../InputFileForm';
 import InputForm from '../InputForm';
 import Modal from './Modal';
 
-const Header = styled.h2`
-  margin: 0 10px 20px;
-  text-align: center;
-`;
+import * as headerCss from './css/header.css';
 
 const PreviewContainer = styled.div`
   display: block;
@@ -30,6 +26,7 @@ const PreviewImage = styled.img`
 interface IProps {
   onClickConfirm: (amount: number, remarks: string, attachments: any) => void;
   onClickCancel: () => void;
+  isOpen: boolean;
 }
 
 interface IState {
@@ -55,8 +52,8 @@ class ModalPayment extends React.Component<IProps, IState> {
     const disabled = !(this.state.amount && this.state.previews.length);
 
     return (
-      <Modal>
-        <Header>New payment</Header>
+      <Modal isOpen={this.props.isOpen}>
+        <h2 className={headerCss.header}>New payment</h2>
 
         <InputForm
           label="Amount"
