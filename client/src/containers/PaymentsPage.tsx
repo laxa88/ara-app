@@ -11,6 +11,8 @@ import * as paymentsActions from '../store/Payments/actions';
 import { IDispatch, IPayment, IProps } from '../store/Payments/types';
 import { IReducers } from '../store/types';
 
+import ModalPreviewImage from '../components/modals/ModalPreviewImage';
+import * as paths from '../constants/paths';
 import * as css from './PaymentsPage.css';
 
 export type Dispatch = IDispatch;
@@ -20,6 +22,8 @@ export type ClassProps = Props & Dispatch;
 interface IClassState {
   editId: number;
   isModalOpen: boolean;
+  isModalPreviewOpen: boolean;
+  previewImageUrl: string;
 }
 
 class PaymentsPage extends React.Component<ClassProps, IClassState> {
@@ -29,6 +33,8 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     this.state = {
       editId: null,
       isModalOpen: false,
+      isModalPreviewOpen: false,
+      previewImageUrl: '',
     };
   }
 
@@ -37,7 +43,7 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
   }
 
   public render() {
-    const { isModalOpen } = this.state;
+    const { isModalOpen, isModalPreviewOpen, previewImageUrl } = this.state;
 
     const {
       errorMessageAdd,
@@ -85,6 +91,12 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
           onClickCancel={this.handleAddPaymentCancel}
           isOpen={isModalOpen}
         />
+
+        <ModalPreviewImage
+          imageUrl={previewImageUrl}
+          isOpen={isModalPreviewOpen}
+          onClose={this.handleOnClosePreview}
+        />
       </div>
     );
   }
@@ -111,11 +123,18 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
       </div>
     );
 
+    const attachmentLinks = item.attachments.map(attachment => (
+      <Button
+        key={attachment.id}
+        onClick={this.handleOnClickAttachment(1, 11, attachment.file_name)}
+      />
+    ));
+
     return {
       cells: [
         item.id,
         parseDate(item.date_created),
-        item.attachments.length,
+        attachmentLinks,
         item.approver_id,
         editButton,
       ],
@@ -130,6 +149,27 @@ class PaymentsPage extends React.Component<ClassProps, IClassState> {
     this.setState({
       editId: id,
       isModalOpen: true,
+    });
+  }
+
+  private handleOnClickAttachment = (
+    userId: number,
+    paymentId: number,
+    url: string,
+  ) => () => {
+    const previewImageUrl =
+      `${paths.development.BASE_SERVER_PATH}` +
+      `/${userId}/${paymentId}/${url}`;
+
+    this.setState({
+      previewImageUrl,
+      isModalPreviewOpen: true,
+    });
+  }
+
+  private handleOnClosePreview = () => {
+    this.setState({
+      isModalPreviewOpen: false,
     });
   }
 
