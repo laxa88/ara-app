@@ -107,6 +107,13 @@ class ModalPayment extends React.Component<IProps, IState> {
   }
 
   private handleOnClickCancel = () => {
+    this.setState({
+      amount: 0,
+      attachments: [],
+      previews: [],
+      remarks: '',
+    });
+
     this.props.onClickCancel();
   }
 }
