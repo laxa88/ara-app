@@ -3,24 +3,13 @@ import styled from '../../css/styled';
 import Button from '../Button';
 import InputFileForm from '../InputFileForm';
 import InputForm from '../InputForm';
+import PreviewImage from '../PreviewImage';
 import Modal from './Modal';
 
 import * as headerCss from './css/header.css';
 
 const PreviewContainer = styled.div`
   display: block;
-`;
-
-const PreviewImage = styled.img`
-  max-width: 100%;
-  max-height: 150px;
-  object-fit: contain;
-  display: block;
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: #eee;
-  border-radius: 5px;
-  margin-bottom: 10px;
 `;
 
 interface IProps {
